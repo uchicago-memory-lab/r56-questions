@@ -1,8 +1,14 @@
 
 
+document.addEventListener('DOMContentLoaded',main,false);
 
-let timeline = [];
-timeline.push({type: 'html-keyboard-response', stimulus: 'Welcome to the R56!', prompt: 'Press any key to continue...'})
+function main() {
+    let timeline = [];
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: 'Welcome to the R56!',
+        prompt: 'Press any key to continue...'
+    })
 
 // timeline.push(EMWordStim(['blurp', 'wollen', 'quavied'],
 //     ['koaya', 'quavied', 'loonsty', 'fealong'],
@@ -12,6 +18,6 @@ timeline.push({type: 'html-keyboard-response', stimulus: 'Welcome to the R56!', 
 //     ['ringbinder', 'chessboard', 'cookingpan', 'motorcycle'],
 //     {stims_type: 'all unrelated', item: 9}))
 
-timeline.push(EFRuleID(['DB7', 'SB8'], {stims_type: 'RuleID', item: 'EFRIP'}))
-
-jsPsych.init({timeline: timeline});
+    timeline.push(EFRuleID(['DB7', 'SB8'], {stims_type: 'RuleID', item: 'EFRIP'}))
+    jsPsych.init({timeline: timeline});
+}

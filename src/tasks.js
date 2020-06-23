@@ -76,10 +76,25 @@ function EMObjectPicture(stims, choices, data){
 }
 
 let ruleIDColorChart = {R: '#F93943',
-                        G: '#33673B',
-                        B: '#445E93',
-                        O: '#E9C46A',
-                        P: '#501537'}
+        G: '#33673B',
+        B: '#445E93',
+        O: '#E9C46A',
+        P: '#501537'}
+
+function ruleID(stimuli) {
+    var canvas = document.getElementById('ruleID');
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.moveTo(75, 50);
+        ctx.lineTo(100, 75);
+        ctx.lineTo(100, 25);
+        ctx.fill();
+    }
+}
+
+
 
 function EFRuleID(stimuli, data){
     let task = {};
@@ -89,9 +104,15 @@ function EFRuleID(stimuli, data){
         stimulus: 'What is the most frequent feature: Shape, Color, or Number?',
         prompt:'Press any key to continue...'});
 
-    timeline.push({type: 'html-keyboard-response',
-        stimulus: '<canvas></canvas>'
-    })
+    function draw(){
+        ruleID(stimuli)
+    }
+
+    timeline.push({type: 'canvas-keyboard-response',
+        func: draw,
+        canvas_id: 'ruleID',
+        prompt: 'What is the most frequent feature: Shape, Color, or Number?'})
+
 
 
     data['trial_type'] = 'Executive Function Rule Identification';
