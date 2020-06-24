@@ -16,6 +16,12 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
                 type: jsPsych.plugins.parameterType.STRING,
                 pretty_name: 'Prompt',
                 default: undefined,
+                description: 'The HTML string to be displayed below the canvas.'
+            },
+            stimulus: {
+                type: jsPsych.plugins.parameterType.STRING,
+                pretty_name: 'Stimulus',
+                default: undefined,
                 description: 'The HTML string to be displayed above the canvas.'
             },
             canvas_id:{
@@ -23,6 +29,12 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
               pretty_name: 'Canvas ID',
               default: 'canvas',
               description: 'The ID of the canvas html block.'
+            },
+            show_stim_with_feedback: {
+                type: jsPsych.plugins.parameterType.BOOL,
+                default: true,
+                no_function: false,
+                description: ''
             },
             choices: {
                 type: jsPsych.plugins.parameterType.KEYCODE,
@@ -49,12 +61,25 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
                 default: true,
                 description: 'If true, trial will end when subject makes a response.'
             },
+            key_answer: {
+                type: jsPsych.plugins.parameterType.KEYCODE,
+                pretty_name: 'Key answer',
+                default: undefined,
+                description: 'The key to indicate the correct response.'
+            },
+            text_answer: {
+                type: jsPsych.plugins.parameterType.STRING,
+                pretty_name: 'Text answer',
+                default: null,
+                description: 'Label that is associated with the correct answer.'
+            }
         }
     };
 
     plugin.trial = function(display_element, trial) {
 
-        var new_html = '<canvas id="'+trial.canvas_id+'" width="1000" style="border: transparent"></canvas><p>';
+        var new_html = '<p><div id="jspsych-canvas-keyboard-response-stimulus">'+ trial.stimulus +'</div></p>' +
+            '<canvas id="'+trial.canvas_id+'" width="1000" style="border: transparent"></canvas><p>';
 
         if(trial.prompt !== null){
             new_html += trial.prompt + "</p>";
@@ -81,8 +106,8 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
             // gather the data to store for the trial
             var trial_data = {
                 "rt": response.rt,
-                "stimulus": trial.stimulus,
-                "key_press": response.key
+                "key_press": response.key,
+                "answer_key": trial.answer_key
             };
 
             // clear the display
@@ -97,7 +122,7 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
 
             // after a valid response, the stimulus will have the CSS class 'responded'
             // which can be used to provide visual feedback that a response was recorded
-            display_element.querySelector('#jspsych-html-keyboard-response-stimulus').className += ' responded';
+            display_element.querySelector('#jspsych-canvas-keyboard-response-stimulus').className += ' responded';
 
             // only record the first response
             if (response.key == null) {
@@ -122,7 +147,7 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
         // hide stimulus if stimulus_duration is set
         if (trial.stimulus_duration !== null) {
             jsPsych.pluginAPI.setTimeout(function() {
-                display_element.querySelector('#jspsych-html-keyboard-response-stimulus').style.visibility = 'hidden';
+                display_element.querySelector('#jspsych-canvas-keyboard-response-stimulus').style.visibility = 'hidden';
             }, trial.stimulus_duration);
         }
 
@@ -133,15 +158,6 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
             }, trial.trial_duration);
         }
 
-
-
-        // data saving
-        var trial_data = {
-            parameter_name: 'parameter value'
-        };
-
-        // end trial
-        jsPsych.finishTrial(trial_data);
     };
 
     return plugin;
