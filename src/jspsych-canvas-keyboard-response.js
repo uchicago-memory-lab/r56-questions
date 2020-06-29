@@ -1,6 +1,6 @@
 jsPsych.plugins["canvas-keyboard-response"] = (function() {
 
-    var plugin = {};
+    let plugin = {};
 
     plugin.info = {
         name: "canvas-keyboard-response",
@@ -78,47 +78,8 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
 
     plugin.trial = function(display_element, trial) {
 
-        var new_html = '<p><div id="jspsych-canvas-keyboard-response-stimulus">'+ trial.stimulus +'</div></p>' +
-            '<canvas id="'+trial.canvas_id+'" width="1000" style="border: transparent"></canvas><p>';
-
-        if(trial.prompt !== null){
-            new_html += trial.prompt + "</p>";
-        }
-
-        display_element.innerHTML = new_html;
-        trial.func()
-        var response = {
-            rt: null,
-            key: null
-        };
-
-        // function to end trial when it is time
-        var end_trial = function() {
-
-            // kill any remaining setTimeout handlers
-            jsPsych.pluginAPI.clearAllTimeouts();
-
-            // kill keyboard listeners
-            if (typeof keyboardListener !== 'undefined') {
-                jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
-            }
-
-            // gather the data to store for the trial
-            var trial_data = {
-                "rt": response.rt,
-                "key_press": response.key,
-                "answer_key": trial.answer_key
-            };
-
-            // clear the display
-            display_element.innerHTML = '';
-
-            // move on to the next trial
-            jsPsych.finishTrial(trial_data);
-        };
-
         // function to handle responses by the subject
-        var after_response = function(info) {
+        let after_response = function (info) {
 
             // after a valid response, the stimulus will have the CSS class 'responded'
             // which can be used to provide visual feedback that a response was recorded
@@ -134,14 +95,55 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
             }
         };
 
+        let keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+            callback_function: after_response,
+            valid_responses: trial.choices,
+            rt_method: 'date',
+            persist: false,
+            allow_held_key: false
+        });
+        let new_html = '<p><div id="jspsych-canvas-keyboard-response-stimulus">' + trial.stimulus + '</div></p>' +
+            '<canvas id="' + trial.canvas_id + '" width="1000" style="border: transparent"></canvas><p>';
+
+        if(trial.prompt !== null){
+            new_html += trial.prompt + "</p>";
+        }
+
+        display_element.innerHTML = new_html;
+        trial.func()
+        let response = {
+            rt: null,
+            key: null
+        };
+
+        // function to end trial when it is time
+        let end_trial = function () {
+
+            // kill any remaining setTimeout handlers
+            jsPsych.pluginAPI.clearAllTimeouts();
+
+            // kill keyboard listeners
+            if (typeof keyboardListener !== 'undefined') {
+                jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+            }
+
+            // gather the data to store for the trial
+            let trial_data = {
+                "rt": response.rt,
+                "key_press": response.key,
+                "answer_key": trial.answer_key
+            };
+
+            // clear the display
+            display_element.innerHTML = '';
+
+            // move on to the next trial
+            jsPsych.finishTrial(trial_data);
+        };
+
+
+
         if (trial.choices !== jsPsych.NO_KEYS) {
-            var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-                callback_function: after_response,
-                valid_responses: trial.choices,
-                rt_method: 'date',
-                persist: false,
-                allow_held_key: false
-            });
         }
 
         // hide stimulus if stimulus_duration is set

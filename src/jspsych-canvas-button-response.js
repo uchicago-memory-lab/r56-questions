@@ -1,7 +1,7 @@
 
 jsPsych.plugins["canvas-button-response"] = (function() {
 
-    var plugin = {};
+    let plugin = {};
 
     plugin.info = {
         name: 'canvas-button-response',
@@ -120,7 +120,8 @@ jsPsych.plugins["canvas-button-response"] = (function() {
         // add event listeners to buttons
         for (let i = 0; i < trial.choices.length; i++) {
             display_element.querySelector('#jspsych-canvas-button-response-button-' + i).addEventListener('click', function(e){
-                var choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
+                // noinspection JSUnresolvedFunction
+                let choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
                 after_response(choice);
             });
         }
@@ -135,8 +136,8 @@ jsPsych.plugins["canvas-button-response"] = (function() {
         function after_response(choice) {
 
             // measure rt
-            var end_time = performance.now();
-            var rt = end_time - start_time;
+            let end_time = performance.now();
+            let rt = end_time - start_time;
             response.button = choice;
             response.rt = rt;
 
@@ -145,8 +146,8 @@ jsPsych.plugins["canvas-button-response"] = (function() {
             display_element.querySelector('#jspsych-canvas-button-response-stimulus').className += ' responded';
 
             // disable all the buttons after a response
-            var btns = document.querySelectorAll('.jspsych-canvas-button-response-button button');
-            for(var i=0; i<btns.length; i++){
+            let btns = document.querySelectorAll('.jspsych-canvas-button-response-button button');
+            for(let i=0; i<btns.length; i++){
                 //btns[i].removeEventListener('click');
                 btns[i].setAttribute('disabled', 'disabled');
             }
@@ -163,7 +164,7 @@ jsPsych.plugins["canvas-button-response"] = (function() {
             jsPsych.pluginAPI.clearAllTimeouts();
 
             // gather the data to store for the trial
-            var trial_data = {
+            let trial_data = {
                 "rt": response.rt,
                 "stimulus": trial.stimulus,
                 "button_pressed": response.button

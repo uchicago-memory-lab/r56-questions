@@ -340,7 +340,7 @@ function EFStroop(stimuli, duration, data){
     })
 
     let choices = Array(stimuli.length + 1).fill(0).map((x, y) => x + y);
-    let choicePrompt = '<div class="container space-around">'
+    let choicePrompt = '<div class="container space-between">'
     for(const i in choices){
         choicePrompt += '<div>' + i + '</div>'
     }
@@ -353,7 +353,8 @@ function EFStroop(stimuli, duration, data){
         key_answer: possibleKeys[correctAnswer],
         correct_text: "",
         incorrect_text: "",
-        feedback_duration: 0
+        feedback_duration: 0,
+        show_stim_with_feedback: false
     })
 
     data['trial_type'] = 'Executive Function Stroop Task';
@@ -368,11 +369,24 @@ function PSStringComparison(stimuli, data){
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'As fast as you can, determine if the two items shown on the screen are the SAME or DIFFERENT',
     prompt: '<p>If they are the SAME press "Q", if they are DIFFERENT press "P"</p>' +
-        '<p>Press any Key to Continue...</p>>'})
+        '<p>Press any Key to Continue...</p>'})
 
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'Get Ready!',
-    prompt: '<div class="container space-around"> <div>Same - Q</div><div>Different - P</div>'})
+    prompt: '<div class="container space-between"> <div>Same - Q</div><div>Different - P</div></div>'})
+
+    let stimuli_1 = []
+    let stimuli_2 = []
+    for(let i in stimuli){
+        let stimsplit = stimuli[i].split('-')
+        stimuli_1.push(stimsplit[0])
+        stimuli_2.push(stimsplit[1])
+    }
+    timeline.push({type: 'timed-html-comparison',
+    stimuli_1: stimuli_1,
+    stimuli_2: stimuli_2,
+    choices: [80, 81],
+    time_limit: null})
 
     data['trial_type'] = 'Processing Speed String Comparison';
     task['timeline'] = timeline;

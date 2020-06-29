@@ -80,6 +80,7 @@ jsPsych.plugins["string-entry"] = (function() {
             }
 
             // data saving
+            // noinspection ES6ConvertVarToLetConst
             var trial_data = {
                 "rt": response.rt,
                 "answer": trial.answer,

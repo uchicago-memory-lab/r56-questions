@@ -1,6 +1,6 @@
 jsPsych.plugins["timed-html-comparison"] = (function() {
 
-    var plugin = {};
+    let plugin = {};
 
     plugin.info = {
         name: "timed-html-comparison",
@@ -26,32 +26,52 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
 
     plugin.trial = function(display_element, trial) {
 
+
+        let response = {
+            rt: [],
+            key: []
+        };
+
+        let t = 0;
+
+        if (trial.time_limit !== null) {
+            jsPsych.pluginAPI.setTimeout(function() {
+                end_trial();
+            }, trial.time_limit);
+        }
+
         let after_response = function(info){
 
             display_element.querySelector('#jspsych-timed-html-comparison').className += ' responded';
 
+            response.rt.push(info.rt);
+            response.key.push(info.key);
+            t += 1;
+            innerTrial(t)
+            if(t === trial.stimuli_1.length){
+                end_trial()
+            }
         };
-        let keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-            callback_function: after_response,
-            valid_responses: trial.choices,
-            rt_method: 'performance',
-            persist: false,
-            allow_held_key: false
-        });
-        let new_html = '<div id="jspsych-timed-html-comparison"><div>' + trial.stimuli_1[0] + '</div><div>' +
-            trial.stimuli_2[0] + '</div></div>';
 
-        // start the response listener
         if (trial.choices !== jsPsych.NO_KEYS) {
+            var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+                callback_function: after_response,
+                valid_responses: trial.choices,
+                rt_method: 'performance',
+                persist: true,
+                allow_held_key: false
+            });
         }
 
-        let response = {
-            rt: null,
-            keys: []
-        };
+        let innerTrial = function(trialNum){
+            // noinspection UnnecessaryLocalVariableJS
+            let new_html = '<div id="jspsych-timed-html-comparison" class="container space-between"><div>' + trial.stimuli_1[trialNum] + '</div><div>' +
+                trial.stimuli_2[trialNum] + '</div></div>';
 
+            display_element.innerHTML = new_html;
+        }
 
-        let end_trial = function () {
+        var end_trial = function () {
 
             // kill any remaining setTimeout handlers
             jsPsych.pluginAPI.clearAllTimeouts();
@@ -61,6 +81,13 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
                 jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
             }
 
+            let t_left = trial.stimuli_1.length - t
+
+            for(let i = 0; i < t_left; i++){
+                response.rt.push(0)
+                response.key.push(null)
+            }
+
             // gather the data to store for the trial
             let trial_data = {
                 "rt": response.rt,
@@ -68,12 +95,20 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
                 "key_press": response.key
             };
 
+            console.log(trial_data)
+
             // clear the display
             display_element.innerHTML = '';
 
             // move on to the next trial
             jsPsych.finishTrial(trial_data);
         };
+
+
+        innerTrial(t)
+
+
+
     };
 
     return plugin;
