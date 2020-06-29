@@ -97,6 +97,9 @@ jsPsych.plugins["categorize-animation"] = (function() {
     var timeoutSet = false;
     var correct;
 
+
+    var startTime = (new Date()).getTime();
+
     // show animation
     var animate_interval = setInterval(function() {
       display_element.innerHTML = ''; // clear everything
@@ -184,7 +187,7 @@ jsPsych.plugins["categorize-animation"] = (function() {
     keyboard_listener = jsPsych.pluginAPI.getKeyboardResponse({
       callback_function: after_response,
       valid_responses: trial.choices,
-      rt_method: 'performance',
+      rt_method: 'date',
       persist: true,
       allow_held_key: false
     });

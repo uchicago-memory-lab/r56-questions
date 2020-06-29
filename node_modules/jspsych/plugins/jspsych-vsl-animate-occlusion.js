@@ -132,7 +132,7 @@ jsPsych.plugins['vsl-animate-occlusion'] = (function() {
         });
 
         // start timer for this trial
-        start_time = performance.now();
+        start_time = (new Date()).getTime();
       }
     }
 
@@ -164,7 +164,7 @@ jsPsych.plugins['vsl-animate-occlusion'] = (function() {
     key_listener = jsPsych.pluginAPI.getKeyboardResponse({
       callback_function: after_response,
       valid_responses: trial.choices,
-      rt_method: 'performance',
+      rt_method: 'date',
       persist: true,
       allow_held_key: false
     });

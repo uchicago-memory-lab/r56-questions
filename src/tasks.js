@@ -11,11 +11,11 @@ let memorize_command = {type: 'html-keyboard-response',
 let ALL_NUMBERS_PLUS_BACKSPACE = [8, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
 
 function imgLocStim(name){
-    return '<img src="./img/' + name + '.jpg">'
+    return '<img src="./img/' + name + '.jpg" alt="locStim">'
 }
 
 function imgLocChoice(name){
-    return '<img src="./img/' + name + '.jpg" style="vertical-align: middle" height="200px">'
+    return '<img src="./img/' + name + '.jpg" style="vertical-align: middle" height="200px" alt="locChoice">'
 }
 
 function EMWordStim(stims, choices, data){
@@ -81,14 +81,14 @@ let wordChart = {R: 'red',
 
 function ruleID(stimuli, scale) {
     // Draws on the canvas.
-    var canvas = document.getElementById('ruleID');
+    let canvas = document.getElementById('ruleID');
     let step = 1000 / (stimuli.length + 1);
     let objectCenters =   Array(Math.ceil(1000.0 / step)).fill(0).map((x, y) => x + y * step);
     objectCenters.shift();
 
 
     for(const i in stimuli){
-        var ctx = canvas.getContext('2d');
+        let ctx = canvas.getContext('2d');
         ctx.beginPath();
         ctx.font = '32px Open Sans';
         ctx.textBaseline= 'middle';
@@ -226,6 +226,7 @@ function SMObjectNaming(choices, stimulus, data){
 }
 
 function WMForwardDigitSpan(stimulus, delay, data){
+    let repeats;
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
@@ -250,10 +251,10 @@ function WMForwardDigitSpan(stimulus, delay, data){
 
     if(countUnique(numbers) === numbers.length){
         // noinspection JSDuplicatedDeclaration
-        var repeats = ' no repeats'
+        repeats = ' no repeats';
     } else {
         // noinspection JSDuplicatedDeclaration
-        var repeats = ' repeats'
+        repeats = ' repeats';
     }
 
     data['stims_type'] = numbers.length + ' digits' + repeats;
@@ -264,6 +265,7 @@ function WMForwardDigitSpan(stimulus, delay, data){
 }
 
 function WMBackwardDigitSpan(stimulus, delay, data){
+    let repeats;
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
@@ -292,10 +294,10 @@ function WMBackwardDigitSpan(stimulus, delay, data){
 
     if(countUnique(numbers) === numbers.length){
         // noinspection JSDuplicatedDeclaration
-        var repeats = ' no repeats'
+        repeats = ' no repeats';
     } else {
         // noinspection JSDuplicatedDeclaration
-        var repeats = ' repeats'
+        repeats = ' repeats';
     }
 
     data['stims_type'] = numbers.length + ' digits' + repeats;

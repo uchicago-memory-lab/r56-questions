@@ -84,7 +84,7 @@ jsPsych.plugins.instructions = (function() {
 
     var view_history = [];
 
-    var start_time = performance.now();
+    var start_time = (new Date()).getTime();
 
     var last_page_update_time = start_time;
 
@@ -164,7 +164,7 @@ jsPsych.plugins.instructions = (function() {
 
     function add_current_page_to_view_history() {
 
-      var current_time = performance.now();
+      var current_time = (new Date()).getTime();
 
       var page_view_time = current_time - last_page_update_time;
 
@@ -186,7 +186,7 @@ jsPsych.plugins.instructions = (function() {
 
       var trial_data = {
         "view_history": JSON.stringify(view_history),
-        "rt": performance.now() - start_time
+        "rt": (new Date()).getTime() - start_time
       };
 
       jsPsych.finishTrial(trial_data);
@@ -198,7 +198,7 @@ jsPsych.plugins.instructions = (function() {
       keyboard_listener = jsPsych.pluginAPI.getKeyboardResponse({
         callback_function: after_response,
         valid_responses: [trial.key_forward, trial.key_backward],
-        rt_method: 'performance',
+        rt_method: 'date',
         persist: false,
         allow_held_key: false
       });
@@ -221,7 +221,7 @@ jsPsych.plugins.instructions = (function() {
       var keyboard_listener = jsPsych.pluginAPI.getKeyboardResponse({
         callback_function: after_response,
         valid_responses: [trial.key_forward, trial.key_backward],
-        rt_method: 'performance',
+        rt_method: 'date',
         persist: false
       });
     }

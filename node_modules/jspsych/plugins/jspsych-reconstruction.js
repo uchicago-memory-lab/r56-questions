@@ -86,7 +86,7 @@ jsPsych.plugins['reconstruction'] = (function() {
     var key_listener = jsPsych.pluginAPI.getKeyboardResponse({
       callback_function: after_response,
       valid_responses: [trial.key_increase, trial.key_decrease],
-      rt_method: 'performance',
+      rt_method: 'date',
       persist: true,
       allow_held_key: true
     });
@@ -107,7 +107,7 @@ jsPsych.plugins['reconstruction'] = (function() {
 
     function endTrial() {
       // measure response time
-      var endTime =performance.now();
+      var endTime = (new Date()).getTime();
       var response_time = endTime - startTime;
 
       // clear keyboard response
@@ -126,7 +126,7 @@ jsPsych.plugins['reconstruction'] = (function() {
       jsPsych.finishTrial(trial_data);
     }
 
-    var startTime = performance.now();
+    var startTime = (new Date()).getTime();
 
   };
 

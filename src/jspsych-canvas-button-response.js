@@ -83,11 +83,11 @@ jsPsych.plugins["canvas-button-response"] = (function() {
     plugin.trial = function(display_element, trial) {
 
         // display stimulus
-        var html = '<div id="jspsych-canvas-button-response-stimulus">'+trial.stimulus+'</div>' +
-            '<canvas id="'+trial.canvas_id+'" width="1000" style="border: transparent"></canvas><p>';
+        let html = '<div id="jspsych-canvas-button-response-stimulus">' + trial.stimulus + '</div>' +
+            '<canvas id="' + trial.canvas_id + '" width="1000" style="border: transparent"></canvas><p>';
 
         //display buttons
-        var buttons = [];
+        let buttons = [];
         if (Array.isArray(trial.button_html)) {
             if (trial.button_html.length === trial.choices.length) {
                 buttons = trial.button_html;
@@ -101,7 +101,7 @@ jsPsych.plugins["canvas-button-response"] = (function() {
         }
         html += '<div id="jspsych-canvas-button-response-btngroup">';
         for (let i = 0; i < trial.choices.length; i++) {
-            var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
+            let str = buttons[i].replace(/%choice%/g, trial.choices[i]);
             html += '<div class="jspsych-canvas-button-response-button" style="display: inline-block; margin:'+trial.margin_vertical+' '+trial.margin_horizontal+'" id="jspsych-canvas-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
         }
         html += '</div>';
@@ -115,7 +115,7 @@ jsPsych.plugins["canvas-button-response"] = (function() {
         trial.func()
 
         // start time
-        var start_time = performance.now();
+        let start_time = performance.now();
 
         // add event listeners to buttons
         for (let i = 0; i < trial.choices.length; i++) {
@@ -126,7 +126,7 @@ jsPsych.plugins["canvas-button-response"] = (function() {
         }
 
         // store response
-        var response = {
+        let response = {
             rt: null,
             button: null
         };

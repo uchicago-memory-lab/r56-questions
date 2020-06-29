@@ -123,13 +123,13 @@ jsPsych.plugins["serial-reaction-time-mouse"] = (function() {
             var info = {}
             info.row = e.currentTarget.getAttribute('data-row');
             info.column = e.currentTarget.getAttribute('data-column');
-            info.rt = performance.now() - startTime;
+            info.rt = Date.now() - startTime;
             after_response(info);
           }
         });
       }
 
-      startTime = performance.now();
+      startTime = Date.now();
 
       if(trial.fade_duration == null){
         display_element.querySelector('#jspsych-serial-reaction-time-stimulus-cell-'+trial.target[0]+'-'+trial.target[1]).style.backgroundColor = trial.target_color;
