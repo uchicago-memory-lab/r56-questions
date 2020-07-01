@@ -1,8 +1,9 @@
 /*
- * CSS for jsPsych experiments.
+ * CSS for r56 experiments.
  *
  * This stylesheet provides minimal styling to make jsPsych
  * experiments look polished without any additional styles.
+ * Adjusted from the original jsPsych css for our use-case.
  */
 
  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
@@ -129,8 +130,12 @@
 }
 .container {
   display: flex;
-  width: 750px
 }
-.container.space-between {
-  justify-content: space-between;
+.container.object {
+  justify-content: space-around;
+  min-width: 500px;
+}
+.container.reminders{
+  justify-content: space-around;
+  min-width: 1000px;
 }

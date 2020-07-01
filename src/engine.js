@@ -9,8 +9,18 @@ funcspace = {EMWordStim: EMWordStim,
              WMForwardDigitSpan: WMForwardDigitSpan,
              WMBackwardDigitSpan: WMBackwardDigitSpan,
              EFStroop: EFStroop,
-             PSStringComparison: PSStringComparison}
+             PSStringComparison: PSStringComparison};
 
+function fisherYates(tarArray){
+    let array = JSON.parse(JSON.stringify(tarArray))
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * i)
+        const temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
+    }
+    return array
+}
 
 
 function main() {
@@ -21,33 +31,37 @@ function main() {
         prompt: 'Press any key to continue...'
     })
 
-    // timeline.push({type: 'fullscreen', fullscreen_mode: true})
-    //
-    // timeline.push(EMWordStim(['blurp', 'wollen', 'quavied'],
-    //     ['koaya', 'quavied', 'loonsty', 'fealong'],
-    //     {stims_type: 'nonsense', item: 1}));
-    //
-    // timeline.push(EMObjectPicture(['chessboard', 'tennisracquet', 'babushkadolls'],
-    //     ['ringbinder', 'chessboard', 'cookingpan', 'motorcycle'],
-    //     {stims_type: 'all unrelated', item: 9}))
-    //
-    // timeline.push(EFRuleID(['DB7', 'CO4', 'TR2', 'SP4', 'HG9'],
-    //         {stims_type: 'RuleID', item: 'EFRIP'}))
-    //
-    // timeline.push(SMObjectNaming(['fish', 'stairs', 'marker', 'glue'], 'fish',
-    //     {stims_type: 'object_naming', item:'SMONP'}))
-    //
-    //
-    // timeline.push(WMForwardDigitSpan(872, 1, {item: 'WMFDP'}))
-    //
-    // timeline.push(WMBackwardDigitSpan(519, 1, {item: 'WMBDP'}))
+    timeline.push({type: 'fullscreen', fullscreen_mode: true})
 
-    // timeline.push(EFStroop(['GG', 'RG', 'GR', 'YY', 'YK', 'KK'], 4, {item: 'EFSTP'}))
+    timeline.push(EMWordStim(['anger', 'bread', 'army'],
+        [['anger', 'white', 'cat', 'coal'], ['woman', 'mountain', 'music', 'bread'], ['bird', 'stomach', 'army', 'net']],
+        {stims_type: 'nonsense', item: 1}));
 
-    //
-    // timeline.push(PSStringComparison(['AA-AA', 'BB-BB', 'AB-34'], {item: 'PSSCP'}))
-    //
-    // timeline.push({type: 'fullscreen', fullscreen_mode: false})
+    timeline.push(EMObjectPicture(['chessboard', 'tennisracquet', 'babushkadolls'],
+        [['ringbinder', 'chessboard', 'cookingpan', 'motorcycle'], ['nunchaku', 'tennisracquet', 'ceilingfan', 'pokercard'],
+        ['coin', 'babushkadolls', 'easteregg_redo', 'orifan']],
+        {stims_type: 'all unrelated', item: 9}))
+
+    timeline.push(EFRuleID([['DB7', 'CO4', 'CR2'], ['HG5', 'SP1', 'HR2'], ['TP5', 'CP3', 'HG9']],
+            {stims_type: 'RuleID', item: 'EFRIP'}))
+
+    let ON_TEST = ['butterfly', 'muffin', 'flag', 'coffee'];
+
+    timeline.push(SMObjectNaming([ON_TEST, fisherYates(ON_TEST), fisherYates(ON_TEST)], ['butterfly', 'flag', 'muffin'],
+        {stims_type: 'object_naming', item:'SMONP'}))
+
+
+    timeline.push(WMForwardDigitSpan([872, 345, 982], 1, {item: 'WMFDP'}))
+
+    timeline.push(WMBackwardDigitSpan([519, 762, 123], 1, {item: 'WMBDP'}))
+
+    timeline.push(EFStroop([['KG', 'GR', 'PP'], ['RR', 'GR', 'KK'], ['PP', 'GR', 'RG']], 4, {item: 'EFSTP'}))
+
+
+    timeline.push(PSStringComparison(['AA-AA', 'BB-BB', 'AB-34'], {item: 'PSSCP'}))
+
+    timeline.push({type: 'fullscreen', fullscreen_mode: false})
+
 
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'You have completed the Practice round!',

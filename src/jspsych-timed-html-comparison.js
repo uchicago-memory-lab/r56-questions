@@ -20,6 +20,10 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
             choices: {
                 type: jsPsych.plugins.parameterType.KEYCODE,
                 default: jsPsych.ALL_KEYS
+            },
+            prompt: {
+                type: jsPsych.plugins.parameterType.STRING,
+                default: null
             }
         }
     }
@@ -65,8 +69,12 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
 
         let innerTrial = function(trialNum){
             // noinspection UnnecessaryLocalVariableJS
-            let new_html = '<div id="jspsych-timed-html-comparison" class="container space-between"><div>' + trial.stimuli_1[trialNum] + '</div><div>' +
+            let new_html = '<div id="jspsych-timed-html-comparison" class="container object"><div>' + trial.stimuli_1[trialNum] + '</div><div>' +
                 trial.stimuli_2[trialNum] + '</div></div>';
+
+            if(trial.prompt){
+                new_html += trial.prompt
+            }
 
             display_element.innerHTML = new_html;
         }
@@ -95,7 +103,6 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
                 "key_press": response.key
             };
 
-            console.log(trial_data)
 
             // clear the display
             display_element.innerHTML = '';
