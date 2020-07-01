@@ -4,12 +4,16 @@
 // different trials, it's easier to build these helper functions and then define our own sampling structure.
 // In addition this allows this code to be more easily re-usable down the line.
 
-let d_questions = [];
-let d_answers = [];
-for(let i in distractors){
-    d_answers.push(distractors[i][1]);
-    d_questions.push(distractors[i][0]);
+async function getData(url) {
+    const response = await fetch(url);
+
+    return response.json()
 }
+
+
+
+
+
 
 let memorize_command = {type: 'html-keyboard-response',
     stimulus: 'Memorize the items.',
@@ -27,7 +31,14 @@ function imgLocChoice(name){
 // most of the work is being done plugin-side, since a lot of it is abstracted away to the question set. So this is just
 // a shortcut function for our particular brand of distractor questions.
 
-function EMDistractors(){
+async function EMDistractors(){
+    let distractors = await getData('questions/distractors.json')
+    let d_questions = [];
+    let d_answers = [];
+    for(let i in distractors){
+        d_answers.push(distractors[i][1]);
+        d_questions.push(distractors[i][0]);
+    }
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'True/False Math Problems',
@@ -43,7 +54,7 @@ function EMDistractors(){
     return {timeline: timeline};
 }
 
-function EMWordStim(stims, choices, data){
+async function EMWordStim(stims, choices, data){
     let task = {};
     let answer = stims.filter(x => choices.includes(x));
     let timeline = [];
@@ -52,7 +63,7 @@ function EMWordStim(stims, choices, data){
         timeline.push({type: 'html-keyboard-response', stimulus: stims[i],
             choices: jsPsych.NO_KEYS, trial_duration: 1000})
     }
-    timeline.push(EMDistractors())
+    timeline.push(await EMDistractors())
     for (let i in choices) {
         timeline.push({
              type: 'html-button-response',
@@ -67,7 +78,7 @@ function EMWordStim(stims, choices, data){
     return task;
 }
 
-function EMObjectPicture(stims, choices, data){
+async function EMObjectPicture(stims, choices, data){
     let task = {};
     let answer = stims.filter(x => choices.includes(x));
     let timeline = [];
