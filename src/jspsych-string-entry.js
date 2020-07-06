@@ -20,12 +20,12 @@ jsPsych.plugins["string-entry"] = (function() {
             },
             trial_duration: {
                 type: jsPsych.plugins.parameterType.INT,
-                default: null,
+                default: 15000,
                 description: 'How long to show trial before it ends.'
             },
             delay: {
                 type: jsPsych.plugins.parameterType.INT,
-                default: 500,
+                default: 0,
                 description: 'Time to wait (ms) after subject enters the last number before moving on.'
             },
             entry_size: {
@@ -52,6 +52,13 @@ jsPsych.plugins["string-entry"] = (function() {
 
 
         var after_response = function(info){
+            if(info.key === 13){
+                var endTime = performance.now();
+                var rt = endTime - startTime;
+                response.entry = entryString;
+                response.rt = rt;
+                setTimeout(() => end_trial(), trial.delay);
+            }
             if(info.key === 8){
                 entryString = entryString.substr(0, entryString.length - 1);
             } else {
@@ -59,14 +66,9 @@ jsPsych.plugins["string-entry"] = (function() {
                     jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(info.key).replace('numpad', '');
             }
             display_element.innerHTML = html + '<p style="font-size: ' + trial.entry_size + 'px">&nbsp;' + entryString + '</p>';
-            if(entryString.length === trial.answer.length){
-                var endTime = performance.now();
-                var rt = endTime - startTime;
-                response.entry = entryString;
-                response.rt = rt;
-                setTimeout(() => end_trial(), trial.delay);
-            }
+            console.log(info.key)
         }
+
 
         var end_trial = function () {
 

@@ -1,0 +1,11 @@
+taskNum,stim1,stim2,stim3,stim4,stim5,stim6,trial1,trial2,trial3,stimsType,difficulty
+SMONP,bed,stairs,marker,glue,,,,,,,practice
+201,butterfly,muffins,flag,coffee,,,,,,,easy
+202,pants,calculator,stapler,switch,,,,,,,easy
+203,tricycle,guitar,basket,folder,,,,,,,easy
+204,necklace,collar,rosary,choker,,,,,,,med
+205,vase,bowl,pitcher,urn,,,,,,,med
+206,tophat,sunhat,helmet,visor,,,,,,,med
+207,loaf,bagel,sandwich,donut,,,,,,,hard
+208,seagull,duck,cardinal,pidgeon,,,,,,,hard
+209,basketball,beachball,soccerball,volleyball,,,,,,,hard

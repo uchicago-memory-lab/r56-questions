@@ -23,9 +23,7 @@ def convert_to_json(csv_filename):
     json_filename = f'./json/{csv_filename.split("/")[-1].split(".")[-2]}.json'
     with open(json_filename, 'w') as jsonfile:
         json.dump(dat, jsonfile, indent=4)
-    
 
 if __name__ == "__main__":
     for f in glob.glob('./csv/*'):
         convert_to_json(f)
-    

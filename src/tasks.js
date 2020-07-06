@@ -10,16 +10,19 @@ async function getData(url) {
     return response.json()
 }
 
-
-
-
-
+function range(start, end) {
+    if(start === end) return [start];
+    return [start, ...range(start + 1, end)];
+}
 
 let memorize_command = {type: 'html-keyboard-response',
     stimulus: 'Memorize the items.',
     prompt:'Press any key to continue...'};
 
-let ALL_NUMBERS_PLUS_BACKSPACE = [8, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
+let ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER =
+    [8, 13, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
+
+let ALL_KEYS_BUT_ENTER = range(0, 222).filter(function(value, index, arr){return value !== 13})
 
 function imgLocStim(name){
     return '<img src="./img/' + name + '.jpg">'
@@ -32,7 +35,7 @@ function imgLocChoice(name){
 // a shortcut function for our particular brand of distractor questions.
 
 async function EMDistractors(){
-    let distractors = await getData('questions/distractors.json')
+    let distractors = await getData('questions/json/distractors.json')
     let d_questions = [];
     let d_answers = [];
     for(let i in distractors){
@@ -87,7 +90,8 @@ async function EMObjectPicture(stims, choices, data){
         timeline.push({type: 'html-keyboard-response', stimulus: imgLocStim(stims[i]),
             choices: jsPsych.NO_KEYS, trial_duration: 1000})
     }
-    timeline.push(EMDistractors())
+
+    timeline.push(await EMDistractors())
 
     for (let i in choices) {
         let promptLines = [];
@@ -282,6 +286,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
     timeline.push({type: 'html-keyboard-response',
     stimulus:'Rehearse the numbers for forward recall (first to last)',
     prompt: 'Press any key to continue...'});
+    console.log(ALL_KEYS_BUT_ENTER)
     for (let j in stimuli) {
         let numbers = stimuli[j].toString()
         for (const i in numbers) {
@@ -298,11 +303,17 @@ function WMForwardDigitSpan(stimuli, delay, data){
 
         timeline.push({
             type: 'string-entry',
-            prompt: '<p>Type the numbers in forward order (first to last)</p>',
+            prompt: '<p>Type the numbers in forward order (first to last), press enter/return to send.</p>',
             answer: stimuli[j].toString(),
-            choices: ALL_NUMBERS_PLUS_BACKSPACE,
+            choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
             entry_size: 100
         });
+
+        timeline.push({
+            type: 'html-keyboard-response',
+            stimulus: 'Press any key (except return/enter) to continue',
+            choices: ALL_KEYS_BUT_ENTER
+        })
 
 
         if (countUnique(numbers) === numbers.length) {
@@ -328,7 +339,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-        stimulus:'Rehearse the numbers for backward recall (first to last)',
+        stimulus:'Rehearse the numbers for backward recall (last to first)',
         prompt: 'Press any key to continue...'});
     for(let j in stimuli){
         let numbers = stimuli[j].toString();
@@ -345,9 +356,9 @@ function WMBackwardDigitSpan(stimuli, delay, data){
             choices: jsPsych.NO_KEYS, trial_duration: 1000*delay});
 
         timeline.push({type: 'string-entry',
-            prompt:'<p>Type the numbers in backward order (first to last)</p>',
+            prompt:'<p>Type the numbers in backward order (first to last), press enter/return to send.</p>',
             answer: stimuli[j].toString(),
-            choices: ALL_NUMBERS_PLUS_BACKSPACE,
+            choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
             entry_size: 100});
 
 
@@ -379,12 +390,13 @@ function EFStroop(stimuli, duration, data){
     })
 
     for(let j in stimuli){
-        timeline.push({
-            type: 'html-keyboard-response',
-            stimulus: 'Get Ready!',
-            choices: jsPsych.NO_KEYS,
-            trial_duration: 1000
+        timeline.push({type: 'html-keyboard-response',
+            stimulus: '<p>Count the number of words with matching ink. For example, here <b>2</b> words match.</p>' +
+                '<p style="color: '+ colorChart.G+'"> green </p>' + '<p style="color: '+ colorChart.R+'"> purple </p>' +
+                '<p style="color: '+ colorChart.K+'"> black </p>',
+            prompt: 'Press any key to continue...'
         })
+
         let possibleKeys = Array(stimuli[j].length + 1).fill(48).map((x, y) => x + y);
 
         let correctAnswer = 0
@@ -398,7 +410,6 @@ function EFStroop(stimuli, duration, data){
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: stimLines.join(''),
-            prompt: 'Count the words with matching colors.',
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000 * duration
         })
@@ -430,7 +441,7 @@ function EFStroop(stimuli, duration, data){
     return task;
 }
 
-function PSStringComparison(stimuli, data){
+function PSStringComparison(stimuli, limit, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
@@ -453,8 +464,8 @@ function PSStringComparison(stimuli, data){
     stimuli_1: stimuli_1,
     stimuli_2: stimuli_2,
     choices: [80, 81],
-    time_limit: null,
-    prompt: '<div class="container reminders"> <div>Same - Q</div><div>Different - P</div></div>'})
+    time_limit: limit,
+    prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>'})
 
     data['trial_type'] = 'Processing Speed String Comparison';
     task['timeline'] = timeline;

@@ -1,0 +1,410 @@
+[
+    {
+        "taskNum": "WMFP",
+        "stimuli": [
+            "872"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "easy",
+        "difficulty": null
+    },
+    {
+        "taskNum": "401",
+        "stimuli": [
+            "218",
+            "495",
+            "782"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "402",
+        "stimuli": [
+            "482",
+            "872",
+            "528"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "403",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "404",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "405",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "406",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "easy",
+        "difficulty": null
+    },
+    {
+        "taskNum": "407",
+        "stimuli": [
+            "43521",
+            "61374",
+            "95824"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "408",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "409",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "410",
+        "stimuli": [
+            "897234",
+            "247139",
+            "948235"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "411",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "412",
+        "stimuli": [
+            "3148572",
+            "6418725",
+            "4235698"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "medium",
+        "difficulty": null
+    },
+    {
+        "taskNum": "413",
+        "stimuli": [
+            "71485329",
+            "34187256",
+            "32458961"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "414",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "hard",
+        "difficulty": null
+    },
+    {
+        "taskNum": "415",
+        "stimuli": [
+            "4855379321",
+            "3167948375",
+            "1837524169"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "416",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "417",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "435",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "436",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "437",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "438",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "439",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "440",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "441",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "442",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "443",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "444",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "445",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "medium",
+        "difficulty": null
+    },
+    {
+        "taskNum": "446",
+        "stimuli": [
+            "5217968",
+            "3418725",
+            "9652781"
+        ],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "447",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "448",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "449",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    },
+    {
+        "taskNum": "450",
+        "stimuli": [],
+        "trials": [
+            [],
+            [],
+            []
+        ],
+        "stimsType": "",
+        "difficulty": null
+    }
+]

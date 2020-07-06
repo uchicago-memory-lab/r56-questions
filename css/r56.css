@@ -129,6 +129,7 @@
   text-align: left;
 }
 .container {
+  text-align: center;
   display: flex;
 }
 .container.object {
@@ -138,4 +139,13 @@
 .container.reminders{
   justify-content: space-around;
   min-width: 1000px;
+}
+
+.container.bottom{
+  justify-content: space-around;
+  min-width: 1200px;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
 }
