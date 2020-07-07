@@ -31,6 +31,7 @@ function imgLocStim(name){
 function imgLocChoice(name){
     return '<img src="./img/' + name + '.jpg" style="vertical-align: middle" height="200px">'
 }
+
 // most of the work is being done plugin-side, since a lot of it is abstracted away to the question set. So this is just
 // a shortcut function for our particular brand of distractor questions.
 
@@ -450,8 +451,9 @@ function PSStringComparison(stimuli, limit, data){
         '<p>Press any Key to Continue...</p>'})
 
     timeline.push({type: 'html-keyboard-response',
-    stimulus: 'Get Ready!',
-    prompt: '<div class="container reminders"> <div>Same - Q</div><div>Different - P</div></div>'})
+    stimulus: 'Press Q or P when Ready',
+    prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
+    choices: [80, 81]})
 
     let stimuli_1 = []
     let stimuli_2 = []

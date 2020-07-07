@@ -22,7 +22,16 @@ function fisherYates(tarArray){
     return array
 }
 
-function easyBlock(){
+async function loadQuestions(){
+    let qBlock = {}
+    for (const kind in Object.keys(nameToFunc)){
+        qBlock[Object.keys(nameToFunc)[kind]] = await getData('questions/json/' + Object.keys(nameToFunc)[kind] + '.json')
+
+    }
+    return qBlock
+}
+
+async function easyBlock(){
     let block = {};
     let timeline = [];
     timeline.push({
@@ -30,8 +39,13 @@ function easyBlock(){
         stimulus: 'Block 1 of 3',
         prompt: 'Press any key to continue...'
     })
-    timeline.push(EFRuleID([['DB7', 'CO4', 'CR2'], ['HG5', 'SP1', 'HR2'], ['TP5', 'CP3', 'HG9']],
-            {stims_type: 'RuleID', item: 'EFRIP'}))
+    let qBlock = await loadQuestions()
+    let RID = qBlock['EFRuleID'].filter(function (obj){return obj['difficulty'] === 'easy'})
+    for (const i in RID){
+        timeline.push(EFRuleID(RID[i]['trials'], {stims_type: RID[i]['stimsType'], item: RID[i]['taskNum']}))
+    }
+
+
     block['timeline'] = timeline
     return block
 }
@@ -45,7 +59,7 @@ async function main() {
     })
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true})
-    //
+
     // timeline.push(await EMWordStim(['anger', 'bread', 'army'],
     //     [['anger', 'white', 'cat', 'coal'], ['woman', 'mountain', 'music', 'bread'], ['bird', 'stomach', 'army', 'net']],
     //     {stims_type: 'nonsense', item: 1}));
@@ -65,9 +79,9 @@ async function main() {
     //     {stims_type: 'object_naming', item:'SMONP'}))
     //
     //
-    timeline.push(WMForwardDigitSpan([872, 345, 982], 1, {item: 'WMFDP'}))
+    // timeline.push(WMForwardDigitSpan([872, 345, 982], 1, {item: 'WMFDP'}))
     //
-    timeline.push(WMBackwardDigitSpan([519, 762, 123], 1, {item: 'WMBDP'}))
+    // timeline.push(WMBackwardDigitSpan([519, 762, 123], 1, {item: 'WMBDP'}))
     //
     // timeline.push(EFStroop([['KG', 'GR', 'PP'], ['RR', 'GR', 'KK'], ['PP', 'GR', 'RG']], 4, {item: 'EFSTP'}))
 
@@ -76,7 +90,7 @@ async function main() {
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false})
 
-    // timeline.push(easyBlock())
+    timeline.push(await easyBlock())
 
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'You have completed the Practice round!',
