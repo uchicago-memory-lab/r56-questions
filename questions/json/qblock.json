@@ -1,4 +1,31 @@
 {
+    "": {
+        "difficulty": "",
+        "kind": "SMObjectNaming",
+        "stimsType": "",
+        "stimuli": [],
+        "taskNum": "",
+        "trials": [
+            [
+                "compass",
+                "clock",
+                "scale",
+                "meter"
+            ],
+            [
+                "compass",
+                "clock",
+                "scale",
+                "meter"
+            ],
+            [
+                "compass",
+                "clock",
+                "scale",
+                "meter"
+            ]
+        ]
+    },
     "1": {
         "difficulty": "easy",
         "kind": "EMWordStim",
@@ -256,9 +283,24 @@
         ],
         "taskNum": "201",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "butterfly",
+                "coffee",
+                "muffins",
+                "flag"
+            ],
+            [
+                "muffins",
+                "coffee",
+                "butterfly",
+                "flag"
+            ],
+            [
+                "coffee",
+                "muffins",
+                "flag",
+                "butterfly"
+            ]
         ]
     },
     "202": {
@@ -273,9 +315,24 @@
         ],
         "taskNum": "202",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "pants",
+                "calculator",
+                "stapler",
+                "switch"
+            ],
+            [
+                "stapler",
+                "calculator",
+                "pants",
+                "switch"
+            ],
+            [
+                "switch",
+                "calculator",
+                "stapler",
+                "pants"
+            ]
         ]
     },
     "203": {
@@ -290,9 +347,24 @@
         ],
         "taskNum": "203",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "tricycle",
+                "guitar",
+                "basket",
+                "folder"
+            ],
+            [
+                "guitar",
+                "folder",
+                "basket",
+                "tricycle"
+            ],
+            [
+                "folder",
+                "basket",
+                "tricycle",
+                "guitar"
+            ]
         ]
     },
     "204": {
@@ -307,9 +379,24 @@
         ],
         "taskNum": "204",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "necklace",
+                "collar",
+                "rosary",
+                "choker"
+            ],
+            [
+                "choker",
+                "necklace",
+                "collar",
+                "rosary"
+            ],
+            [
+                "rosary",
+                "necklace",
+                "choker",
+                "collar"
+            ]
         ]
     },
     "205": {
@@ -324,9 +411,24 @@
         ],
         "taskNum": "205",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "vase",
+                "bowl",
+                "pitcher",
+                "urn"
+            ],
+            [
+                "urn",
+                "vase",
+                "pitcher",
+                "bowl"
+            ],
+            [
+                "bowl",
+                "pitcher",
+                "vase",
+                "urn"
+            ]
         ]
     },
     "206": {
@@ -341,9 +443,24 @@
         ],
         "taskNum": "206",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "tophat",
+                "sunhat",
+                "helmet",
+                "visor"
+            ],
+            [
+                "visor",
+                "tophat",
+                "helmet",
+                "sunhat"
+            ],
+            [
+                "sunhat",
+                "visor",
+                "helmet",
+                "tophat"
+            ]
         ]
     },
     "207": {
@@ -358,9 +475,24 @@
         ],
         "taskNum": "207",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "loaf",
+                "bagel",
+                "sandwich",
+                "donut"
+            ],
+            [
+                "donut",
+                "loaf",
+                "bagel",
+                "sandwich"
+            ],
+            [
+                "sandwich",
+                "loaf",
+                "donut",
+                "bagel"
+            ]
         ]
     },
     "208": {
@@ -375,9 +507,24 @@
         ],
         "taskNum": "208",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "seagull",
+                "duck",
+                "cardinal",
+                "pidgeon"
+            ],
+            [
+                "cardinal",
+                "seagull",
+                "duck",
+                "pidgeon"
+            ],
+            [
+                "pidgeon",
+                "duck",
+                "cardinal",
+                "seagull"
+            ]
         ]
     },
     "209": {
@@ -392,9 +539,24 @@
         ],
         "taskNum": "209",
         "trials": [
-            [],
-            [],
-            []
+            [
+                "basketball",
+                "beachball",
+                "soccerball",
+                "volleyball"
+            ],
+            [
+                "beachball",
+                "soccerball",
+                "basketball",
+                "volleyball"
+            ],
+            [
+                "volleyball",
+                "soccerball",
+                "beachball",
+                "basketball"
+            ]
         ]
     },
     "3": {
@@ -3024,7 +3186,7 @@
     "801": {
         "difficulty": "easy",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "6s",
         "stimuli": [
             "AA-AA",
             "BB-BB",
@@ -3132,7 +3294,7 @@
     "809": {
         "difficulty": "easy",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "6s",
         "stimuli": [
             "BKK-KK3",
             "G2&-H4H",
@@ -3148,7 +3310,7 @@
     "810": {
         "difficulty": "medium",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "5s",
         "stimuli": [
             "bab2-bab2",
             "j2xj-jx2j",
@@ -3236,7 +3398,7 @@
     "817": {
         "difficulty": "medium",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "5s",
         "stimuli": [
             "hgg3-hgh3",
             "hgg3-hgg3",
@@ -3336,7 +3498,7 @@
     "825": {
         "difficulty": "easy",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "6s",
         "stimuli": [
             "tyyyy-tyyyy",
             "$$$$$-$$$$$",
@@ -3352,7 +3514,7 @@
     "826": {
         "difficulty": "hard",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "5s",
         "stimuli": [
             "hghhg-hghgg",
             "867ed-867de",
@@ -3440,7 +3602,7 @@
     "833": {
         "difficulty": "hard",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "5s",
         "stimuli": [
             "BN67$4-BN67$4",
             "BN76$4-BN67$4",
@@ -3456,7 +3618,7 @@
     "834": {
         "difficulty": "medium",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "5s",
         "stimuli": [
             "GGGGGH-GGGGHH",
             "AAAAAB-AAAABB",
@@ -3544,7 +3706,7 @@
     "841": {
         "difficulty": "hard",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "5s",
         "stimuli": [
             "gh6&&df-gh6S&df",
             "gh6&&d2-gh6&&d2",
@@ -3751,7 +3913,7 @@
     "PSSCP": {
         "difficulty": "practice",
         "kind": "PSStringComparison",
-        "stimsType": "",
+        "stimsType": "6s",
         "stimuli": [
             "VV-vV"
         ],
@@ -3774,7 +3936,13 @@
         ],
         "taskNum": "SMONP",
         "trials": [
-            [],
+            [
+                "stairs",
+                "glue",
+                "bed",
+                "marker",
+                "glue"
+            ],
             [],
             []
         ]

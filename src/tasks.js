@@ -121,13 +121,6 @@ let colorChart = {R: '#F93943',
         W: '#F4F1DE',
         K: '#000000'}
 
-let wordChart = {R: 'red',
-    G: 'green',
-    B: 'blue',
-    Y: 'yellow',
-    P: 'purple',
-    K: 'black'}
-
 function drawRuleID(stimuli, scale) {
     // Draws on the canvas.
     let canvas = document.getElementById('ruleID');
@@ -254,7 +247,7 @@ function EFRuleID(stimuli, data){
     return task;
 }
 
-function SMObjectNaming(choices, stimuli, data){
+function SMObjectNaming(stimuli, choices, data){
     // Just so it's written down somewhere: I resized all the images to around 500x500. This is to make rendering and
     // loading easier. (Aspect ratio was maintained as much as possible)
 
@@ -351,13 +344,15 @@ function WMBackwardDigitSpan(stimuli, delay, data){
         for(const i in reverseNumbers){
             timeline.push({type: 'html-keyboard-response', stimulus: '<p style="font-size: 100px">' + reverseNumbers[i] + '</p>',
                 choices: jsPsych.NO_KEYS, trial_duration: 1000})
+            timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
+                choices: jsPsych.NO_KEYS, trial_duration: 1000})
         }
         timeline.push({type: 'html-keyboard-response',
             stimulus: 'Rehearse the numbers in backward order.',
-            choices: jsPsych.NO_KEYS, trial_duration: 1000*delay});
+            choices: jsPsych.NO_KEYS, trial_duration: delay});
 
         timeline.push({type: 'string-entry',
-            prompt:'<p>Type the numbers in backward order (first to last), press enter/return to send.</p>',
+            prompt:'<p>Type the numbers in backward order (last to first), press enter/return to send.</p>',
             answer: stimuli[j].toString(),
             choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
             entry_size: 100});
@@ -402,11 +397,13 @@ function EFStroop(stimuli, duration, data){
 
         let correctAnswer = 0
         let stimLines = [];
+
         for (const i in stimuli[j]) {
-            if (stimuli[j][i][0] === stimuli[j][i][1]) {
+            let word = stimuli[j][i].split('.')
+            if (word[0] === word[1]) {
                 correctAnswer += 1;
             }
-            stimLines.push('<p style="color: ' + colorChart[stimuli[j][i][1]] + '">' + wordChart[stimuli[j][i][0]] + '</p>')
+            stimLines.push('<p style="color: ' + colorChart[word[1]] + '">' + word[0].toLowerCase() + '</p>')
         }
         timeline.push({
             type: 'html-keyboard-response',

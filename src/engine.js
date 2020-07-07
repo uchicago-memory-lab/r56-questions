@@ -11,6 +11,8 @@ let nameToFunc = {EMWordStim: EMWordStim,
              EFStroop: EFStroop,
              PSStringComparison: PSStringComparison};
 
+
+
 function fisherYates(tarArray){
     let array = JSON.parse(JSON.stringify(tarArray))
     for(let i = array.length - 1; i > 0; i--){
@@ -26,12 +28,21 @@ async function loadQuestions(){
     let qBlock = {}
     for (const kind in Object.keys(nameToFunc)){
         qBlock[Object.keys(nameToFunc)[kind]] = await getData('questions/json/' + Object.keys(nameToFunc)[kind] + '.json')
-
     }
     return qBlock
 }
 
-async function easyBlock(){
+function dat2Func(dat){
+    /**
+     * A function that takes in the generalized question data object (defined in qblock.json) and does a smart-conversion
+     * into a jsPsych trial object.
+     */
+    let data = {stims_type: dat['stimsType'], item: dat['taskNum']}
+
+
+}
+
+async function easyBlock(qBlock){
     let block = {};
     let timeline = [];
     timeline.push({
@@ -39,10 +50,10 @@ async function easyBlock(){
         stimulus: 'Block 1 of 3',
         prompt: 'Press any key to continue...'
     })
-    let qBlock = await loadQuestions()
-    let RID = qBlock['EFRuleID'].filter(function (obj){return obj['difficulty'] === 'easy'})
-    for (const i in RID){
-        timeline.push(EFRuleID(RID[i]['trials'], {stims_type: RID[i]['stimsType'], item: RID[i]['taskNum']}))
+    let tarNums = ['33', '1', '635', '451']
+    // TODO: Figure out if tarNums needs to be manual or auto.
+    for (const i in tarNums){
+        timeline.push(dat2Func(qBlock[tarNums[i]]))
     }
 
 
@@ -57,6 +68,7 @@ async function main() {
         stimulus: 'Welcome to the R56!',
         prompt: 'Press any key to continue...'
     })
+    let qBlock = await loadQuestions()
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true})
 
@@ -75,7 +87,7 @@ async function main() {
     //
     // let ON_TEST = ['butterfly', 'muffin', 'flag', 'coffee'];
     //
-    // timeline.push(SMObjectNaming([ON_TEST, fisherYates(ON_TEST), fisherYates(ON_TEST)], ['butterfly', 'flag', 'muffin'],
+    // timeline.push(SMObjectNaming(['butterfly', 'flag', 'muffin'], [ON_TEST, fisherYates(ON_TEST), fisherYates(ON_TEST)],
     //     {stims_type: 'object_naming', item:'SMONP'}))
     //
     //
@@ -83,14 +95,14 @@ async function main() {
     //
     // timeline.push(WMBackwardDigitSpan([519, 762, 123], 1, {item: 'WMBDP'}))
     //
-    // timeline.push(EFStroop([['KG', 'GR', 'PP'], ['RR', 'GR', 'KK'], ['PP', 'GR', 'RG']], 4, {item: 'EFSTP'}))
+    // timeline.push(EFStroop([['Black.G', 'Green.R', 'purple.P'], ['Red.R', 'green.R', 'Black.K'], ['Purple.P', 'Green.R', 'Red.G']], 4, {item: 'EFSTP'}))
 
 
     // timeline.push(PSStringComparison(['AA-AA', 'BB-BB', 'AB-34'], 6000, {item: 'PSSCP'}))
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false})
 
-    timeline.push(await easyBlock())
+    // timeline.push(await easyBlock(qBlock))
 
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'You have completed the Practice round!',
