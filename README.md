@@ -30,6 +30,8 @@ Episodic Memory describes a person's ability to recall a specific event. General
 
 The subject is exposed to a set of English words. They are then asked to determine the truth or falsity of a number of simple math equations. Then they are given three sets of four English words and asked to report which of those words appeared in the original set.
 
+[//]: # (TODO: Fill this out with up-to-date information.)
+
 ### Object-Picture
 
 ### Nonsense Words
