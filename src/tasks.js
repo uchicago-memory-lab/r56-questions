@@ -22,7 +22,7 @@ let memorize_command = {type: 'html-keyboard-response',
 let ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER =
     [8, 13, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
 
-let ALL_KEYS_BUT_ENTER = range(0, 222).filter(function(value, index, arr){return value !== 13})
+let ALL_KEYS_BUT_ENTER = range(0, 222).filter(function(value){return value !== 13})
 
 function imgLocStim(name){
     return '<img src="./img/' + name + '.jpg">'
@@ -58,21 +58,22 @@ async function EMDistractors(){
     return {timeline: timeline};
 }
 
-async function EMWordStim(stims, choices, data){
+async function EMWordStim(stimuli, choices, data){
     let task = {};
-    let answer = stims.filter(x => choices.includes(x));
+    let answer = stimuli.filter(x => choices.includes(x));
     let timeline = [];
     timeline.push(memorize_command)
-    for (const i in stims){
-        timeline.push({type: 'html-keyboard-response', stimulus: stims[i],
+    for (const i in stimuli){
+        timeline.push({type: 'html-keyboard-response', stimulus: stimuli[i],
             choices: jsPsych.NO_KEYS, trial_duration: 1000})
     }
     timeline.push(await EMDistractors())
     for (let i in choices) {
+        let rechoice = fisherYates(choices)
         timeline.push({
              type: 'html-button-response',
             stimulus: "Which did you see?",
-            choices: choices[i]
+            choices: rechoice[i]
         });
     }
     data['trial_type'] = 'Episodic Memory Word Stimuli';
@@ -82,13 +83,13 @@ async function EMWordStim(stims, choices, data){
     return task;
 }
 
-async function EMObjectPicture(stims, choices, data){
+async function EMObjectPicture(stimuli, choices, data){
     let task = {};
-    let answer = stims.filter(x => choices.includes(x));
+    let answer = stimuli.filter(x => choices.includes(x));
     let timeline = [];
     timeline.push(memorize_command)
-    for (const i in stims){
-        timeline.push({type: 'html-keyboard-response', stimulus: imgLocStim(stims[i]),
+    for (const i in stimuli){
+        timeline.push({type: 'html-keyboard-response', stimulus: imgLocStim(stimuli[i]),
             choices: jsPsych.NO_KEYS, trial_duration: 1000})
     }
 
@@ -96,8 +97,9 @@ async function EMObjectPicture(stims, choices, data){
 
     for (let i in choices) {
         let promptLines = [];
-        for (const j in choices[i]) {
-            promptLines.push(imgLocChoice(choices[i][j]))
+        let rechoice = fisherYates(choices[i])
+        for (const j in rechoice) {
+            promptLines.push(imgLocChoice(rechoice[j]))
         }
         timeline.push({
             type: 'html-button-response',
@@ -256,13 +258,13 @@ function SMObjectNaming(stimuli, choices, data){
     timeline.push({type: 'html-keyboard-response',
         stimulus: "Choose the name for each object.",
         prompt: "Press any key to continue...."})
-
-    for(let i in stimuli) {
+    let stimshuf = fisherYates(stimuli)
+    for(let i in stimshuf) {
         timeline.push({
             type: 'image-button-response',
-            stimulus: './img/' + stimuli[i] + '.jpg',
+            stimulus: './img/' + stimshuf[i] + '.jpg',
             choices: choices[i],
-            text_answer: stimuli[i]
+            text_answer: stimshuf[i]
         })
     }
     data['trial_type'] = 'Semantic Memory Object Naming';
@@ -280,19 +282,20 @@ function WMForwardDigitSpan(stimuli, delay, data){
     timeline.push({type: 'html-keyboard-response',
     stimulus:'Rehearse the numbers for forward recall (first to last)',
     prompt: 'Press any key to continue...'});
-    console.log(ALL_KEYS_BUT_ENTER)
     for (let j in stimuli) {
         let numbers = stimuli[j].toString()
         for (const i in numbers) {
             timeline.push({
                 type: 'html-keyboard-response', stimulus: '<p style="font-size: 100px">' + numbers[i] + '</p>',
                 choices: jsPsych.NO_KEYS, trial_duration: 1000
-            })
+            });
+            timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
+                choices: jsPsych.NO_KEYS, trial_duration: 1000});
         }
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: 'Rehearse the numbers in forward order.',
-            choices: jsPsych.NO_KEYS, trial_duration: 1000 * delay
+            choices: jsPsych.NO_KEYS, trial_duration: delay
         });
 
         timeline.push({
@@ -305,7 +308,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
 
         timeline.push({
             type: 'html-keyboard-response',
-            stimulus: 'Press any key (except return/enter) to continue',
+            stimulus: 'Press any key (except return/enter) to continue...',
             choices: ALL_KEYS_BUT_ENTER
         })
 
@@ -357,6 +360,12 @@ function WMBackwardDigitSpan(stimuli, delay, data){
             choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
             entry_size: 100});
 
+        timeline.push({
+            type: 'html-keyboard-response',
+            stimulus: 'Press any key (except return/enter) to continue...',
+            choices: ALL_KEYS_BUT_ENTER
+        })
+
 
         if(countUnique(numbers) === numbers.length){
             // noinspection JSDuplicatedDeclaration
@@ -375,7 +384,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
     return task;
 }
 
-function EFStroop(stimuli, duration, data){
+function EFStroop(stimuli, delay, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
@@ -386,6 +395,7 @@ function EFStroop(stimuli, duration, data){
     })
 
     for(let j in stimuli){
+        let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
         timeline.push({type: 'html-keyboard-response',
             stimulus: '<p>Count the number of words with matching ink. For example, here <b>2</b> words match.</p>' +
                 '<p style="color: '+ colorChart.G+'"> green </p>' + '<p style="color: '+ colorChart.R+'"> purple </p>' +
@@ -393,13 +403,13 @@ function EFStroop(stimuli, duration, data){
             prompt: 'Press any key to continue...'
         })
 
-        let possibleKeys = Array(stimuli[j].length + 1).fill(48).map((x, y) => x + y);
+        let possibleKeys = Array(stimulus.length + 1).fill(48).map((x, y) => x + y);
 
         let correctAnswer = 0
         let stimLines = [];
 
-        for (const i in stimuli[j]) {
-            let word = stimuli[j][i].split('.')
+        for (const i in stimulus) {
+            let word = stimulus[i].split('.')
             if (word[0] === word[1]) {
                 correctAnswer += 1;
             }
@@ -409,10 +419,10 @@ function EFStroop(stimuli, duration, data){
             type: 'html-keyboard-response',
             stimulus: stimLines.join(''),
             choices: jsPsych.NO_KEYS,
-            trial_duration: 1000 * duration
+            trial_duration: delay
         })
 
-        let choices = Array(stimuli[j].length + 1).fill(0).map((x, y) => x + y);
+        let choices = Array(stimulus.length + 1).fill(0).map((x, y) => x + y);
         let choicePrompt = '<div class="container object">'
         for (const i in choices) {
             choicePrompt += '<div>' + i + '</div>'
@@ -439,7 +449,7 @@ function EFStroop(stimuli, duration, data){
     return task;
 }
 
-function PSStringComparison(stimuli, limit, data){
+function PSStringComparison(stimuli, delay, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
@@ -463,7 +473,7 @@ function PSStringComparison(stimuli, limit, data){
     stimuli_1: stimuli_1,
     stimuli_2: stimuli_2,
     choices: [80, 81],
-    time_limit: limit,
+    time_limit: delay,
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>'})
 
     data['trial_type'] = 'Processing Speed String Comparison';

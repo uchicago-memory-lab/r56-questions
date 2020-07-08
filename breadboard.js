@@ -1,2 +1,2 @@
-require('jspsych')
-console.log(jsPsych.ALL_KEYS)
+let s = '1s'
+console.log(s.slice(0, -1))

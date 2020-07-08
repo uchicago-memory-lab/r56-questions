@@ -59,14 +59,13 @@ jsPsych.plugins["string-entry"] = (function() {
                 response.rt = rt;
                 setTimeout(() => end_trial(), trial.delay);
             }
-            if(info.key === 8){
+            else if(info.key === 8){
                 entryString = entryString.substr(0, entryString.length - 1);
             } else {
                 entryString +=
                     jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(info.key).replace('numpad', '');
             }
             display_element.innerHTML = html + '<p style="font-size: ' + trial.entry_size + 'px">&nbsp;' + entryString + '</p>';
-            console.log(info.key)
         }
 
 
