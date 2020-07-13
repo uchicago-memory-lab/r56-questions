@@ -180,18 +180,15 @@ async function main() {
     })
     let qBlock = await loadQuestions();
 
-    timeline.push({type: 'fullscreen', fullscreen_mode: true});
+    // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    timeline.push(await practiceBlock(qBlock))
+    // timeline.push(await practiceBlock(qBlock))
 
     timeline.push(await easyBlock(qBlock));
-    timeline.push(await medBlock(qBlock))
-    timeline.push(await hardBlock(qBlock))
+    timeline.push(await medBlock(qBlock));
+    timeline.push(await hardBlock(qBlock));
 
-
-    timeline.push({type: 'fullscreen', fullscreen_mode: false});
-
-
+    // timeline.push({type: 'fullscreen', fullscreen_mode: false});
 
     jsPsych.init({timeline: timeline});
 }

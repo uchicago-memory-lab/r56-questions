@@ -69,9 +69,9 @@
         "kind": "EMObjectPicture",
         "stimsType": "",
         "stimuli": [
-            "bike",
-            "flashlight",
-            "backpack"
+            "bike_1",
+            "flashlight_1",
+            "backpack_1"
         ],
         "taskNum": "11",
         "trials": [
@@ -2624,9 +2624,9 @@
                 "HG5"
             ],
             [
-                "C2O",
-                "C3P",
-                "S4R"
+                "CO2",
+                "CP3",
+                "SR4"
             ]
         ]
     },

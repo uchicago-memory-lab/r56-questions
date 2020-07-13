@@ -69,11 +69,11 @@ async function EMWordStim(stimuli, choices, data){
     }
     timeline.push(await EMDistractors())
     for (let i in choices) {
-        let rechoice = fisherYates(choices)
+        let rechoice = fisherYates(choices[i])
         timeline.push({
              type: 'html-button-response',
             stimulus: "Which did you see?",
-            choices: rechoice[i]
+            choices: rechoice
         });
     }
     data['trial_type'] = 'Episodic Memory Word Stimuli';
