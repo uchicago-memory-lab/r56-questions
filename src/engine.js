@@ -183,10 +183,10 @@ async function main() {
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     // timeline.push(await practiceBlock(qBlock))
-
-    timeline.push(await easyBlock(qBlock));
-    timeline.push(await medBlock(qBlock));
-    timeline.push(await hardBlock(qBlock));
+    timeline.push(await dat2Func(qBlock['761']));
+    // timeline.push(await easyBlock(qBlock));
+    // timeline.push(await medBlock(qBlock));
+    // timeline.push(await hardBlock(qBlock));
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false});
 

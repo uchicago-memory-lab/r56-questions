@@ -116,7 +116,7 @@ async function EMObjectPicture(stimuli, choices, data){
 
 let colorChart = {R: '#F93943',
         G: '#33673B',
-        B: '#445E93',
+        B: '#0B4F6C',
         O: '#FE9920',
         Y: '#FE9920',
         P: '#662C91',
