@@ -117,7 +117,7 @@ async function medBlock(qBlock){
     let timeline = [];
     timeline.push({
         type: 'html-keyboard-response',
-        stimulus: 'Block 1 of 3',
+        stimulus: 'Block 2 of 3',
         prompt: 'Press any key to continue...'
     });
     let tarNums = itemsByDifficulty(qBlock, 'medium');
@@ -152,12 +152,34 @@ async function practiceBlock(qBlock){
 
 }
 
+async function fakePractice(qBlock){
+    let block = {};
+    let timeline = [];
+    timeline.push({type: 'html-keyboard-response',
+    stimulus: 'Press any key to continue...',
+    choices: jsPsych.ALL_KEYS})
+    timeline.push({type: 'html-button-response',
+    stimulus: 'Would you like to repeat the practice round?',
+    choices: ['yes', 'no']})
+
+    block['timeline'] = timeline
+    block['on_finish'] = async function (data) {
+
+        if (data.values()[2]['button_pressed'] === '1') {
+            jsPsych.init(await easyBlock(qBlock))
+        } else {
+            jsPsych.init(await fakePractice(qBlock)) // TODO: This is a f***ing mess, fix it.
+            // TODO: This is a core feature, if it doesn't work you have to start over.
+        }}
+    return block
+}
+
 async function hardBlock(qBlock){
     let block = {};
     let timeline = [];
     timeline.push({
         type: 'html-keyboard-response',
-        stimulus: 'Block 1 of 3',
+        stimulus: 'Block 3 of 3',
         prompt: 'Press any key to continue...'
     })
     let tarNums = itemsByDifficulty(qBlock, 'hard');
@@ -166,9 +188,9 @@ async function hardBlock(qBlock){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
     }
     block['timeline'] = timeline;
+
     return block
 }
-
 
 
 async function main() {
@@ -182,14 +204,15 @@ async function main() {
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    // timeline.push(await practiceBlock(qBlock))
-    timeline.push(await dat2Func(qBlock['761']));
+    timeline.push(await fakePractice(qBlock));
+
     // timeline.push(await easyBlock(qBlock));
     // timeline.push(await medBlock(qBlock));
     // timeline.push(await hardBlock(qBlock));
+
+
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false});
 
     jsPsych.init({timeline: timeline});
 }
-

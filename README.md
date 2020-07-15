@@ -78,6 +78,7 @@ After this, the subject is asked to enter the sequence of numerals in reverse or
 There are two executive function tasks. They both have to do with visually identifying color and content, and synthesizing this data in an abnormal way. These tasks use a custom pallette.
 <center>
 
+
 |English|Hex Value|Visual|
 |-------|---------|------|
 |Red|#F93943|<div style="background-color:#F93943">&nbsp;</div>|

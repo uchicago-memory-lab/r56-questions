@@ -1849,7 +1849,11 @@
         "difficulty": "",
         "kind": "EFStroop",
         "stimsType": "3s",
-        "stimuli": [],
+        "stimuli": [
+            "Green.R Yellow.P Red.R",
+            "Green.R Yellow.P Red.R",
+            "Green.R Yellow.P Red.R"
+        ],
         "taskNum": "606",
         "trials": [
             [],

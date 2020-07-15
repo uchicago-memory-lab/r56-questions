@@ -66,6 +66,8 @@ async function EMWordStim(stimuli, choices, data){
     for (const i in stimuli){
         timeline.push({type: 'html-keyboard-response', stimulus: stimuli[i],
             choices: jsPsych.NO_KEYS, trial_duration: 1000})
+        timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
+            choices: jsPsych.NO_KEYS, trial_duration: 1000});
     }
     timeline.push(await EMDistractors())
     for (let i in choices) {
@@ -91,6 +93,8 @@ async function EMObjectPicture(stimuli, choices, data){
     for (const i in stimuli){
         timeline.push({type: 'html-keyboard-response', stimulus: imgLocStim(stimuli[i]),
             choices: jsPsych.NO_KEYS, trial_duration: 1000})
+        timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
+            choices: jsPsych.NO_KEYS, trial_duration: 1000});
     }
 
     timeline.push(await EMDistractors())
@@ -113,12 +117,12 @@ async function EMObjectPicture(stimuli, choices, data){
     task['data'] = data;
     return task;
 }
-
+// TODO: Change this so that the RuleID uses a colorblind safe color instead of orange
 let colorChart = {R: '#F93943',
-        G: '#33673B',
-        B: '#0B4F6C',
+        G: '#3D7B46',
+        B: '#1495CC',
         O: '#FE9920',
-        Y: '#FE9920',
+        Y: '#FDE74C',
         P: '#662C91',
         W: '#F4F1DE',
         K: '#000000'}
@@ -228,7 +232,7 @@ function EFRuleID(stimuli, data){
 
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-        stimulus: 'Which is the most frequent feature: Shape, Color, or Number?',
+        stimulus: '<p>Which is the most frequent feature:</p><p>Shape, Color, or Number?</p>',
         prompt:'Press any key to continue...'});
         for(let i in stimuli){
             function draw(){
@@ -240,7 +244,15 @@ function EFRuleID(stimuli, data){
                 canvas_id: 'ruleID',
                 stimulus: 'Which is the most frequent feature?',
                 choices: ['Shape', 'Color', 'Number']
-                })}
+                })
+            timeline.push({type: 'html-keyboard-response',
+                stimuli: '<p></p>',
+                choices: jsPsych.NO_KEYS,
+                trial_duration: 500
+            })
+            // TODO: Make this so it's between 1 and 2 and 2 and 3
+        }
+
 
     data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
     data['trial_type'] = 'Executive Function Rule Identification';
@@ -389,17 +401,15 @@ function EFStroop(stimuli, delay, data){
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus: '<p>Count the number of words with matching ink. For example, here <b>2</b> words match.</p>' +
-            '<p style="color: '+ colorChart.G+'"> green </p>' + '<p style="color: '+ colorChart.R+'"> purple </p>' +
-            '<p style="color: '+ colorChart.K+'"> black </p>',
+            '<b><p style="color: '+ colorChart.G+'"> green </p>' + '<p style="color: '+ colorChart.R+'"> purple </p>' +
+            '<p style="color: '+ colorChart.K+'"> black </p></b>',
         prompt: 'Press any key to continue...'
     })
 
     for(let j in stimuli){
         let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
         timeline.push({type: 'html-keyboard-response',
-            stimulus: '<p>Count the number of words with matching ink. For example, here <b>2</b> words match.</p>' +
-                '<p style="color: '+ colorChart.G+'"> green </p>' + '<p style="color: '+ colorChart.R+'"> purple </p>' +
-                '<p style="color: '+ colorChart.K+'"> black </p>',
+            stimulus: '<p>Count the number of words with matching ink.</p>',
             prompt: 'Press any key to continue...'
         })
 
@@ -413,7 +423,7 @@ function EFStroop(stimuli, delay, data){
             if (word[0] === word[1]) {
                 correctAnswer += 1;
             }
-            stimLines.push('<p style="color: ' + colorChart[word[1]] + '">' + word[0].toLowerCase() + '</p>')
+            stimLines.push('<p style="color: ' + colorChart[word[1]] + '"><b>' + word[0].toLowerCase() + '</b></p>')
         }
         timeline.push({
             type: 'html-keyboard-response',
@@ -453,8 +463,8 @@ function PSStringComparison(stimuli, delay, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-    stimulus: 'As fast as you can, determine if the two items shown on the screen are the SAME or DIFFERENT',
-    prompt: '<p>If they are the SAME press "Q", if they are DIFFERENT press "P"</p>' +
+    stimulus: 'Are the two items the SAME or DIFFERENT?',
+    prompt: '<p>For SAME press "Q", for DIFFERENT press "P"</p>' + '<p>Go as fast as you can!</p>'+
         '<p>Press any Key to Continue...</p>'})
 
     timeline.push({type: 'html-keyboard-response',
