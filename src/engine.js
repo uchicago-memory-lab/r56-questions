@@ -108,6 +108,13 @@ async function easyBlock(qBlock){
     for (const i in orderedNums){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
     }
+    // Oh the humanity why.
+
+    // Basically this is putting the on_finish marker on the absolute last jsPsych task. Because for some reason
+    // jsPsych is set up so that if you apply on_finish to a timeline, it runs it on finishing EVERY SUBTASK WHYYYYYYYY
+    timeline[timeline.length - 1][timeline[timeline.length - 1].length - 1]['on_finish'] = async function(data){
+        jsPsych.init(await medBlock(qBlock))
+    }
     block['timeline'] = timeline;
     return block;
 }
@@ -124,6 +131,13 @@ async function medBlock(qBlock){
     let orderedNums = fisherYates(tarNums);
     for (const i in orderedNums){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
+    }
+
+    // I'm sure this is the right design decision on jsPsych's part, considering that very very few of us do adaptive
+    // testing research and even fewer of us do it online.
+
+    timeline[timeline.length - 1][timeline[timeline.length - 1].length - 1]['on_finish'] = async function(data){
+        jsPsych.init(await hardBlock(qBlock))
     }
     block['timeline'] = timeline;
     return block
@@ -160,17 +174,16 @@ async function fakePractice(qBlock){
     choices: jsPsych.ALL_KEYS})
     timeline.push({type: 'html-button-response',
     stimulus: 'Would you like to repeat the practice round?',
-    choices: ['yes', 'no']})
+    choices: ['yes', 'no'],
+    on_finish: async function (data) {
+
+            if (data['button_pressed'] === '1') {
+                jsPsych.init(await easyBlock(qBlock))
+            } else {
+                jsPsych.init(await fakePractice(qBlock))
+            }}})
 
     block['timeline'] = timeline
-    block['on_finish'] = async function (data) {
-
-        if (data.values()[2]['button_pressed'] === '1') {
-            jsPsych.init(await easyBlock(qBlock))
-        } else {
-            jsPsych.init(await fakePractice(qBlock)) // TODO: This is a f***ing mess, fix it.
-            // TODO: This is a core feature, if it doesn't work you have to start over.
-        }}
     return block
 }
 
@@ -205,10 +218,6 @@ async function main() {
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     timeline.push(await fakePractice(qBlock));
-
-    // timeline.push(await easyBlock(qBlock));
-    // timeline.push(await medBlock(qBlock));
-    // timeline.push(await hardBlock(qBlock));
 
 
 

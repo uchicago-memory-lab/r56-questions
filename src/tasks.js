@@ -121,7 +121,7 @@ async function EMObjectPicture(stimuli, choices, data){
 let colorChart = {R: '#F93943',
         G: '#3D7B46',
         B: '#1495CC',
-        O: '#FE9920',
+        O: '#FFCB77',
         Y: '#FDE74C',
         P: '#662C91',
         W: '#F4F1DE',
@@ -245,12 +245,14 @@ function EFRuleID(stimuli, data){
                 stimulus: 'Which is the most frequent feature?',
                 choices: ['Shape', 'Color', 'Number']
                 })
+
             timeline.push({type: 'html-keyboard-response',
                 stimuli: '<p></p>',
+                prompt: '<p></p>',
                 choices: jsPsych.NO_KEYS,
                 trial_duration: 500
             })
-            // TODO: Make this so it's between 1 and 2 and 2 and 3
+            // TODO: This displays "undefined" instead of nothing. Figure that out Einstein.
         }
 
 
