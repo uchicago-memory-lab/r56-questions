@@ -117,7 +117,6 @@ async function EMObjectPicture(stimuli, choices, data){
     task['data'] = data;
     return task;
 }
-// TODO: Change this so that the RuleID uses a colorblind safe color instead of orange
 let colorChart = {R: '#F93943',
         G: '#3D7B46',
         B: '#1495CC',
@@ -246,12 +245,8 @@ function EFRuleID(stimuli, data){
                 choices: ['Shape', 'Color', 'Number']
                 })
 
-            timeline.push({type: 'html-keyboard-response',
-                stimuli: '<p></p>',
-                prompt: '<p></p>',
-                choices: jsPsych.NO_KEYS,
-                trial_duration: 500
-            })
+            timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
+                choices: jsPsych.NO_KEYS, trial_duration: 500});
             // TODO: This displays "undefined" instead of nothing. Figure that out Einstein.
         }
 

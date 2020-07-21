@@ -217,8 +217,8 @@ async function main() {
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    timeline.push(await fakePractice(qBlock));
-
+    // timeline.push(await fakePractice(qBlock));
+    timeline.push(await dat2Func(qBlock['753']))
 
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false});
