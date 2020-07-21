@@ -17,7 +17,7 @@ function range(start, end) {
 
 let memorize_command = {type: 'html-keyboard-response',
     stimulus: 'Memorize the items.',
-    prompt:'Press any key to continue...'};
+    prompt:'<p style="font-size:32px">Press any key to continue...<p>'};
 
 let ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER =
     [8, 13, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
@@ -232,7 +232,7 @@ function EFRuleID(stimuli, data){
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus: '<p>Which is the most frequent feature:</p><p>Shape, Color, or Number?</p>',
-        prompt:'Press any key to continue...'});
+        prompt:'<p style="font-size:32px">Press any key to continue...<p>'});
         for(let i in stimuli){
             function draw(){
                 drawRuleID(stimuli[i], 50);
@@ -266,7 +266,7 @@ function SMObjectNaming(stimuli, choices, data){
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus: "Choose the name for each object.",
-        prompt: "Press any key to continue...."})
+        prompt: "<p style='font-size:32px'>Press any key to continue...<p>."})
     let stimshuf = fisherYates(stimuli)
     for(let i in stimshuf) {
         timeline.push({
@@ -290,7 +290,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
     stimulus:'Rehearse the numbers for forward recall (first to last)',
-    prompt: 'Press any key to continue...'});
+    prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
     for (let j in stimuli) {
         let numbers = stimuli[j].toString()
         for (const i in numbers) {
@@ -346,7 +346,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus:'Rehearse the numbers for backward recall (last to first)',
-        prompt: 'Press any key to continue...'});
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
     for(let j in stimuli){
         let numbers = stimuli[j].toString();
         let splitNumbers = numbers.split("");
@@ -400,14 +400,14 @@ function EFStroop(stimuli, delay, data){
         stimulus: '<p>Count the number of words with matching ink. For example, here <b>2</b> words match.</p>' +
             '<b><p style="color: '+ colorChart.G+'"> green </p>' + '<p style="color: '+ colorChart.R+'"> purple </p>' +
             '<p style="color: '+ colorChart.K+'"> black </p></b>',
-        prompt: 'Press any key to continue...'
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
 
     for(let j in stimuli){
         let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
         timeline.push({type: 'html-keyboard-response',
             stimulus: '<p>Count the number of words with matching ink.</p>',
-            prompt: 'Press any key to continue...'
+            prompt: '<p style="font-size:32px">Press any key to continue...<p>'
         })
 
         let possibleKeys = Array(stimulus.length + 1).fill(48).map((x, y) => x + y);
@@ -462,7 +462,7 @@ function PSStringComparison(stimuli, delay, data){
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'Are the two items the SAME or DIFFERENT?',
     prompt: '<p>For SAME press "Q", for DIFFERENT press "P"</p>' + '<p>Go as fast as you can!</p>'+
-        '<p>Press any Key to Continue...</p>'})
+        '<p><p style="font-size:32px">Press any key to continue...<p></p>'})
 
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'Press Q or P when Ready',

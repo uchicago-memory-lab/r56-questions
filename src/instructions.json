@@ -1,3 +1,8 @@
 {
-
+  "SMObjectNaming": "<p><b>Object Naming</b></p><p>For this task you will see a picture, and pick out the name of the item in the picture.</p>",
+  "WMForwardDigitSpan": "<p><b>Forward Digit Span</b></p><p>You will see some numbers flash on the screen. Then you will have to rehearse these numbers, and then you will be asked to type them in. You may use the backspace key if you make a mistake. Press enter/return when you are finished.</p>",
+  "EMWordStim": "<p><b>Word Memory</b></p><p>For this task some words will flash on the screen. They may or may not be real English words.</p><p>Then you will be asked some true/false math questions. An equation will be shown, for example '1+1 = 2' In this case, the statement is true.</p><p>After a few math questions you will be shown a set of words, and asked which of those words you remember from the original set.</p>",
+  "PSStringComparison": "<p><b>Fast Comparison</b></p><p>For this task you will be shown two short sequences of letters, numbers, or symbols.</p><p>You will be asked if the two sequences are the same or if they are different. If they are the same, press 'Q' on your keyboard, if they are different, press 'P'</p><p>This is the only task where speed counts.</p>",
+  "EFStroop": "<p><b>Color Matching</b></p><p>For this task, you will be shown a set of color words that are written in colored ink.</p><p>You will be asked to read each word, and count the number of words that describe the same color that they are written in.</p><p>After a few seconds the words will disappear, and you will be asked to enter the number of words you counted. You will do this using your keyboard.</p>",
+  "EFRuleID": "<p><b>Frequent Feaatures</b></p><p>For this task you will be shown a set of colored shapes that have a number written on them.</p> <p> Each shape has a color and a number. Look at all the shapes, and determine what is the most common among them.</p>"
 }

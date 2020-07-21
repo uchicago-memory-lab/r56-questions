@@ -101,7 +101,7 @@ async function easyBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 1 of 3',
-        prompt: 'Press any key to continue...'
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     });
     let tarNums = itemsByDifficulty(qBlock, 'easy');
     let orderedNums = fisherYates(tarNums);
@@ -125,7 +125,7 @@ async function medBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 2 of 3',
-        prompt: 'Press any key to continue...'
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     });
     let tarNums = itemsByDifficulty(qBlock, 'medium');
     let orderedNums = fisherYates(tarNums);
@@ -149,7 +149,7 @@ async function practiceBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'First, some practice.',
-        prompt: 'Press any key to continue...'
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
     let tarNums = itemsByDifficulty(qBlock, 'practice');
     let instructions = await getData('./instructions.json')
@@ -157,7 +157,7 @@ async function practiceBlock(qBlock){
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: instructions[qBlock[tarNums[i]]['kind']],
-            prompt: 'Press any key to continue...'
+            prompt: '<p style="font-size:32px">Press any key to continue...<p>'
         })
         timeline.push(await dat2Func(qBlock[tarNums[i]]));
     }
@@ -170,7 +170,7 @@ async function fakePractice(qBlock){
     let block = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-    stimulus: 'Press any key to continue...',
+    stimulus: '<p style="font-size:32px">Press any key to continue...<p>',
     choices: jsPsych.ALL_KEYS})
     timeline.push({type: 'html-button-response',
     stimulus: 'Would you like to repeat the practice round?',
@@ -193,7 +193,7 @@ async function hardBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 3 of 3',
-        prompt: 'Press any key to continue...'
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
     let tarNums = itemsByDifficulty(qBlock, 'hard');
     let orderedNums = fisherYates(tarNums);
@@ -211,14 +211,13 @@ async function main() {
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Welcome to the R56!',
-        prompt: 'Press any key to continue...'
+        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
     let qBlock = await loadQuestions();
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    // timeline.push(await fakePractice(qBlock));
-    timeline.push(await dat2Func(qBlock['753']))
+    timeline.push(await fakePractice(qBlock));
 
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false});
