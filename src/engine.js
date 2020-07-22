@@ -112,7 +112,9 @@ async function easyBlock(qBlock){
 
     // Basically this is putting the on_finish marker on the absolute last jsPsych task. Because for some reason
     // jsPsych is set up so that if you apply on_finish to a timeline, it runs it on finishing EVERY SUBTASK WHYYYYYYYY
-    timeline[timeline.length - 1][timeline[timeline.length - 1].length - 1]['on_finish'] = async function(data){
+    let litem = await timeline[timeline.length - 1]
+    let ltask = await litem['timeline'][litem['timeline'].length - 1]
+    ltask['on_finish'] = async function(data){
         jsPsych.init(await medBlock(qBlock))
     }
     block['timeline'] = timeline;
@@ -136,7 +138,9 @@ async function medBlock(qBlock){
     // I'm sure this is the right design decision on jsPsych's part, considering that very very few of us do adaptive
     // testing research and even fewer of us do it online.
 
-    timeline[timeline.length - 1][timeline[timeline.length - 1].length - 1]['on_finish'] = async function(data){
+    let litem = await timeline[timeline.length - 1]
+    let ltask = await litem['timeline'][litem['timeline'].length - 1]
+    ltask['on_finish'] = async function(data){
         jsPsych.init(await hardBlock(qBlock))
     }
     block['timeline'] = timeline;
@@ -152,7 +156,7 @@ async function practiceBlock(qBlock){
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
     let tarNums = itemsByDifficulty(qBlock, 'practice');
-    let instructions = await getData('./instructions.json')
+    let instructions = await getData('./src/instructions.json')
     for (const i in tarNums){
         timeline.push({
             type: 'html-keyboard-response',
@@ -161,31 +165,20 @@ async function practiceBlock(qBlock){
         })
         timeline.push(await dat2Func(qBlock[tarNums[i]]));
     }
-    block['timeline'] = timeline;
-    return block
 
-}
-
-async function fakePractice(qBlock){
-    let block = {};
-    let timeline = [];
-    timeline.push({type: 'html-keyboard-response',
-    stimulus: '<p style="font-size:32px">Press any key to continue...<p>',
-    choices: jsPsych.ALL_KEYS})
     timeline.push({type: 'html-button-response',
-    stimulus: 'Would you like to repeat the practice round?',
-    choices: ['yes', 'no'],
-    on_finish: async function (data) {
+        stimulus: 'Would you like to repeat the practice round?',
+        choices: ['yes', 'no'],
+        on_finish: async function (data) {
 
             if (data['button_pressed'] === '1') {
                 jsPsych.init(await easyBlock(qBlock))
             } else {
-                jsPsych.init(await fakePractice(qBlock))
+                jsPsych.init(await practiceBlock(qBlock))
             }}})
+    block['timeline'] = timeline;
+    return block}
 
-    block['timeline'] = timeline
-    return block
-}
 
 async function hardBlock(qBlock){
     let block = {};
@@ -217,7 +210,7 @@ async function main() {
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    timeline.push(await fakePractice(qBlock));
+    timeline.push(await practiceBlock(qBlock));
 
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false});

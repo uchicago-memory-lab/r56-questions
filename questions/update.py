@@ -14,7 +14,7 @@ def csv2dict(csv_filename):
                 trial['kind'] = csv_filename.split('/')[-1].split('.')[0]
                 trial['taskNum'] = row[0]
                 trial['stimuli'] = [i.replace('  ', ' ') for i in row[1:7] if i != '']
-                trial['trials'] = [[j for j in i.split(' ') if j != ''] for i in row[7:10]]
+                trial['trials'] = [[j for j in i.split(' ') if j != ''] for i in row[7:10] if i != '']
                 trial['stimsType'] = row[10]
                 try:
                     trial['difficulty'] = row[11]

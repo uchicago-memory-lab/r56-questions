@@ -81,11 +81,11 @@ There are two executive function tasks. They both have to do with visually ident
 
 |English|Hex Value|Visual|
 |-------|---------|------|
-|Red|#F93943|<div style="background-color:#F93943">&nbsp;</div>|
+|Red|#F94D56|<div style="background-color:#F94D56">&nbsp;</div>|
 |Green|#33673B|<div style="background-color:#33673B">&nbsp;</div>|
 |Blue|#0B4F6C|<div style="background-color:#0B4F6C">&nbsp;</div>|
-|Orange|#FE9920|<div style="background-color:#FE9920">&nbsp;</div>|
-|Yellow|#FE9920|<div style="background-color:#FE9920">&nbsp;</div>|
+|Orange|#E05200|<div style="background-color:#E05200">&nbsp;</div>|
+|Yellow|#FDE74C|<div style="background-color:#FDE74C">&nbsp;</div>|
 |Purple|#662C91|<div style="background-color:#662C91">&nbsp;</div>|
 |White|#F4F1DE|<div style="background-color:#F4F1DE">&nbsp;</div>|
 |Black|#000000|<div style="background-color:#000000">&nbsp;</div>|
@@ -99,7 +99,7 @@ Note that orange and yellow are rendered as the same color. White is used only f
 This is an implementation of the classic Stroop task. The subject is shown an instruction screen explaining the task, with an example. They are then shown a set of color words, rendered in varying colors, these will be Blue, Yellow, Purple, Red, Green, or Black. This screen is shown for a varying time. The subject is then asked to enter, using the keyboard, the number of words which matched the color they were printed in. For example:
 
 <center>
-<p style='color:#FE9920'>Yellow<p>
+<p style='color:#FDE74C'>Yellow<p>
 <p style='color:#F93943'>Green<p>
 <p style='color:#33673B'>Red<p>
 </center>
@@ -109,8 +109,9 @@ The answer for this example is 1.
 ### Rule Identification
 
 
-
 ![](RuleIDEx.png)
+
+The subject is shown a series of colored shapes. 
 
 ## Processing Speed
 

@@ -117,10 +117,10 @@ async function EMObjectPicture(stimuli, choices, data){
     task['data'] = data;
     return task;
 }
-let colorChart = {R: '#F93943',
+let colorChart = {R: '#F94D56',
         G: '#3D7B46',
         B: '#1495CC',
-        O: '#FFCB77',
+        O: '#E05200',
         Y: '#FDE74C',
         P: '#662C91',
         W: '#F4F1DE',
@@ -246,9 +246,10 @@ function EFRuleID(stimuli, data){
                 })
 
             timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
-                choices: jsPsych.NO_KEYS, trial_duration: 500});
-            // TODO: This displays "undefined" instead of nothing. Figure that out Einstein.
+                choices: jsPsych.NO_KEYS, trial_duration: 250});
+
         }
+        timeline.pop() // gets rid of the break on the last one, we don't need it before the next trial.
 
 
     data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
