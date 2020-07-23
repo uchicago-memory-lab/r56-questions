@@ -3145,7 +3145,7 @@
         "trials": []
     },
     "EMRP": {
-        "difficulty": "",
+        "difficulty": "practice",
         "kind": "EMWordStim",
         "stimsType": "",
         "stimuli": [
