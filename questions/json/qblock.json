@@ -3145,7 +3145,7 @@
         "trials": []
     },
     "EMRP": {
-        "difficulty": "practice",
+        "difficulty": "",
         "kind": "EMWordStim",
         "stimsType": "",
         "stimuli": [
@@ -3162,6 +3162,106 @@
                 "fealong"
             ]
         ]
+    },
+    "ES1": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Recalling new names, places, or grocery lists."
+        ],
+        "taskNum": "ES1",
+        "trials": []
+    },
+    "ES10": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Working under time pressure."
+        ],
+        "taskNum": "ES10",
+        "trials": []
+    },
+    "ES2": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Remembering that you\u2019ve already told someone a story."
+        ],
+        "taskNum": "ES2",
+        "trials": []
+    },
+    "ES3": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Knowing the meaning of uncommon words."
+        ],
+        "taskNum": "ES3",
+        "trials": []
+    },
+    "ES4": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Identifying common objects."
+        ],
+        "taskNum": "ES4",
+        "trials": []
+    },
+    "ES5": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Rehearsing phone numbers or directions."
+        ],
+        "taskNum": "ES5",
+        "trials": []
+    },
+    "ES6": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Multi-tasking (e.g. cooking while talking)."
+        ],
+        "taskNum": "ES6",
+        "trials": []
+    },
+    "ES7": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Paying close attention (e.g. reading in a noisy room)."
+        ],
+        "taskNum": "ES7",
+        "trials": []
+    },
+    "ES8": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Learning new tasks (e.g. new card games)."
+        ],
+        "taskNum": "ES8",
+        "trials": []
+    },
+    "ES9": {
+        "difficulty": "survey",
+        "kind": "endSurvey",
+        "stimsType": "",
+        "stimuli": [
+            "Reacting quickly."
+        ],
+        "taskNum": "ES9",
+        "trials": []
     },
     "PSSCP": {
         "difficulty": "practice",

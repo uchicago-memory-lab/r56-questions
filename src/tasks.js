@@ -490,3 +490,39 @@ function PSStringComparison(stimuli, delay, data){
     return task;
 }
 
+function EMLongTerm(stimuli, choices, data){
+    let task = {};
+    let timeline = [];
+    let answer = stimuli.filter(x => choices.includes(x));
+
+    for (let i in choices) {
+        let rechoice = fisherYates(choices[i])
+        timeline.push({
+            type: 'html-button-response',
+            stimulus: "Which did you see?",
+            choices: rechoice
+        });
+    }
+
+    data['trial_type'] = 'Word Stim Long Term';
+    data['answer'] = answer[0];
+    task['timeline'] = timeline;
+    task['data'] = data;
+    return task;
+}
+
+function endSurvey(question){
+    let task = {};
+    let data = {}
+    let timeline = [];
+    let options = ['Extremely Worse', 'A Lot Worse', 'A Little Worse', 'The Same', 'A Little Better', 'A Lot Better', 'Extremely Better']
+
+    timeline.push({type: 'survey-multi-choice',
+    stimulus: question,
+    choices: options})
+
+    task['timeline'] = timeline;
+    data['trial_type'] = "End of Experiment Survey";
+    task['data'] = data;
+    return task;
+}

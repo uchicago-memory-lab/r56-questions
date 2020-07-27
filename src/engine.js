@@ -1,4 +1,5 @@
 
+let LONGTERMS = [1, 9, 33]
 
 document.addEventListener('DOMContentLoaded', main, false);
 
@@ -11,7 +12,7 @@ let nameToFunc = {EMWordStim: EMWordStim,
              EFStroop: EFStroop,
              PSStringComparison: PSStringComparison};
 
-
+let pressAny = '<p style="font-size:32px">Press any key to continue...<p>'
 
 function fisherYates(tarArray){
     let array = JSON.parse(JSON.stringify(tarArray));
@@ -81,9 +82,11 @@ function dat2Func(dat){
     let params = getParams(tarfunc);
     if (params.includes('choices')){
         return tarfunc(dat['stimuli'], dat['trials'], data);
-    } else if (params.includes('delay')){
+    } else if (params.includes('delay')) {
         let dparam = parseInt(dat['stimsType'].slice(0, -1));
-        return tarfunc(dat['stimuli'], dparam*1000, data); // We have to convert seconds to ms
+        return tarfunc(dat['stimuli'], dparam * 1000, data); // We have to convert seconds to ms
+    } else if (params.includes('question')){
+        return tarfunc(dat['stimuli'][0])
     } else {
         return tarfunc(dat['trials'], data);
     }
@@ -101,7 +104,7 @@ async function easyBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 1 of 3',
-        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
+        prompt: pressAny
     });
     let tarNums = itemsByDifficulty(qBlock, 'easy');
     let orderedNums = fisherYates(tarNums);
@@ -127,7 +130,7 @@ async function medBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 2 of 3',
-        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
+        prompt: pressAny
     });
     let tarNums = itemsByDifficulty(qBlock, 'medium');
     let orderedNums = fisherYates(tarNums);
@@ -153,7 +156,7 @@ async function practiceBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'First, some practice.',
-        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
+        prompt: pressAny
     })
     let tarNums = itemsByDifficulty(qBlock, 'practice');
     let instructions = await getData('./src/instructions.json')
@@ -162,7 +165,7 @@ async function practiceBlock(qBlock){
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: instructions[qBlock[tarNums[i]]['kind']],
-            prompt: '<p style="font-size:32px">Press any key to continue...<p>'
+            prompt: pressAny
         })
         timeline.push(await dat2Func(qBlock[tarNums[i]]));
     }
@@ -187,31 +190,53 @@ async function hardBlock(qBlock){
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 3 of 3',
-        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
+        prompt: pressAny
     })
     let tarNums = itemsByDifficulty(qBlock, 'hard');
     let orderedNums = fisherYates(tarNums);
     for (const i in orderedNums){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
     }
+    let litem = await timeline[timeline.length - 1]
+    let ltask = await litem['timeline'][litem['timeline'].length - 1]
+    ltask['on_finish'] = async function(data){
+        jsPsych.init(await hardBlock(qBlock))
+    }
     block['timeline'] = timeline;
 
     return block
 }
 
+async function endBlock(qBlock){
+    let block = {};
+    let timeline = [];
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: "You're almost done! Just a few more items to test your longer term memory, and then a short survey",
+        prompt: pressAny
+    })
+    for(let i in LONGTERMS){
+        let dat = qBlock[LONGTERMS[i].toString()]
+        let data = {stims_type: dat['stimsType'], item: dat['taskNum'], difficulty: dat['difficulty']};
+        timeline.push(EMLongTerm(dat['stimuli'], dat['choices'], data))
+    }
+    block['timeline'] = timeline;
+
+    return block
+}
 
 async function main() {
     let timeline = [];
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Welcome to the R56!',
-        prompt: '<p style="font-size:32px">Press any key to continue...<p>'
+        prompt: pressAny
     })
     let qBlock = await loadQuestions();
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    timeline.push(await practiceBlock(qBlock));
+    timeline.push(await endBlock(qBlock));
 
 
     // timeline.push({type: 'fullscreen', fullscreen_mode: false});
