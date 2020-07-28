@@ -1,5 +1,5 @@
 
-let LONGTERMS = [1, 9, 33]
+let LONGTERMS = [1]
 
 document.addEventListener('DOMContentLoaded', main, false);
 
@@ -10,6 +10,7 @@ let nameToFunc = {EMWordStim: EMWordStim,
              WMForwardDigitSpan: WMForwardDigitSpan,
              WMBackwardDigitSpan: WMBackwardDigitSpan,
              EFStroop: EFStroop,
+             endSurvey: endSurvey,
              PSStringComparison: PSStringComparison};
 
 let pressAny = '<p style="font-size:32px">Press any key to continue...<p>'
@@ -200,7 +201,7 @@ async function hardBlock(qBlock){
     let litem = await timeline[timeline.length - 1]
     let ltask = await litem['timeline'][litem['timeline'].length - 1]
     ltask['on_finish'] = async function(data){
-        jsPsych.init(await hardBlock(qBlock))
+        jsPsych.init(await endBlock(qBlock))
     }
     block['timeline'] = timeline;
 
@@ -218,10 +219,14 @@ async function endBlock(qBlock){
     for(let i in LONGTERMS){
         let dat = qBlock[LONGTERMS[i].toString()]
         let data = {stims_type: dat['stimsType'], item: dat['taskNum'], difficulty: dat['difficulty']};
-        timeline.push(EMLongTerm(dat['stimuli'], dat['choices'], data))
+        timeline.push(await EMLongTerm(dat['stimuli'], dat['trials'], data))
+    }
+    let surveyQs = itemsByDifficulty(qBlock, 'survey')
+    for (const i in surveyQs){
+        let dat = qBlock[surveyQs[i].toString()]
+        timeline.push(endSurvey(dat['stimuli']))
     }
     block['timeline'] = timeline;
-
     return block
 }
 

@@ -516,11 +516,10 @@ function endSurvey(question){
     let data = {}
     let timeline = [];
     let options = ['Extremely Worse', 'A Lot Worse', 'A Little Worse', 'The Same', 'A Little Better', 'A Lot Better', 'Extremely Better']
-
-    timeline.push({type: 'survey-multi-choice',
-    stimulus: question,
-    choices: options})
-
+    // TODO: Figure out a way to make the options large print (This could be tricky).
+    timeline.push({type: 'survey-likert',
+    questions: [{prompt: '<p style="font-size:32px">' + question[0] + '</p>',
+    labels: options}]})
     task['timeline'] = timeline;
     data['trial_type'] = "End of Experiment Survey";
     task['data'] = data;
