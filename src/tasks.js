@@ -515,11 +515,14 @@ function endSurvey(question){
     let task = {};
     let data = {}
     let timeline = [];
-    let options = ['Extremely Worse', 'A Lot Worse', 'A Little Worse', 'The Same', 'A Little Better', 'A Lot Better', 'Extremely Better']
-    // TODO: Figure out a way to make the options large print (This could be tricky).
+    let options = ['Substantially Worse', 'A Lot Worse', 'A Little Worse', 'The Same', 'A Little Better', 'A Lot Better', 'Substantially Better']
+    let formoptions = []
+    for(const i in options){
+        formoptions.push('<p style="font-size:32px; line-height: 32px">' + options[i] + '</p>')
+    }
     timeline.push({type: 'survey-likert',
-    questions: [{prompt: '<p style="font-size:32px">' + question[0] + '</p>',
-    labels: options}]})
+    questions: [{prompt: '<p style="font-size:48px">' + question[0] + '</p>',
+    labels: formoptions}]})
     task['timeline'] = timeline;
     data['trial_type'] = "End of Experiment Survey";
     task['data'] = data;
