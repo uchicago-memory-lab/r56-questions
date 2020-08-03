@@ -102,13 +102,14 @@ function itemsByDifficulty(qBlock, difficulty){
 async function easyBlock(qBlock){
     let block = {};
     let timeline = [];
-    timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 1 of 3',
         prompt: pressAny
     });
+    timeline.push({type: 'fullscreen', fullscreen_mode: true});
+
     let tarNums = itemsByDifficulty(qBlock, 'easy');
     let orderedNums = fisherYates(tarNums);
     for (const i in orderedNums){
