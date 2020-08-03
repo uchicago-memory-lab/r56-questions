@@ -102,6 +102,8 @@ function itemsByDifficulty(qBlock, difficulty){
 async function easyBlock(qBlock){
     let block = {};
     let timeline = [];
+    timeline.push({type: 'fullscreen', fullscreen_mode: false});
+
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 1 of 3',
@@ -128,6 +130,8 @@ async function easyBlock(qBlock){
 async function medBlock(qBlock){
     let block = {};
     let timeline = [];
+    timeline.push({type: 'fullscreen', fullscreen_mode: false});
+
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 2 of 3',
@@ -188,6 +192,8 @@ async function practiceBlock(qBlock){
 async function hardBlock(qBlock){
     let block = {};
     let timeline = [];
+    timeline.push({type: 'fullscreen', fullscreen_mode: false});
+
     timeline.push({
         type: 'html-keyboard-response',
         stimulus: 'Block 3 of 3',
