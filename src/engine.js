@@ -239,12 +239,15 @@ async function main() {
     })
     let qBlock = await loadQuestions();
 
-    // timeline.push({type: 'fullscreen', fullscreen_mode: true});
+    timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
-    timeline.push(await endBlock(qBlock));
+    timeline.push(await practiceBlock(qBlock));
 
 
-    // timeline.push({type: 'fullscreen', fullscreen_mode: false});
+    timeline.push({type: 'fullscreen', fullscreen_mode: false});
+
+    timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
+        choices: jsPsych.NO_KEYS})
 
     jsPsych.init({timeline: timeline});
 }
