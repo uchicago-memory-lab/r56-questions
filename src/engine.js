@@ -108,7 +108,6 @@ async function easyBlock(qBlock){
         stimulus: 'Block 1 of 3',
         prompt: pressAny
     });
-    timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     let tarNums = itemsByDifficulty(qBlock, 'easy');
     let orderedNums = fisherYates(tarNums);
@@ -131,7 +130,6 @@ async function easyBlock(qBlock){
 async function medBlock(qBlock){
     let block = {};
     let timeline = [];
-    timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     timeline.push({
         type: 'html-keyboard-response',
@@ -193,7 +191,6 @@ async function practiceBlock(qBlock){
 async function hardBlock(qBlock){
     let block = {};
     let timeline = [];
-    timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     timeline.push({
         type: 'html-keyboard-response',
@@ -241,17 +238,22 @@ async function main() {
     let timeline = [];
     timeline.push({
         type: 'html-keyboard-response',
-        stimulus: 'Welcome to the R56!',
+        stimulus: 'Welcome to the Experiment!',
+        prompt: pressAny
+    })
+
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: 'For the best experience, we recommend using fullscreen. ' +
+            'Press Alt+Enter, ^ + ⌘ + F, ctrl+F, or F11 to enter and exit fullscreen mode.',
         prompt: pressAny
     })
     let qBlock = await loadQuestions();
 
-    timeline.push({type: 'fullscreen', fullscreen_mode: true});
 
     timeline.push(await practiceBlock(qBlock));
 
 
-    timeline.push({type: 'fullscreen', fullscreen_mode: false});
 
     timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
         choices: jsPsych.NO_KEYS})
