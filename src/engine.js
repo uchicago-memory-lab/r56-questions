@@ -158,6 +158,7 @@ async function medBlock(qBlock){
         jsPsych.init(await hardBlock(qBlock))
     }
     block['timeline'] = timeline;
+    block['on_finish'] = function(){ saveData("experiment_data", jsPsych.data.get().csv()); };
     return block
 }
 
@@ -187,7 +188,7 @@ async function practiceBlock(qBlock){
         on_finish: async function (data) {
 
             if (data['button_pressed'] === '1') {
-                jsPsych.init({timeline: await easyBlock(qBlock), on_finish: function(){ saveData("experiment_data", jsPsych.data.get().csv()); }})
+                jsPsych.init(await easyBlock(qBlock))
             } else {
                 jsPsych.init(await practiceBlock(qBlock))
             }}})
