@@ -127,12 +127,7 @@ async function easyBlock(qBlock){
     return block;
 }
 
-function saveData(name, data){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({filename: name, filedata: data}));
-}
+
 
 async function medBlock(qBlock){
     let block = {};
@@ -158,7 +153,6 @@ async function medBlock(qBlock){
         jsPsych.init(await hardBlock(qBlock))
     }
     block['timeline'] = timeline;
-    block['on_finish'] = function(){ saveData("experiment_data", jsPsych.data.get().csv()); };
     return block
 }
 

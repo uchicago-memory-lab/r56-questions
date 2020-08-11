@@ -10,6 +10,33 @@ async function getData(url) {
     return response.json()
 }
 
+function saveData(data) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if(xhr.status === 200){
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.success);
+        }
+    };
+    xhr.send(data.json());
+}
+
+function dataBlock(data){
+    /**
+     * A simple helper function that wraps the AJAX call into a jspsych object.
+     */
+    return {
+        type: "call-function",
+        func: function () {saveData(data);}
+    }
+}
+
+function dumpData(){
+    console.log(jsPsych.data.get().json())
+}
+
 function range(start, end) {
     if(start === end) return [start];
     return [start, ...range(start + 1, end)];
@@ -79,7 +106,12 @@ async function EMWordStim(stimuli, choices, data){
         });
     }
     data['trial_type'] = 'Episodic Memory Word Stimuli';
+    data['shortcode'] = 'EMWordStim';
     data['answer'] = answer[0];
+    timeline.push({
+        type: 'call-function',
+        func: dumpData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
