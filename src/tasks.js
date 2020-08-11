@@ -34,7 +34,7 @@ function dataBlock(data){
 }
 
 function dumpData(){
-    console.log(jsPsych.data.get().json())
+    console.log(jsPsych.data.get().filterCustom(function(x) {return x.data.scored}))
 }
 
 function range(start, end) {
@@ -310,6 +310,10 @@ function SMObjectNaming(stimuli, choices, data){
         })
     }
     data['trial_type'] = 'Semantic Memory Object Naming';
+    timeline.push({
+        type: 'call-function',
+        func: dumpData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
