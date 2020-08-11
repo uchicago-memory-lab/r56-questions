@@ -12,7 +12,7 @@ async function getData(url) {
 
 let storeDataTag = {stored: true}
 
-function saveData(data) {
+function saveData() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -22,7 +22,7 @@ function saveData(data) {
             console.log(response.success);
         }
     };
-    xhr.send(data.json());
+    xhr.send(jsPsych.data.get().filterCustom(testItemFinder).json());
 }
 
 function dataBlock(data){
@@ -298,7 +298,7 @@ function EFRuleID(stimuli, data){
     data['trial_type'] = 'Executive Function Rule Identification';
     timeline.push({
         type: 'call-function',
-        func: dumpData
+        func: saveData
     })
     task['timeline'] = timeline;
     task['data'] = data;
