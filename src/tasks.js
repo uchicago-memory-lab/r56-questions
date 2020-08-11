@@ -34,7 +34,7 @@ function dataBlock(data){
 }
 
 function dumpData(){
-    console.log(jsPsych.data.get().filterCustom(function(x) {return x.data.scored}))
+    console.log(jsPsych.data.get().filterCustom(function(x) {console.log(x); return x.data.scored}))
 }
 
 function range(start, end) {
@@ -108,10 +108,6 @@ async function EMWordStim(stimuli, choices, data){
     data['trial_type'] = 'Episodic Memory Word Stimuli';
     data['shortcode'] = 'EMWordStim';
     data['answer'] = answer[0];
-    timeline.push({
-        type: 'call-function',
-        func: dumpData
-    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -286,6 +282,10 @@ function EFRuleID(stimuli, data){
 
     data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
     data['trial_type'] = 'Executive Function Rule Identification';
+    timeline.push({
+        type: 'call-function',
+        func: dumpData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -310,10 +310,7 @@ function SMObjectNaming(stimuli, choices, data){
         })
     }
     data['trial_type'] = 'Semantic Memory Object Naming';
-    timeline.push({
-        type: 'call-function',
-        func: dumpData
-    })
+
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
