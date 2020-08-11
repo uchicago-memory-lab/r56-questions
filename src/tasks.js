@@ -10,6 +10,8 @@ async function getData(url) {
     return response.json()
 }
 
+let storeDataTag = {stored: true}
+
 function saveData(data) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
@@ -112,7 +114,8 @@ async function EMWordStim(stimuli, choices, data){
         timeline.push({
              type: 'html-button-response',
             stimulus: "Which did you see?",
-            choices: rechoice
+            choices: rechoice,
+            data: storeDataTag
         });
     }
     data['trial_type'] = 'Episodic Memory Word Stimuli';
@@ -146,7 +149,8 @@ async function EMObjectPicture(stimuli, choices, data){
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you see?",
-            choices: promptLines
+            choices: promptLines,
+            data: storeDataTag
         });
     }
     data['answer'] = answer[0];
@@ -280,7 +284,8 @@ function EFRuleID(stimuli, data){
                 func: draw,
                 canvas_id: 'ruleID',
                 stimulus: 'Which is the most frequent feature?',
-                choices: ['Shape', 'Color', 'Number']
+                choices: ['Shape', 'Color', 'Number'],
+                data: storeDataTag
                 })
 
             timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
@@ -316,7 +321,8 @@ function SMObjectNaming(stimuli, choices, data){
             type: 'image-button-response',
             stimulus: './img/' + stimshuf[i] + '.jpg',
             choices: choices[i],
-            text_answer: stimshuf[i]
+            text_answer: stimshuf[i],
+            data: storeDataTag
         })
     }
     data['trial_type'] = 'Semantic Memory Object Naming';
@@ -356,7 +362,8 @@ function WMForwardDigitSpan(stimuli, delay, data){
             prompt: '<p>Type the numbers in forward order (first to last), press enter/return to send.</p>',
             answer: stimuli[j].toString(),
             choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
-            entry_size: 100
+            entry_size: 100,
+            data: storeDataTag
         });
 
         timeline.push({
@@ -411,7 +418,8 @@ function WMBackwardDigitSpan(stimuli, delay, data){
             prompt:'<p>Type the numbers in backward order (last to first), press enter/return to send.</p>',
             answer: stimuli[j].toString(),
             choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
-            entry_size: 100});
+            entry_size: 100,
+            data: storeDataTag});
 
         timeline.push({
             type: 'html-keyboard-response',
@@ -489,7 +497,8 @@ function EFStroop(stimuli, delay, data){
             correct_text: "",
             incorrect_text: "",
             feedback_duration: 0,
-            show_stim_with_feedback: false
+            show_stim_with_feedback: false,
+            data: storeDataTag
         })
 
     }
@@ -525,7 +534,8 @@ function PSStringComparison(stimuli, delay, data){
     stimuli_2: stimuli_2,
     choices: [80, 81],
     time_limit: delay,
-    prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>'})
+    prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
+    data: storeDataTag})
 
     data['trial_type'] = 'Processing Speed String Comparison';
     task['timeline'] = timeline;
@@ -543,7 +553,8 @@ function EMLongTerm(stimuli, choices, data){
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you see?",
-            choices: rechoice
+            choices: rechoice,
+            data: storeDataTag
         });
     }
 
@@ -565,7 +576,8 @@ function endSurvey(question){
     }
     timeline.push({type: 'survey-likert',
     questions: [{prompt: '<p style="font-size:48px">' + question[0] + '</p>',
-    labels: formoptions}]})
+    labels: formoptions}],
+    data: storeDataTag})
     task['timeline'] = timeline;
     data['trial_type'] = "End of Experiment Survey";
     task['data'] = data;
