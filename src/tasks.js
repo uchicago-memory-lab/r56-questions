@@ -33,8 +33,18 @@ function dataBlock(data){
     }
 }
 
+function testItemFinder(jsPsychData){
+    /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
+    if ('data' in jsPsychData){
+        if ('stored' in jsPsychData){
+            return jsPsychData.data.stored
+        }
+    }
+    return false
+}
+
 function dumpData(){
-    console.log(jsPsych.data.get().filterCustom(function(x) {console.log(x); return x.data.scored}))
+    console.log(jsPsych.data.get().filterCustom(testItemFinder))
 }
 
 function range(start, end) {
