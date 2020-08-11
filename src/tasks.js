@@ -37,7 +37,7 @@ function dataBlock(data){
 
 function testItemFinder(jsPsychData){
     /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
-    console.log('jsPsychData')
+    console.log(jsPsychData)
     if ('data' in jsPsychData){
         console.log('trigger0')
         if ('stored' in jsPsychData){
