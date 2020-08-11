@@ -44,7 +44,7 @@ function testItemFinder(jsPsychData){
 }
 
 function dumpData(){
-    console.log(jsPsych.data.get().filterCustom(testItemFinder))
+    console.log(jsPsych.data.get().filterCustom(testItemFinder).json())
 }
 
 function range(start, end) {
