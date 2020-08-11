@@ -6,5 +6,4 @@ $db["path"] = ltrim($db["path"], "/");
 
 try {
     $conn = pg_connect(getenv("DATABASE_URL"));
-    
 }
