@@ -39,7 +39,7 @@ function testItemFinder(jsPsychData){
     /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
     if ('stored' in jsPsychData){
         console.log('trigger1')
-        return jsPsychData.data.stored
+        return jsPsychData.stored
     }
     return false
 }
