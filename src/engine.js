@@ -178,6 +178,7 @@ async function practiceBlock(qBlock){
             stimulus: instructions[qBlock[tarNums[i]]['kind']+'FB'],
             prompt: pressAny
         })
+        console.log(instructions[qBlock[tarNums[i]]['kind']+'FB'])
     }
 
     timeline.push({type: 'html-button-response',
