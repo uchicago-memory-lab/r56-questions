@@ -3178,7 +3178,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Working under time pressure."
+            "Performing speeded tasks."
         ],
         "taskNum": "ES10",
         "trials": []
@@ -3228,7 +3228,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Multi-tasking (e.g. cooking while talking)."
+            "Multi-tasking (e.g. cooking while talking.)"
         ],
         "taskNum": "ES6",
         "trials": []
@@ -3238,7 +3238,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Paying close attention (e.g. reading in a noisy room)."
+            "Paying close attention (e.g. reading in a noisy room.)"
         ],
         "taskNum": "ES7",
         "trials": []
@@ -3248,7 +3248,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Learning new tasks (e.g. new card games)."
+            "Learning new tasks (e.g. new card games.)"
         ],
         "taskNum": "ES8",
         "trials": []
@@ -3258,7 +3258,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Reacting quickly."
+            "Reacting quickly (e.g. hitting the brakes when driving.)"
         ],
         "taskNum": "ES9",
         "trials": []

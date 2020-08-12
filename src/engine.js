@@ -1,5 +1,5 @@
 
-let LONGTERMS = [1]
+let LONGTERMS = [1, 7, 6]
 
 document.addEventListener('DOMContentLoaded', main, false);
 
@@ -173,6 +173,11 @@ async function practiceBlock(qBlock){
             prompt: pressAny
         })
         timeline.push(await dat2Func(qBlock[tarNums[i]]));
+        timeline.push({
+            type: 'html-keyboard-response',
+            stimulus: instructions[qBlock[tarNums[i]]['kind']+'FB'],
+            prompt: pressAny
+        })
     }
 
     timeline.push({type: 'html-button-response',
@@ -227,10 +232,19 @@ async function endBlock(qBlock){
         timeline.push(await EMLongTerm(dat['stimuli'], dat['trials'], data))
     }
     let surveyQs = itemsByDifficulty(qBlock, 'survey')
-    for (const i in surveyQs){
-        let dat = qBlock[surveyQs[i].toString()]
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: "For each of the following abilities, please rate yourself compared to an <b> average person </b> your age with normal cognitive abilities.",
+        prompt: pressAny
+    })
+    let rSurveyQs = fisherYates(surveyQs)
+    for (const i in rSurveyQs){
+        let dat = qBlock[rSurveyQs[i].toString()]
         timeline.push(endSurvey(dat['stimuli']))
     }
+    timeline.push({type: 'call-function', func: document.exitFullscreen()})
+    timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
+    choices: jsPsych.NO_KEYS})
     block['timeline'] = timeline;
     return block
 }
@@ -244,11 +258,10 @@ async function main() {
     })
 
     timeline.push({
-        type: 'html-keyboard-response',
-        stimulus: 'For the best experience, we recommend using fullscreen. ' +
-            'Press Alt+Enter, ^ + ⌘ + F, ctrl+F, or F11 to enter and exit fullscreen mode.',
-        prompt: pressAny
+        type: 'call-function',
+        func: function() {document.documentElement.requestFullscreen()}
     })
+
     let qBlock = await loadQuestions();
 
 
@@ -256,8 +269,7 @@ async function main() {
 
 
 
-    timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
-        choices: jsPsych.NO_KEYS})
+
 
     jsPsych.init({timeline: timeline});
 }

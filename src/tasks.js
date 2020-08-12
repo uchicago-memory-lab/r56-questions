@@ -111,7 +111,7 @@ async function EMWordStim(stimuli, choices, data){
         let rechoice = fisherYates(choices[i])
         timeline.push({
              type: 'html-button-response',
-            stimulus: "Which did you see?",
+            stimulus: "Which did you memorize before?",
             choices: rechoice,
             data: storeDataTag
         });
@@ -550,7 +550,7 @@ function EMLongTerm(stimuli, choices, data){
         let rechoice = fisherYates(choices[i])
         timeline.push({
             type: 'html-button-response',
-            stimulus: "Which did you see?",
+            stimulus: "Which did you memorize before?", // TODO: Figure out the best wording for this.
             choices: rechoice,
             data: storeDataTag
         });
@@ -567,7 +567,7 @@ function endSurvey(question){
     let task = {};
     let data = {}
     let timeline = [];
-    let options = ['Substantially Worse', 'A Lot Worse', 'A Little Worse', 'The Same', 'A Little Better', 'A Lot Better', 'Substantially Better']
+    let options = ['Substantially Worse', 'Much Worse', 'Slightly Worse', 'Average', 'Slightly Better', 'Much Better', 'Substantially Better']
     let formoptions = []
     for(const i in options){
         formoptions.push('<p style="font-size:32px; line-height: 32px">' + options[i] + '</p>')
