@@ -253,7 +253,7 @@ async function main() {
     let timeline = [];
     timeline.push({
         type: 'html-keyboard-response',
-        stimulus: 'Welcome to the Experiment!',
+        stimulus: 'Welcome to the Experiment! <p> This window will switch to fullscreen mode when you continue.</p>',
         prompt: pressAny
     })
 
