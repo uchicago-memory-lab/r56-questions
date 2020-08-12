@@ -166,6 +166,7 @@ async function practiceBlock(qBlock){
     })
     let tarNums = itemsByDifficulty(qBlock, 'practice');
     let instructions = await getData('./src/instructions.json')
+    console.log(instructions)
     for (const i in tarNums){
         timeline.push({
             type: 'html-keyboard-response',
@@ -178,7 +179,6 @@ async function practiceBlock(qBlock){
             stimulus: instructions[qBlock[tarNums[i]]['kind']+'FB'],
             prompt: pressAny
         })
-        console.log(instructions)
     }
 
     timeline.push({type: 'html-button-response',
