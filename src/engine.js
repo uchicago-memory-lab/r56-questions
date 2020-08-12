@@ -229,7 +229,7 @@ async function endBlock(qBlock){
     for(let i in LONGTERMS){
         let dat = qBlock[LONGTERMS[i].toString()]
         let data = {stims_type: dat['stimsType'], item: dat['taskNum'], difficulty: dat['difficulty']};
-        timeline.push(await EMLongTerm(dat['stimuli'], dat['trials'], data))
+        timeline.push(EMLongTerm(dat['stimuli'], dat['trials'], data))
     }
     let surveyQs = itemsByDifficulty(qBlock, 'survey')
     timeline.push({
