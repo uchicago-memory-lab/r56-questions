@@ -166,7 +166,8 @@ async function practiceBlock(qBlock){
     })
     let tarNums = itemsByDifficulty(qBlock, 'practice');
     let instructions = await getData('./src/instructions.json')
-    console.log(instructions)
+    const response = await fetch('./src/instructions.json');
+    console.log(response);
     for (const i in tarNums){
         timeline.push({
             type: 'html-keyboard-response',
