@@ -768,7 +768,7 @@
         ]
     },
     "33": {
-        "difficulty": "",
+        "difficulty": "easy",
         "kind": "EMWordStim",
         "stimsType": "Unrelated",
         "stimuli": [
@@ -799,7 +799,7 @@
         ]
     },
     "34": {
-        "difficulty": "",
+        "difficulty": "medium",
         "kind": "EMWordStim",
         "stimsType": "Related",
         "stimuli": [
@@ -927,7 +927,7 @@
         ]
     },
     "38": {
-        "difficulty": "",
+        "difficulty": "hard",
         "kind": "EMWordStim",
         "stimsType": "Related",
         "stimuli": [
@@ -3145,7 +3145,7 @@
         "trials": []
     },
     "EMRP": {
-        "difficulty": "",
+        "difficulty": "practice",
         "kind": "EMWordStim",
         "stimsType": "",
         "stimuli": [
@@ -3228,7 +3228,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Multi-tasking (e.g. cooking while talking.)"
+            "Multi-tasking (e.g. cooking while talking)."
         ],
         "taskNum": "ES6",
         "trials": []
@@ -3238,7 +3238,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Paying close attention (e.g. reading in a noisy room.)"
+            "Paying close attention (e.g. reading in a noisy room)."
         ],
         "taskNum": "ES7",
         "trials": []
@@ -3248,7 +3248,7 @@
         "kind": "endSurvey",
         "stimsType": "",
         "stimuli": [
-            "Learning new tasks (e.g. new card games.)"
+            "Learning new tasks (e.g. new card games)."
         ],
         "taskNum": "ES8",
         "trials": []
