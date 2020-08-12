@@ -261,7 +261,16 @@ async function main() {
 
     timeline.push({
         type: 'call-function',
-        func: function() {document.documentElement.requestFullscreen()}
+        func: function() {          var element = document.documentElement;
+            if (element.requestFullscreen) {
+              element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+              element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+              element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+              element.msRequestFullscreen();
+            }}
     })
 
     let qBlock = await loadQuestions();
