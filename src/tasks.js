@@ -10,6 +10,8 @@ async function getData(url) {
     return response.json()
 }
 
+// TODO: Do some magic on the item tags so that they're like itemnum_trialnum
+// TODO: Look into getting data to store in english only.
 
 let storeDataTag = {stored: true}
 
