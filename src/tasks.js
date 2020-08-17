@@ -313,7 +313,7 @@ function EFRuleID(stimuli, data){
     data['trial_type'] = 'Executive Function Rule Identification';
     timeline.push({
         type: 'call-function',
-        func: saveData
+        func: saveCSV
     })
     task['timeline'] = timeline;
     task['data'] = data;
