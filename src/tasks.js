@@ -19,6 +19,7 @@ function saveData() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onload = function() {
         if(xhr.status === 200){
+            console.log(xhr.responseText)
             var response = JSON.parse(xhr.responseText);
             console.log(response.success);
         }
