@@ -23,7 +23,7 @@ function saveData() {
             console.log(response.success);
         }
     };
-    data = jsPsych.data.get().filterCustom(testItemFinder).json()987
+    data = jsPsych.data.get().filterCustom(testItemFinder).json()
     xhr.send();
 }
 
