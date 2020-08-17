@@ -10,9 +10,16 @@ async function getData(url) {
     return response.json()
 }
 
+function saveCSV(name, data){
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({filename: name, filedata: data}));
+  }
+
 let storeDataTag = {stored: true}
 
-function saveData() {
+function saveData(data) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -32,6 +39,15 @@ function dataBlock(data){
     return {
         type: "call-function",
         func: function () {saveData(data);}
+    }
+}
+function csvBlock(){
+    /**
+     * A simple helper function that wraps the AJAX call for csvs into a jspsych object.
+     */
+    return {
+        type: "call-function",
+        func: function () {saveCSV("experiment", jsPsych.data.get().filterCustom(testItemFinder).csv());}
     }
 }
 
