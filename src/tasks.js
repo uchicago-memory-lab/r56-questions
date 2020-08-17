@@ -18,8 +18,8 @@ function saveData() {
     xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
     xhr.setRequestHeader('Content-Type', 'application/json');
     data = jsPsych.data.get().filterCustom(testItemFinder).json()
-    console.log(data)
-    xhr.send(data);
+    console.log(data[data.length - 1])
+    xhr.send(data[data.length - 1]);
 }
 
 function dataBlock(data){
@@ -321,11 +321,12 @@ function SMObjectNaming(stimuli, choices, data){
         prompt: "<p style='font-size:32px'>Press any key to continue...<p>."})
     let stimshuf = fisherYates(stimuli)
     for(let i in stimshuf) {
+        let answer = stimshuf[i]
+        data['answer'] = answer
         timeline.push({
             type: 'image-button-response',
             stimulus: './img/' + stimshuf[i] + '.jpg',
             choices: choices[i],
-            text_answer: stimshuf[i],
             data: {...storeDataTag, ...data}
         })
     }
@@ -378,11 +379,6 @@ function WMForwardDigitSpan(stimuli, delay, data){
             choices: jsPsych.NO_KEYS, trial_duration: delay
         });
         
-
-        timeline.push({
-            type: 'call-function',
-            func: saveData
-        })
         timeline.push({
             type: 'string-entry',
             prompt: '<p>Type the numbers in forward order (first to last), press enter/return to send.</p>',
@@ -400,7 +396,10 @@ function WMForwardDigitSpan(stimuli, delay, data){
 
 
     }
-
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -473,6 +472,7 @@ function EFStroop(stimuli, delay, data){
             '<p style="color: '+ colorChart.K+'"> black </p></b>',
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
+    data['trial_type'] = 'Executive Function Stroop Task';
 
     for(let j in stimuli){
         let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
@@ -521,8 +521,10 @@ function EFStroop(stimuli, delay, data){
         })
 
     }
-
-    data['trial_type'] = 'Executive Function Stroop Task';
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -555,7 +557,10 @@ function PSStringComparison(stimuli, delay, data){
     time_limit: delay,
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
     data: {...storeDataTag, ...data}})
-
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     data['trial_type'] = 'Processing Speed String Comparison';
     task['timeline'] = timeline;
     task['data'] = data;
