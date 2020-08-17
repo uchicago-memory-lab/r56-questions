@@ -252,8 +252,8 @@ function countUnique(array){
     return new Set(array).size;
 }
 
-function argMin(array) {
-    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] < r[0] ? a : r))[1];
+function argMax(array) {
+    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
 }
 
 function EFRuleID(stimuli, data){
@@ -271,7 +271,7 @@ function EFRuleID(stimuli, data){
             colors.push(stimuli[i][1])
             numbers.push(stimuli[i][2])
             let uniques = [shapes, colors, numbers].map(countUnique)
-            let answerIndex = argMin(uniques)
+            let answerIndex = argMax(uniques)
         
             data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
             data['trial_type'] = 'Executive Function Rule Identification';
