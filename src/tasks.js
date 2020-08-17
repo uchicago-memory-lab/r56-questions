@@ -122,7 +122,10 @@ async function EMWordStim(stimuli, choices, data){
     data['trial_type'] = 'Episodic Memory Word Stimuli';
     data['shortcode'] = 'EMWordStim';
     data['answer'] = answer[0];
-    timeline.push(dataBlock)
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
