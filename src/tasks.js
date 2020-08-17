@@ -267,9 +267,10 @@ function EFRuleID(stimuli, data){
         stimulus: '<p>Which is the most frequent feature:</p><p>Shape, Color, or Number?</p>',
         prompt:'<p style="font-size:32px">Press any key to continue...<p>'});
         for(let i in stimuli){
-            shapes.push(stimuli[i][0])
-            colors.push(stimuli[i][1])
-            numbers.push(stimuli[i][2])
+            for(let j in stimuli[i]){
+                shapes.push(stimuli[i][j][0])
+                colors.push(stimuli[i][j][1])
+                numbers.push(stimuli[i][j][2])}
             let uniques = [shapes, colors, numbers].map(countUnique)
             let answerIndex = argMin(uniques)
             console.log(shapes)
