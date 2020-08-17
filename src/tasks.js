@@ -10,16 +10,10 @@ async function getData(url) {
     return response.json()
 }
 
-function saveCSV(name, data){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'writecsv.php'); // 'write_data.php' is the path to the php file described above.
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({filename: name, filedata: data}));
-  }
 
 let storeDataTag = {stored: true}
 
-function saveData(data) {
+function saveData() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -29,7 +23,9 @@ function saveData(data) {
             console.log(response.success);
         }
     };
-    xhr.send(jsPsych.data.get().filterCustom(testItemFinder).json());
+    data = jsPsych.data.get().filterCustom(testItemFinder).json()
+    console.log(data)
+    xhr.send();
 }
 
 function dataBlock(data){
@@ -39,15 +35,6 @@ function dataBlock(data){
     return {
         type: "call-function",
         func: function () {saveData(data);}
-    }
-}
-function csvBlock(){
-    /**
-     * A simple helper function that wraps the AJAX call for csvs into a jspsych object.
-     */
-    return {
-        type: "call-function",
-        func: function () {saveCSV("experiment", jsPsych.data.get().filterCustom(testItemFinder).csv());}
     }
 }
 
@@ -135,6 +122,7 @@ async function EMWordStim(stimuli, choices, data){
     data['trial_type'] = 'Episodic Memory Word Stimuli';
     data['shortcode'] = 'EMWordStim';
     data['answer'] = answer[0];
+    timeline.push(dataBlock)
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -313,7 +301,7 @@ function EFRuleID(stimuli, data){
     data['trial_type'] = 'Executive Function Rule Identification';
     timeline.push({
         type: 'call-function',
-        func: saveCSV
+        func: saveData
     })
     task['timeline'] = timeline;
     task['data'] = data;
