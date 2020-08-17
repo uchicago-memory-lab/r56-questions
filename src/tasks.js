@@ -23,8 +23,7 @@ function saveData() {
             console.log(response.success);
         }
     };
-    data = jsPsych.data.get().filterCustom(testItemFinder).json()
-    console.log(data)
+    data = jsPsych.data.get().filterCustom(testItemFinder).json()987
     xhr.send();
 }
 
@@ -267,20 +266,21 @@ function EFRuleID(stimuli, data){
     let shapes = [];
     let colors = [];
     let numbers = [];
-    for(const i in stimuli){
-        shapes.push(stimuli[i][0])
-        colors.push(stimuli[i][1])
-        numbers.push(stimuli[i][2])
-    }
-    let uniques = [shapes, colors, numbers].map(countUnique)
-    let answerIndex = argMin(uniques)
-
 
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus: '<p>Which is the most frequent feature:</p><p>Shape, Color, or Number?</p>',
         prompt:'<p style="font-size:32px">Press any key to continue...<p>'});
         for(let i in stimuli){
+            shapes.push(stimuli[i][0])
+            colors.push(stimuli[i][1])
+            numbers.push(stimuli[i][2])
+            let uniques = [shapes, colors, numbers].map(countUnique)
+            let answerIndex = argMin(uniques)
+        
+            data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
+            data['trial_type'] = 'Executive Function Rule Identification';
+
             function draw(){
                 drawRuleID(stimuli[i], 50);
             }
@@ -290,7 +290,7 @@ function EFRuleID(stimuli, data){
                 canvas_id: 'ruleID',
                 stimulus: 'Which is the most frequent feature?',
                 choices: ['Shape', 'Color', 'Number'],
-                data: storeDataTag
+                data: {...storeDataTag, ...data}
                 })
 
             timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
@@ -300,8 +300,6 @@ function EFRuleID(stimuli, data){
         timeline.pop() // gets rid of the break on the last one, we don't need it before the next trial.
 
 
-    data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
-    data['trial_type'] = 'Executive Function Rule Identification';
     timeline.push({
         type: 'call-function',
         func: saveData
@@ -408,6 +406,19 @@ function WMBackwardDigitSpan(stimuli, delay, data){
         let splitNumbers = numbers.split("");
         let reverseArray = splitNumbers.reverse();
         let reverseNumbers = reverseArray.join("")
+        
+        if(countUnique(numbers) === numbers.length){
+            // noinspection JSDuplicatedDeclaration
+            repeats = ' no repeats';
+        } else {
+            // noinspection JSDuplicatedDeclaration
+            repeats = ' repeats';
+        }
+        var numlen = numbers.length
+
+        data['stims_type'] = numlen + ' digits' + repeats;
+        data['trial_type'] = 'Working Memory Backward Span';
+        task['timeline'] = timeline;
 
         for(const i in reverseNumbers){
             timeline.push({type: 'html-keyboard-response', stimulus: '<p style="font-size: 100px">' + reverseNumbers[i] + '</p>',
@@ -424,7 +435,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
             answer: stimuli[j].toString(),
             choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
             entry_size: 100,
-            data: storeDataTag});
+            data: {...storeDataTag, ...data}});
 
         timeline.push({
             type: 'html-keyboard-response',
@@ -433,19 +444,9 @@ function WMBackwardDigitSpan(stimuli, delay, data){
         })
 
 
-        if(countUnique(numbers) === numbers.length){
-            // noinspection JSDuplicatedDeclaration
-            repeats = ' no repeats';
-        } else {
-            // noinspection JSDuplicatedDeclaration
-            repeats = ' repeats';
-        }
-        var numlen = numbers.length
     }
 
-    data['stims_type'] = numlen + ' digits' + repeats;
-    data['trial_type'] = 'Working Memory Backward Span';
-    task['timeline'] = timeline;
+
     task['data'] = data;
     return task;
 }
