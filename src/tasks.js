@@ -34,7 +34,7 @@ function dataBlock(data){
      */
     return {
         type: "call-function",
-        func: function () {saveData(data);}
+        func: saveData
     }
 }
 
@@ -113,7 +113,7 @@ async function EMWordStim(stimuli, choices, data){
     for (let i in choices) {
         let rechoice = fisherYates(choices[i])
         timeline.push({
-             type: 'html-button-response',
+            type: 'html-button-response',
             stimulus: "Which did you memorize before?",
             choices: rechoice,
             data: storeDataTag
