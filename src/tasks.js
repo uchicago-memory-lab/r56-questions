@@ -17,13 +17,6 @@ function saveData() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function() {
-        if(xhr.status === 200){
-            console.log(xhr.responseText)
-            var response = JSON.parse(xhr.responseText);
-            console.log(response.success);
-        }
-    };
     data = jsPsych.data.get().filterCustom(testItemFinder).json()
     console.log(data)
     xhr.send(data);
