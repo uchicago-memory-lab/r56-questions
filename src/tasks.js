@@ -94,7 +94,6 @@ async function EMDistractors(){
 
 async function EMWordStim(stimuli, choices, data){
     let task = {};
-    let answer = stimuli.filter(x => choices.includes(x));
     let timeline = [];
     timeline.push(memorize_command)
     for (const i in stimuli){
@@ -105,17 +104,19 @@ async function EMWordStim(stimuli, choices, data){
     }
     timeline.push(await EMDistractors())
     for (let i in choices) {
+        data['trial_type'] = 'Episodic Memory Word Stimuli';
+        data['shortcode'] = 'EMWordStim';
+        let answer = stimuli.filter(x => choices[i].includes(x));
+        data['answer'] = answer[0];
         let rechoice = fisherYates(choices[i])
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you memorize before?",
             choices: rechoice,
-            data: storeDataTag
+            data: {...storeDataTag, ...data}
         });
     }
-    data['trial_type'] = 'Episodic Memory Word Stimuli';
-    data['shortcode'] = 'EMWordStim';
-    data['answer'] = answer[0];
+
     timeline.push({
         type: 'call-function',
         func: saveData
@@ -127,7 +128,6 @@ async function EMWordStim(stimuli, choices, data){
 
 async function EMObjectPicture(stimuli, choices, data){
     let task = {};
-    let answer = stimuli.filter(x => choices.includes(x));
     let timeline = [];
     timeline.push(memorize_command)
     for (const i in stimuli){
@@ -142,18 +142,24 @@ async function EMObjectPicture(stimuli, choices, data){
     for (let i in choices) {
         let promptLines = [];
         let rechoice = fisherYates(choices[i])
+        let answer = stimuli.filter(x => choices[i].includes(x));
+
         for (const j in rechoice) {
             promptLines.push(imgLocChoice(rechoice[j]))
         }
+        data['answer'] = answer[0];
+        data['trial_type'] = 'Episodic Memory Image Stimuli';
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you see?",
             choices: promptLines,
-            data: storeDataTag
+            data: {...storeDataTag, ...data}
         });
     }
-    data['answer'] = answer[0];
-    data['trial_type'] = 'Episodic Memory Image Stimuli';
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -273,7 +279,7 @@ function EFRuleID(stimuli, data){
                 numbers.push(stimuli[i][j][2])}
             let uniques = [shapes, colors, numbers].map(countUnique)
             let answerIndex = argMin(uniques)
-            data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
+            data['answer'] = answerIndex
             data['trial_type'] = 'Executive Function Rule Identification';
 
             function draw(){
@@ -320,11 +326,14 @@ function SMObjectNaming(stimuli, choices, data){
             stimulus: './img/' + stimshuf[i] + '.jpg',
             choices: choices[i],
             text_answer: stimshuf[i],
-            data: storeDataTag
+            data: {...storeDataTag, ...data}
         })
     }
     data['trial_type'] = 'Semantic Memory Object Naming';
-
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -340,7 +349,21 @@ function WMForwardDigitSpan(stimuli, delay, data){
     stimulus:'Rehearse the numbers for forward recall (first to last)',
     prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
     for (let j in stimuli) {
+
         let numbers = stimuli[j].toString()
+        if (countUnique(numbers) === numbers.length) {
+            // noinspection JSDuplicatedDeclaration
+            repeats = ' no repeats';
+        } else {
+            // noinspection JSDuplicatedDeclaration
+            repeats = ' repeats';
+        }
+        var numlen = numbers.length
+        
+
+        data['stims_type'] = numlen + ' digits' + repeats;
+        data['trial_type'] = 'Working Memory Forward Span';
+
         for (const i in numbers) {
             timeline.push({
                 type: 'html-keyboard-response', stimulus: '<p style="font-size: 100px">' + numbers[i] + '</p>',
@@ -354,14 +377,19 @@ function WMForwardDigitSpan(stimuli, delay, data){
             stimulus: 'Rehearse the numbers in forward order.',
             choices: jsPsych.NO_KEYS, trial_duration: delay
         });
+        
 
+        timeline.push({
+            type: 'call-function',
+            func: saveData
+        })
         timeline.push({
             type: 'string-entry',
             prompt: '<p>Type the numbers in forward order (first to last), press enter/return to send.</p>',
             answer: stimuli[j].toString(),
             choices: ALL_NUMBERS_PLUS_BACKSPACE_AND_ENTER,
             entry_size: 100,
-            data: storeDataTag
+            data: {...storeDataTag, ...data}
         });
 
         timeline.push({
@@ -371,18 +399,8 @@ function WMForwardDigitSpan(stimuli, delay, data){
         })
 
 
-        if (countUnique(numbers) === numbers.length) {
-            // noinspection JSDuplicatedDeclaration
-            repeats = ' no repeats';
-        } else {
-            // noinspection JSDuplicatedDeclaration
-            repeats = ' repeats';
-        }
-        var numlen = numbers.length
     }
 
-    data['stims_type'] = numlen + ' digits' + repeats;
-    data['trial_type'] = 'Working Memory Forward Span';
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -499,7 +517,7 @@ function EFStroop(stimuli, delay, data){
             incorrect_text: "",
             feedback_duration: 0,
             show_stim_with_feedback: false,
-            data: storeDataTag
+            data: {...storeDataTag, ...data}
         })
 
     }
@@ -536,7 +554,7 @@ function PSStringComparison(stimuli, delay, data){
     choices: [80, 81],
     time_limit: delay,
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
-    data: storeDataTag})
+    data: {...storeDataTag, ...data}})
 
     data['trial_type'] = 'Processing Speed String Comparison';
     task['timeline'] = timeline;
@@ -547,20 +565,20 @@ function PSStringComparison(stimuli, delay, data){
 function EMLongTerm(stimuli, choices, data){
     let task = {};
     let timeline = [];
-    let answer = stimuli.filter(x => choices.includes(x));
 
     for (let i in choices) {
         let rechoice = fisherYates(choices[i])
+        let answer = stimuli.filter(x => choices[i].includes(x));
+        data['answer'] = answer[0];
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you memorize before?", // TODO: Figure out the best wording for this.
             choices: rechoice,
-            data: storeDataTag
+            data: {...storeDataTag, ...data}
         });
     }
 
     data['trial_type'] = 'Word Stim Long Term';
-    data['answer'] = answer[0];
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -578,7 +596,7 @@ function endSurvey(question){
     timeline.push({type: 'survey-likert',
     questions: [{prompt: '<p style="font-size:48px">' + question[0] + '</p>',
     labels: formoptions}],
-    data: storeDataTag})
+    data: {...storeDataTag, ...data}})
     task['timeline'] = timeline;
     data['trial_type'] = "End of Experiment Survey";
     task['data'] = data;
