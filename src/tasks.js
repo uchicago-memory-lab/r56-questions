@@ -24,7 +24,8 @@ function saveData() {
         }
     };
     data = jsPsych.data.get().filterCustom(testItemFinder).json()
-    xhr.send();
+    console.log(data)
+    xhr.send(data);
 }
 
 function dataBlock(data){
