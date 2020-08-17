@@ -398,7 +398,10 @@ function WMForwardDigitSpan(stimuli, delay, data){
 
 
     }
-
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -471,6 +474,7 @@ function EFStroop(stimuli, delay, data){
             '<p style="color: '+ colorChart.K+'"> black </p></b>',
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
+    data['trial_type'] = 'Executive Function Stroop Task';
 
     for(let j in stimuli){
         let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
@@ -519,8 +523,10 @@ function EFStroop(stimuli, delay, data){
         })
 
     }
-
-    data['trial_type'] = 'Executive Function Stroop Task';
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -553,7 +559,10 @@ function PSStringComparison(stimuli, delay, data){
     time_limit: delay,
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
     data: {...storeDataTag, ...data}})
-
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     data['trial_type'] = 'Processing Speed String Comparison';
     task['timeline'] = timeline;
     task['data'] = data;
