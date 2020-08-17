@@ -272,7 +272,7 @@ function EFRuleID(stimuli, data){
             numbers.push(stimuli[i][2])
             let uniques = [shapes, colors, numbers].map(countUnique)
             let answerIndex = argMax(uniques)
-        
+            console.log(answerIndex)
             data['answer'] = ['Shape', 'Color', 'Number'][answerIndex]
             data['trial_type'] = 'Executive Function Rule Identification';
 
