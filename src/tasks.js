@@ -10,6 +10,8 @@ async function getData(url) {
     return response.json()
 }
 
+let IMPORTANT_COLUMNS = ['item', 'key_press', 'button_pressed', 'rt', '']
+
 // TODO: Do some magic on the item tags so that they're like itemnum_trialnum
 // TODO: Look into getting data to store in english only.
 
