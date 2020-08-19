@@ -249,7 +249,7 @@ async function endBlock(qBlock){
         let dat = qBlock[rSurveyQs[i].toString()]
         timeline.push(endSurvey(dat['stimuli']))
     }
-    timeline.push({type: 'call-function', func: document.exitFullscreen()})
+    timeline.push({type: 'call-function', func: setTimeout(function(){document.exitFullscreen()}, 1000)})
     timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
     choices: jsPsych.NO_KEYS})
     block['timeline'] = timeline;

@@ -14,7 +14,7 @@ let IMPORTANT_COLUMNS = ['item', 'key_press', 'button_pressed', 'rt']
 
 let LAST_UPLOAD = 0
 
-// TODO: Do some magic on the item tags so that they're like itemnum_trialnum
+// TODO: Do some magic on the item tags so that they're like IitemnumTtrialnum
 // TODO: Look into getting data to store in english only.
 
 let storeDataTag = {stored: true}
@@ -479,6 +479,7 @@ function EFStroop(stimuli, delay, data){
         })
 
         let possibleKeys = Array(stimulus.length + 1).fill(48).map((x, y) => x + y);
+        let possibleKeys = possibleKeys.concat(Array(stimulus.length + 1).fill(96).map((x, y) => x + y));
 
         let correctAnswer = 0
         let stimLines = [];
