@@ -24,7 +24,7 @@ function saveData() {
     xhr.open('POST', 'write_data.php');
     xhr.setRequestHeader('Content-Type', 'application/json');
     data = jsPsych.data.get().filterCustom(testItemFinder)
-    LAST_UPLOAD = data[data.length - 1].trial_index
+    LAST_UPLOAD = data
     console.log(data.json())
     xhr.send(data.json());
 }
