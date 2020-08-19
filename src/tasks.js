@@ -24,9 +24,13 @@ function saveData() {
     xhr.open('POST', 'write_data.php');
     xhr.setRequestHeader('Content-Type', 'application/json');
     data = JSON.parse(jsPsych.data.get().filterCustom(testItemFinder).json())
-    try{LAST_UPLOAD = data[data.length - 1].trial_index;}
-    catch{LAST_UPLOAD = 0}
-
+    console.log(LAST_UPLOAD)
+    let last_trial = data[data.length - 1]
+    if (last_trial === undefined){
+        LAST_UPLOAD = 0
+        data = JSON.parse(jsPsych.data.get().filterCustom(testItemFinder).json())
+    }
+    LAST_UPLOAD = last_trial = data[data.length - 1].trial_index
     console.log(data)
     xhr.send(JSON.stringify(data));
 }
@@ -34,7 +38,6 @@ function saveData() {
 function testItemFinder(jsPsychData){
     /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
     if ('stored' in jsPsychData){
-        console.log(jsPsychData.trial_index)
         return jsPsychData.stored && jsPsychData.trial_index > LAST_UPLOAD
     }
     return false
