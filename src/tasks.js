@@ -479,7 +479,7 @@ function EFStroop(stimuli, delay, data){
         })
 
         let possibleKeys = Array(stimulus.length + 1).fill(48).map((x, y) => x + y);
-        let possibleKeys = possibleKeys.concat(Array(stimulus.length + 1).fill(96).map((x, y) => x + y));
+        possibleKeys = possibleKeys.concat(Array(stimulus.length + 1).fill(96).map((x, y) => x + y));
 
         let correctAnswer = 0
         let stimLines = [];
