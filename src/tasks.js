@@ -314,7 +314,7 @@ function SMObjectNaming(stimuli, choices, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-        stimulus: "Choose the name for each object.",
+        stimulus: "Click the name for each object.",
         prompt: "<p style='font-size:32px'>Press any key to continue...<p>"})
     let stimshuf = fisherYates(stimuli)
     for(let i in stimshuf) {
@@ -344,7 +344,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-    stimulus:'Rehearse the numbers for forward recall (first to last)',
+    stimulus:'Rehearse the numbers in forward order. (first to last)',
     prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
     for (let j in stimuli) {
 
@@ -372,7 +372,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
         }
         timeline.push({
             type: 'html-keyboard-response',
-            stimulus: 'Rehearse the numbers in forward order.',
+            stimulus: '+',
             choices: jsPsych.NO_KEYS, trial_duration: delay
         });
         
@@ -387,7 +387,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
 
         timeline.push({
             type: 'html-keyboard-response',
-            stimulus: 'Press any key (except return/enter) to continue...',
+            stimulus: 'Press space to continue...',
             choices: ALL_KEYS_BUT_ENTER
         })
 
@@ -408,7 +408,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
     let task = {};
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
-        stimulus:'Rehearse the numbers for backward recall (last to first)',
+        stimulus:'Rehearse the numbers in reverse order. (last to first)',
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
     for(let j in stimuli){
         let numbers = stimuli[j].toString();
@@ -436,7 +436,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
                 choices: jsPsych.NO_KEYS, trial_duration: 1000})
         }
         timeline.push({type: 'html-keyboard-response',
-            stimulus: 'Rehearse the numbers in backward order.',
+            stimulus: '+',
             choices: jsPsych.NO_KEYS, trial_duration: delay});
 
         timeline.push({type: 'string-entry',
@@ -448,7 +448,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
 
         timeline.push({
             type: 'html-keyboard-response',
-            stimulus: 'Press any key (except return/enter) to continue...',
+            stimulus: 'Press space to continue...',
             choices: ALL_KEYS_BUT_ENTER
         })
 

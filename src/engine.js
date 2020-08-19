@@ -164,6 +164,11 @@ async function practiceBlock(qBlock){
         stimulus: 'First, some practice.',
         prompt: pressAny
     })
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: 'For some of these tasks you will need to use the mouse, for others you will use the keyboard.',
+        prompt: pressAny
+    })
     let tarNums = itemsByDifficulty(qBlock, 'practice');
     let instructions = await getData('./src/instructions.json')
     const response = await fetch('./src/instructions.json');
