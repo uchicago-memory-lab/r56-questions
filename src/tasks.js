@@ -10,7 +10,9 @@ async function getData(url) {
     return response.json()
 }
 
-let IMPORTANT_COLUMNS = ['item', 'key_press', 'button_pressed', 'rt', '']
+let IMPORTANT_COLUMNS = ['item', 'key_press', 'button_pressed', 'rt']
+
+let LAST_UPLOAD = 0
 
 // TODO: Do some magic on the item tags so that they're like itemnum_trialnum
 // TODO: Look into getting data to store in english only.
@@ -19,27 +21,18 @@ let storeDataTag = {stored: true}
 
 function saveData() {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'write_data.php'); // change 'write_data.php' to point to php script.
+    xhr.open('POST', 'write_data.php');
     xhr.setRequestHeader('Content-Type', 'application/json');
-    data = jsPsych.data.get().filterCustom(testItemFinder).json()
-    console.log(data[data.length - 1])
-    xhr.send(data[data.length - 1]);
-}
-
-function dataBlock(data){
-    /**
-     * A simple helper function that wraps the AJAX call into a jspsych object.
-     */
-    return {
-        type: "call-function",
-        func: saveData
-    }
+    data = jsPsych.data.get().filterCustom(testItemFinder)
+    LAST_UPLOAD = data[data.length - 1].trial_index
+    console.log(data.json())
+    xhr.send(data.json());
 }
 
 function testItemFinder(jsPsychData){
     /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
     if ('stored' in jsPsychData){
-        return jsPsychData.stored
+        return jsPsychData.stored && jsPsychData.trial_type > LAST_UPLOAD
     }
     return false
 }
@@ -322,7 +315,7 @@ function SMObjectNaming(stimuli, choices, data){
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus: "Choose the name for each object.",
-        prompt: "<p style='font-size:32px'>Press any key to continue...<p>."})
+        prompt: "<p style='font-size:32px'>Press any key to continue...<p>"})
     let stimshuf = fisherYates(stimuli)
     for(let i in stimshuf) {
         let answer = stimshuf[i]
