@@ -3290,14 +3290,24 @@
             ]
         ]
     },
-    "WMFP": {
+    "WMAP": {
         "difficulty": "practice",
         "kind": "WMForwardDigitSpan",
         "stimsType": "1s",
         "stimuli": [
             "872"
         ],
-        "taskNum": "WMFP",
+        "taskNum": "WMAP",
+        "trials": []
+    },
+    "WMBP": {
+        "difficulty": "practice",
+        "kind": "WMBackwardDigitSpan",
+        "stimsType": "1s",
+        "stimuli": [
+            "970"
+        ],
+        "taskNum": "WMBP",
         "trials": []
     }
 }

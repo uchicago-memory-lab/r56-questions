@@ -1,6 +1,9 @@
 import csv
 import json
 import glob
+import os
+
+fpath = os.path.dirname(os.path.realpath(__file__))
 
 def csv2dict(csv_filename):
     with open(csv_filename, 'r') as csvfile:
@@ -25,7 +28,7 @@ def csv2dict(csv_filename):
 
 if __name__ == "__main__":
     dump = {}
-    for csvf in glob.glob('csv/*'):
+    for csvf in glob.glob(fpath + '/csv/*'):
         dump.update(csv2dict(csvf))
-    with open('json/qblock.json', 'w') as jf:
+    with open(fpath + '/json/qblock.json', 'w') as jf:
         json.dump(dump, jf, indent=4, sort_keys=True)

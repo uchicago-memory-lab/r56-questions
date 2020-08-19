@@ -12,7 +12,7 @@ async function getData(url) {
 
 let IMPORTANT_COLUMNS = ['item', 'key_press', 'button_pressed', 'rt']
 
-let LAST_UPLOAD = 0
+var LAST_UPLOAD = 0
 
 // TODO: Do some magic on the item tags so that they're like IitemnumTtrialnum
 // TODO: Look into getting data to store in english only.
@@ -23,16 +23,19 @@ function saveData() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php');
     xhr.setRequestHeader('Content-Type', 'application/json');
-    data = jsPsych.data.get().filterCustom(testItemFinder)
-    LAST_UPLOAD = data
-    console.log(data.json())
-    xhr.send(data.json());
+    data = JSON.parse(jsPsych.data.get().filterCustom(testItemFinder).json())
+    try{LAST_UPLOAD = data[data.length - 1].trial_index;}
+    catch{LAST_UPLOAD = 0}
+
+    console.log(data)
+    xhr.send(JSON.stringify(data));
 }
 
 function testItemFinder(jsPsychData){
     /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
     if ('stored' in jsPsychData){
-        return jsPsychData.stored && jsPsychData.trial_type > LAST_UPLOAD
+        console.log(jsPsychData.trial_index)
+        return jsPsychData.stored && jsPsychData.trial_index > LAST_UPLOAD
     }
     return false
 }

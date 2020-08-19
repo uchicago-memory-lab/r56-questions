@@ -18,9 +18,6 @@ try{
         $db["pass"],
         ltrim($db["path"], "/")
     ));
-    
-    
-
 
 } catch(Exception $e) {
     echo '{"success": false, "message": ' . $e->getMessage() . '}';
