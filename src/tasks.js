@@ -104,8 +104,7 @@ async function EMWordStim(stimuli, choices, data){
     }
     timeline.push(await EMDistractors())
     for (let i in choices) {
-        data['trial_type'] = 'Episodic Memory Word Stimuli';
-        data['shortcode'] = 'EMWordStim';
+        data['trial_type'] = 'EMWordStim';
         let answer = stimuli.filter(x => choices[i].includes(x));
         data['answer'] = answer[0];
         let rechoice = fisherYates(choices[i])
@@ -280,7 +279,7 @@ function EFRuleID(stimuli, data){
             let uniques = [shapes, colors, numbers].map(countUnique)
             let answerIndex = argMin(uniques)
             data['answer'] = answerIndex
-            data['trial_type'] = 'Executive Function Rule Identification';
+            data['trial_type'] = 'EFRuleID';
 
             function draw(){
                 drawRuleID(stimuli[i], 50);
@@ -330,7 +329,7 @@ function SMObjectNaming(stimuli, choices, data){
             data: {...storeDataTag, ...data}
         })
     }
-    data['trial_type'] = 'Semantic Memory Object Naming';
+    data['trial_type'] = 'SMObjectNaming';
     timeline.push({
         type: 'call-function',
         func: saveData
@@ -363,7 +362,8 @@ function WMForwardDigitSpan(stimuli, delay, data){
         
 
         data['stims_type'] = numlen + ' digits' + repeats;
-        data['trial_type'] = 'Working Memory Forward Span';
+        data['trial_type'] = 'WMForwardDigitSpan';
+        data['answer'] = stimuli[j];
 
         for (const i in numbers) {
             timeline.push({
@@ -429,7 +429,8 @@ function WMBackwardDigitSpan(stimuli, delay, data){
         var numlen = numbers.length
 
         data['stims_type'] = numlen + ' digits' + repeats;
-        data['trial_type'] = 'Working Memory Backward Span';
+        data['trial_type'] = 'WMBackwardDigitSpan';
+        data['answer'] = stimuli[j]
         task['timeline'] = timeline;
 
         for(const i in reverseNumbers){
@@ -472,7 +473,7 @@ function EFStroop(stimuli, delay, data){
             '<p style="color: '+ colorChart.K+'"> black </p></b>',
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
-    data['trial_type'] = 'Executive Function Stroop Task';
+    data['trial_type'] = 'EFStroop';
 
     for(let j in stimuli){
         let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
@@ -494,6 +495,7 @@ function EFStroop(stimuli, delay, data){
             }
             stimLines.push('<p style="color: ' + colorChart[word[1]] + '"><b>' + word[0].toLowerCase() + '</b></p>')
         }
+        data['answer'] = correctAnswer;
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: stimLines.join(''),
@@ -539,22 +541,25 @@ function PSStringComparison(stimuli, delay, data){
     prompt: '<p>For SAME press "Q", for DIFFERENT press "P"</p>' + '<p>Go as fast as you can!</p>'+
         '<p><p style="font-size:32px">Press any key to continue...<p></p>'})
 
+    let q_p = [80, 81]
     timeline.push({type: 'html-keyboard-response',
     stimulus: 'Press Q or P when Ready',
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
-    choices: [80, 81]})
+    choices: q_p})
 
     let stimuli_1 = []
     let stimuli_2 = []
+    let answer = []
     for(let i in stimuli){
         let stimsplit = stimuli[i].split('-')
         stimuli_1.push(stimsplit[0])
         stimuli_2.push(stimsplit[1])
+        answer.push(q_p[stimsplit[0] !== stimsplit[1]])
     }
     timeline.push({type: 'timed-html-comparison',
     stimuli_1: stimuli_1,
     stimuli_2: stimuli_2,
-    choices: [80, 81],
+    choices: q_p,
     time_limit: delay,
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
     data: {...storeDataTag, ...data}})
@@ -562,7 +567,8 @@ function PSStringComparison(stimuli, delay, data){
         type: 'call-function',
         func: saveData
     })
-    data['trial_type'] = 'Processing Speed String Comparison';
+    data['trial_type'] = 'PSStringComparison';
+    data['answer'] = answer
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -584,7 +590,7 @@ function EMLongTerm(stimuli, choices, data){
         });
     }
 
-    data['trial_type'] = 'Word Stim Long Term';
+    data['trial_type'] = 'EMLongTerm';
     task['timeline'] = timeline;
     task['data'] = data;
     return task;

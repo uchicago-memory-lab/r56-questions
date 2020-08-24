@@ -92,15 +92,17 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
             let t_left = trial.stimuli_1.length - t
 
             for(let i = 0; i < t_left; i++){
-                response.rt.push(0)
-                response.key.push(null)
+                response.rt.push(0);
+                response.key.push(null);
             }
+
 
             // gather the data to store for the trial
             let trial_data = {
                 "rt": response.rt,
                 "stimulus": trial.stimulus,
-                "key_press": response.key
+                "key_press": response.key,
+
             };
 
 
