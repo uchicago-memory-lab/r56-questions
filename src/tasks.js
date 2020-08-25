@@ -52,7 +52,6 @@ function saveData() {
     xhr.open('POST', 'write_data.php');
     xhr.setRequestHeader('Content-Type', 'application/json');
     data = JSON.parse(jsPsych.data.get().filterCustom(testItemFinder).json())
-<<<<<<< HEAD
     try{LAST_UPLOAD = data[data.length - 1].trial_index;}
     catch{LAST_UPLOAD = 0}
 
@@ -73,8 +72,7 @@ function saveData() {
                 data[i].response = data[i].key[parseInt(data[i].button_pressed)]
         }}
     }
-=======
->>>>>>> local
+
     console.log(data)
 
     xhr.send(JSON.stringify(data));
