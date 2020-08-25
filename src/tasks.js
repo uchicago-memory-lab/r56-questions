@@ -10,12 +10,40 @@ async function getData(url) {
     return response.json()
 }
 
-let IMPORTANT_COLUMNS = ['item', 'key_press', 'button_pressed', 'rt']
+let IMPORTANT_COLUMNS = ['item', 'response', 'rt']
+
+let NUM_CODES = {'96': 0,
+'97': 1,
+'98': 2,
+'99': 3,
+'100': 4,
+'101': 5,
+'102': 6,
+'103': 7,
+'104': 8,
+'105': 9,
+'48': 0,
+'49': 1,
+'50': 2,
+'51': 3,
+'52': 4,
+'53': 5,
+'54': 6,
+'55': 7,
+'56': 8,
+'57': 9}
+
+let stroopCodes = {
+    'K': 'Black',
+    'G': 'Green',
+    'P': 'Purple',
+    'R': 'Red',
+    'Y': 'Yellow'
+}
 
 var LAST_UPLOAD = 0
 
 // TODO: Do some magic on the item tags so that they're like IitemnumTtrialnum
-// TODO: Look into getting data to store in english only.
 
 let storeDataTag = {stored: true}
 
@@ -27,14 +55,31 @@ function saveData() {
     try{LAST_UPLOAD = data[data.length - 1].trial_index;}
     catch{LAST_UPLOAD = 0}
 
+    for(let i in data){
+        if(!data[i].response){
+            if (data[i].key_press){
+                data[i].response = data[i].key[data[i].key_press]
+                if (data[i].key_press instanceof Array){
+                    data[i].response = []
+                    answer = []
+                    for(let j in data[i].key_press){
+                        data[i].response.push(data[i].key[data[i].key_press[j]])
+                        answer.push(data[i].key[data[i].answer[j]])
+                    }
+                    data[i].answer = answer
+                }else {data[i].answer = data[i].key[data[i].answer]}
+            }else if (data[i].button_pressed) {
+                data[i].response = data[i].key[parseInt(data[i].button_pressed)]
+        }}
+    }
     console.log(data)
+
     xhr.send(JSON.stringify(data));
 }
 
 function testItemFinder(jsPsychData){
     /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
     if ('stored' in jsPsychData){
-        console.log(jsPsychData.trial_index)
         return jsPsychData.stored && jsPsychData.trial_index > LAST_UPLOAD
     }
     return false
@@ -104,10 +149,11 @@ async function EMWordStim(stimuli, choices, data){
     }
     timeline.push(await EMDistractors())
     for (let i in choices) {
-        data['trial_type'] = 'EMWordStim';
+        data['item_type'] = 'EMWordStim';
         let answer = stimuli.filter(x => choices[i].includes(x));
         data['answer'] = answer[0];
-        let rechoice = fisherYates(choices[i])
+        let rechoice = fisherYates(choices[i]);
+        data['key'] = rechoice;
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you memorize before?",
@@ -147,7 +193,8 @@ async function EMObjectPicture(stimuli, choices, data){
             promptLines.push(imgLocChoice(rechoice[j]))
         }
         data['answer'] = answer[0];
-        data['trial_type'] = 'Episodic Memory Image Stimuli';
+        data['item_type'] = 'Episodic Memory Image Stimuli';
+        data['key'] = rechoice;
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you see?",
@@ -279,7 +326,8 @@ function EFRuleID(stimuli, data){
             let uniques = [shapes, colors, numbers].map(countUnique)
             let answerIndex = argMin(uniques)
             data['answer'] = answerIndex
-            data['trial_type'] = 'EFRuleID';
+            data['item_type'] = 'EFRuleID';
+            data['key'] = ['shape', 'color', 'number']
 
             function draw(){
                 drawRuleID(stimuli[i], 50);
@@ -322,6 +370,7 @@ function SMObjectNaming(stimuli, choices, data){
     for(let i in stimshuf) {
         let answer = stimshuf[i]
         data['answer'] = answer
+        data['key'] = choices[i]
         timeline.push({
             type: 'image-button-response',
             stimulus: './img/' + stimshuf[i] + '.jpg',
@@ -329,7 +378,7 @@ function SMObjectNaming(stimuli, choices, data){
             data: {...storeDataTag, ...data}
         })
     }
-    data['trial_type'] = 'SMObjectNaming';
+    data['item_type'] = 'SMObjectNaming';
     timeline.push({
         type: 'call-function',
         func: saveData
@@ -362,7 +411,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
         
 
         data['stims_type'] = numlen + ' digits' + repeats;
-        data['trial_type'] = 'WMForwardDigitSpan';
+        data['item_type'] = 'WMForwardDigitSpan';
         data['answer'] = stimuli[j];
 
         for (const i in numbers) {
@@ -429,7 +478,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
         var numlen = numbers.length
 
         data['stims_type'] = numlen + ' digits' + repeats;
-        data['trial_type'] = 'WMBackwardDigitSpan';
+        data['item_type'] = 'WMBackwardDigitSpan';
         data['answer'] = stimuli[j]
         task['timeline'] = timeline;
 
@@ -450,14 +499,20 @@ function WMBackwardDigitSpan(stimuli, delay, data){
             entry_size: 100,
             data: {...storeDataTag, ...data}});
 
+        
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: 'Press space to continue...',
             choices: ALL_KEYS_BUT_ENTER
         })
+        
 
 
     }
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
 
 
     task['data'] = data;
@@ -473,7 +528,7 @@ function EFStroop(stimuli, delay, data){
             '<p style="color: '+ colorChart.K+'"> black </p></b>',
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'
     })
-    data['trial_type'] = 'EFStroop';
+    data['item_type'] = 'EFStroop';
 
     for(let j in stimuli){
         let stimulus = stimuli[j].split(' ').filter((arg) => arg !== '')
@@ -484,18 +539,21 @@ function EFStroop(stimuli, delay, data){
 
         let possibleKeys = Array(stimulus.length + 1).fill(48).map((x, y) => x + y);
         possibleKeys = possibleKeys.concat(Array(stimulus.length + 1).fill(96).map((x, y) => x + y));
-
         let correctAnswer = 0
         let stimLines = [];
-
+        
         for (const i in stimulus) {
             let word = stimulus[i].split('.')
-            if (word[0] === word[1]) {
+            if (word[0] === stroopCodes[word[1]]) {
                 correctAnswer += 1;
             }
             stimLines.push('<p style="color: ' + colorChart[word[1]] + '"><b>' + word[0].toLowerCase() + '</b></p>')
         }
-        data['answer'] = correctAnswer;
+        data['answer'] = possibleKeys[correctAnswer];
+        data['key'] = NUM_CODES;
+        data['correct'] = undefined;
+        // jspsych-categorize-html doesn't allow for OR-ing answers. This means it will always show 'correct' as false.
+        // This line overloads it with an undefined, which keeps it from showing up in the POST at all.
         timeline.push({
             type: 'html-keyboard-response',
             stimulus: stimLines.join(''),
@@ -515,7 +573,9 @@ function EFStroop(stimuli, delay, data){
             stimulus: 'How many words had matching color?',
             prompt: choicePrompt,
             choices: possibleKeys,
-            key_answer: possibleKeys[correctAnswer],
+            key_answer: 999,
+            // This is to keep a warning from coming up, DO NOT USE THE 'correct' tag, it can't be manipulated to allow keypad usage.
+            // Just to be safe, I suppressed 'correct' from even coming out.
             correct_text: "",
             incorrect_text: "",
             feedback_duration: 0,
@@ -554,8 +614,13 @@ function PSStringComparison(stimuli, delay, data){
         let stimsplit = stimuli[i].split('-')
         stimuli_1.push(stimsplit[0])
         stimuli_2.push(stimsplit[1])
-        answer.push(q_p[stimsplit[0] !== stimsplit[1]])
+        answer.push(q_p[stimsplit[0] === stimsplit[1] ? 1 : 0])
     }
+
+    data['item_type'] = 'PSStringComparison';
+    data['answer'] = answer
+    console.log(answer)
+    data['key'] = {'81': 'same', '80': 'different'}
     timeline.push({type: 'timed-html-comparison',
     stimuli_1: stimuli_1,
     stimuli_2: stimuli_2,
@@ -563,13 +628,13 @@ function PSStringComparison(stimuli, delay, data){
     time_limit: delay,
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
     data: {...storeDataTag, ...data}})
+
     timeline.push({
         type: 'call-function',
         func: saveData
     })
-    data['trial_type'] = 'PSStringComparison';
-    data['answer'] = answer
     task['timeline'] = timeline;
+    
     task['data'] = data;
     return task;
 }
@@ -582,15 +647,16 @@ function EMLongTerm(stimuli, choices, data){
         let rechoice = fisherYates(choices[i])
         let answer = stimuli.filter(x => choices[i].includes(x));
         data['answer'] = answer[0];
+        data['key'] = rechoice
         timeline.push({
             type: 'html-button-response',
-            stimulus: "Which did you memorize before?", // TODO: Figure out the best wording for this.
+            stimulus: "Which did you memorize before?", 
             choices: rechoice,
             data: {...storeDataTag, ...data}
         });
     }
 
-    data['trial_type'] = 'EMLongTerm';
+    data['item_type'] = 'EMLongTerm';
     task['timeline'] = timeline;
     task['data'] = data;
     return task;
@@ -610,7 +676,7 @@ function endSurvey(question){
     labels: formoptions}],
     data: {...storeDataTag, ...data}})
     task['timeline'] = timeline;
-    data['trial_type'] = "End of Experiment Survey";
+    data['item_type'] = "End of Experiment Survey";
     task['data'] = data;
     return task;
 }

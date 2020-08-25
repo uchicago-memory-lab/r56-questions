@@ -43,7 +43,7 @@ jsPsych.plugins["string-entry"] = (function() {
 
         var response = {
             rt: null,
-            entry: null
+            response: null
         }
         var entryString = ''
         display_element.innerHTML = html + '<p style="font-size: ' + trial.entry_size + 'px">&nbsp;' + entryString + '</p>';
@@ -85,7 +85,7 @@ jsPsych.plugins["string-entry"] = (function() {
             var trial_data = {
                 "rt": response.rt,
                 "answer": trial.answer,
-                "entry": response.entry
+                "response": response.entry
             };
 
             // clear the display

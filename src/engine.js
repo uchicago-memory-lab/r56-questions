@@ -159,33 +159,33 @@ async function medBlock(qBlock){
 async function practiceBlock(qBlock){
     let block = {};
     let timeline = [];
-    timeline.push({
-        type: 'html-keyboard-response',
-        stimulus: 'First, some practice.',
-        prompt: pressAny
-    })
-    timeline.push({
-        type: 'html-keyboard-response',
-        stimulus: 'For some of these tasks you will need to use the mouse, for others you will use the keyboard.',
-        prompt: pressAny
-    })
-    let tarNums = itemsByDifficulty(qBlock, 'practice');
-    let instructions = await getData('./src/instructions.json')
-    const response = await fetch('./src/instructions.json');
-    console.log(response);
-    for (const i in tarNums){
-        timeline.push({
-            type: 'html-keyboard-response',
-            stimulus: instructions[qBlock[tarNums[i]]['kind']],
-            prompt: pressAny
-        })
-        timeline.push(await dat2Func(qBlock[tarNums[i]]));
-        timeline.push({
-            type: 'html-keyboard-response',
-            stimulus: instructions[qBlock[tarNums[i]]['kind']+'FB'],
-            prompt: pressAny
-        })
-    }
+    // timeline.push({
+    //     type: 'html-keyboard-response',
+    //     stimulus: 'First, some practice.',
+    //     prompt: pressAny
+    // })
+    // timeline.push({
+    //     type: 'html-keyboard-response',
+    //     stimulus: 'For some of these tasks you will need to use the mouse, for others you will use the keyboard.',
+    //     prompt: pressAny
+    // })
+    // let tarNums = itemsByDifficulty(qBlock, 'practice');
+    // let instructions = await getData('./src/instructions.json')
+    // const response = await fetch('./src/instructions.json');
+    // console.log(response);
+    // for (const i in tarNums){
+    //     timeline.push({
+    //         type: 'html-keyboard-response',
+    //         stimulus: instructions[qBlock[tarNums[i]]['kind']],
+    //         prompt: pressAny
+    //     })
+    //     timeline.push(await dat2Func(qBlock[tarNums[i]]));
+    //     timeline.push({
+    //         type: 'html-keyboard-response',
+    //         stimulus: instructions[qBlock[tarNums[i]]['kind']+'FB'],
+    //         prompt: pressAny
+    //     })
+    // }
 
     timeline.push({type: 'html-button-response',
         stimulus: 'Would you like to repeat the practice round?',
