@@ -274,7 +274,7 @@ async function main() {
 
     timeline.push({
         type: 'call-function',
-        func: function() {          var element = document.documentElement;
+        func: function() {var element = document.documentElement;
             if (element.requestFullscreen) {
               element.requestFullscreen();
             } else if (element.mozRequestFullScreen) {
@@ -284,7 +284,14 @@ async function main() {
             } else if (element.msRequestFullscreen) {
               element.msRequestFullscreen();
             }
-            sleep(500);}
+        }
+    })
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: '',
+        prompt: '',
+        choices: jsPsych.NO_KEYS,
+        trial_duration: 500
     })
 
     let qBlock = await loadQuestions();
