@@ -279,7 +279,7 @@ async function main() {
               element.requestFullscreen();
             } else if (element.mozRequestFullScreen) {
               element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen()) {
+            } else if (element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)) {
               element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
             } else if (element.msRequestFullscreen) {
               element.msRequestFullscreen();
