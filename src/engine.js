@@ -284,7 +284,7 @@ async function main() {
             } else if (element.msRequestFullscreen) {
               element.msRequestFullscreen();
             }
-            sleep(1000);}
+            sleep(500);}
     })
 
     let qBlock = await loadQuestions();
