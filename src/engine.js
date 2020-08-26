@@ -272,38 +272,34 @@ async function main() {
         prompt: pressAny
     })
 
+    // timeline.push({
+    //     type: 'call-function',
+    //     func: function() { 
+
+    //         element = Document.documentElement;
+
+    //         if (screenfull.isEnabled){
+    //             screenfull.request(element)
+    //         }
+    //     }
+    // })
+
     timeline.push({
-        type: 'call-function',
-        func: function() {var element = document.documentElement;
-            if (element.requestFullscreen) {
-              element.requestFullscreen();
-            } else if (element.mozRequestFullScreen) {
-              element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen(element.ALLOW_KEYBOARD_INPUT)) {
-                element.webkitRequestFullScreen(element.ALLOW_KEYBOARD_INPUT);
-                if (!document.webkitCurrentFullScreenElement) {
-                    // Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
-                }
-            } else if (element.msRequestFullscreen) {
-              element.msRequestFullscreen();
-            }
-        }
+        type: 'fullscreen',
+        fullscreen_mode: true
     })
-    timeline.push({
-        type: 'html-keyboard-response',
-        stimulus: '',
-        prompt: '',
-        choices: jsPsych.NO_KEYS,
-        trial_duration: 1000
-    })
+    // timeline.push({
+    //     type: 'html-keyboard-response',
+    //     stimulus: '',
+    //     prompt: '',
+    //     choices: jsPsych.NO_KEYS,
+    //     trial_duration: 1000
+    // })
 
     let qBlock = await loadQuestions();
 
 
     timeline.push(await practiceBlock(qBlock));
-
-
-
 
 
     jsPsych.init({timeline: timeline});
