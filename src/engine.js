@@ -26,6 +26,14 @@ function fisherYates(tarArray){
     return array
 }
 
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+
 function getParams(func) {
     /**
      * Helper function stolen from geeksforgeeks.
@@ -271,11 +279,12 @@ async function main() {
               element.requestFullscreen();
             } else if (element.mozRequestFullScreen) {
               element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) {
-              element.webkitRequestFullscreen();
+            } else if (element.webkitRequestFullscreen()) {
+              element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
             } else if (element.msRequestFullscreen) {
               element.msRequestFullscreen();
-            }}
+            }
+            sleep(1000);}
     })
 
     let qBlock = await loadQuestions();

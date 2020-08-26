@@ -425,7 +425,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
         }
         timeline.push({
             type: 'html-keyboard-response',
-            stimulus: '<p style="font-size: 48px">+</p>',
+            stimulus: '<p style="font-size: 120px">+</p>',
             choices: jsPsych.NO_KEYS, trial_duration: delay
         });
         
@@ -490,7 +490,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
                 choices: jsPsych.NO_KEYS, trial_duration: 1000})
         }
         timeline.push({type: 'html-keyboard-response',
-            stimulus: '+',
+            stimulus: '<p style="font-size: 120px">+</p>',
             choices: jsPsych.NO_KEYS, trial_duration: delay});
 
         timeline.push({type: 'string-entry',
