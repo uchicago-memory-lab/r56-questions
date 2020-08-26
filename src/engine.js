@@ -279,8 +279,11 @@ async function main() {
               element.requestFullscreen();
             } else if (element.mozRequestFullScreen) {
               element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)) {
-              element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            } else if (element.webkitRequestFullscreen(element.ALLOW_KEYBOARD_INPUT)) {
+                element.webkitRequestFullScreen(element.ALLOW_KEYBOARD_INPUT);
+                if (!document.webkitCurrentFullScreenElement) {
+                    // Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
+                }
             } else if (element.msRequestFullscreen) {
               element.msRequestFullscreen();
             }
