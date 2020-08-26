@@ -425,7 +425,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
         }
         timeline.push({
             type: 'html-keyboard-response',
-            stimulus: '+',
+            stimulus: '<p style="font-size: 48px">+</p>',
             choices: jsPsych.NO_KEYS, trial_duration: delay
         });
         
