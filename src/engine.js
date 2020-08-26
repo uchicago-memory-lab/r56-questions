@@ -266,7 +266,7 @@ async function main() {
 
     timeline.push({
         type: 'call-function',
-        func: function() {          var element = document.documentElement;
+        func: setTimeout(function() {          var element = document.documentElement;
             if (element.requestFullscreen) {
               element.requestFullscreen();
             } else if (element.mozRequestFullScreen) {
@@ -275,7 +275,7 @@ async function main() {
               element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
             } else if (element.msRequestFullscreen) {
               element.msRequestFullscreen();
-            }}
+            }}, 1000)
     })
 
     let qBlock = await loadQuestions();
