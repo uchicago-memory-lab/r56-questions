@@ -5,6 +5,8 @@ $db = parse_url(getenv("DATABASE_URL"));
 // Heroku handles the connstring part of this. 
 // Presumably our credentials are safe so we needn't take any safety measures here?
 
+
+// heck
 $data_array = json_decode(file_get_contents("php://input"), true);
 
 
