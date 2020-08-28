@@ -10,7 +10,6 @@ async function getData(url) {
     return response.json()
 }
 
-let IMPORTANT_COLUMNS = ['item', 'response', 'rt']
 
 let NUM_CODES = {'96': 0,
 '97': 1,
@@ -32,6 +31,8 @@ let NUM_CODES = {'96': 0,
 '55': 7,
 '56': 8,
 '57': 9}
+
+let TEST_USER = 'test'
 
 let stroopCodes = {
     'K': 'Black',
@@ -69,13 +70,23 @@ function saveData() {
                     data[i].answer = answer
                 }else {data[i].answer = data[i].key[data[i].answer]}
             }else if (data[i].button_pressed) {
-                data[i].response = data[i].key[parseInt(data[i].button_pressed)]
+                data[i].response = data[i].key[parseInt(data[i].button_pressed)];
         }}
-    }
 
-    console.log(data)
+    }
+    let output = {}
+
 
     xhr.send(JSON.stringify(data));
+}
+
+function objectMelt(target){
+    let output = {}
+    if (target.answer instanceof Array){
+        // Do fast-response stuff here.
+    } else {
+        
+    }
 }
 
 function testItemFinder(jsPsychData){
@@ -326,9 +337,9 @@ function EFRuleID(stimuli, data){
                 numbers.push(stimuli[i][j][2])}
             let uniques = [shapes, colors, numbers].map(countUnique)
             let answerIndex = argMin(uniques)
-            data['answer'] = answerIndex
+            data['key'] = ['shape', 'color', 'number'];
+            data['answer'] = data['key'][answerIndex]
             data['item_type'] = 'EFRuleID';
-            data['key'] = ['shape', 'color', 'number']
 
             function draw(){
                 drawRuleID(stimuli[i], 50);
@@ -620,7 +631,6 @@ function PSStringComparison(stimuli, delay, data){
 
     data['item_type'] = 'PSStringComparison';
     data['answer'] = answer
-    console.log(answer)
     data['key'] = {'81': 'same', '80': 'different'}
     timeline.push({type: 'timed-html-comparison',
     stimuli_1: stimuli_1,
