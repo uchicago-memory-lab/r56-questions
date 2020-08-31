@@ -74,19 +74,54 @@ function saveData() {
         }}
 
     }
-    let output = {}
 
 
-    xhr.send(JSON.stringify(data));
+    xhr.send(JSON.stringify(objectMelt(data)));
 }
 
 function objectMelt(target){
-    let output = {}
-    if (target.answer instanceof Array){
-        // Do fast-response stuff here.
-    } else {
-        
+    let output = [];
+    let lastItem = undefined;
+    let trialnum = 0;
+    for( i in target){
+        if (target[i].answer instanceof Array){
+            for (j in target[i].answer){
+                trialnum += 1
+                let T = target[i]['rt'][j];
+                let A = target[i]['answer'][j];
+                let R = target[i]['response'][j];
+                let trialCode = 'I' + target[i]['item'] + 'T' + trialnum;
+                let Tcode = (trialCode + 'T');
+                let Acode = (trialCode + 'A');
+                let Rcode = (trialCode + 'R');
+                let obj = {};
+                obj[Tcode] = T;
+                obj[Acode] = A;
+                obj[Rcode] = R;
+                output.push(obj)
+            }
+            trialnum = 0
+        } else {
+            if (lastItem === target[i]['item']){
+                trialnum += 1
+            }else{trialnum = 0}
+            let T = target[i]['rt'];
+            let A = target[i]['answer'];
+            let R = target[i]['response'];
+            let trialCode = 'I' + target[i]['item'] + 'T' + trialnum;
+            let Tcode = (trialCode + 'T');
+            let Acode = (trialCode + 'A');
+            let Rcode = (trialCode + 'R');
+            let obj = {};
+            obj[Tcode] = T;
+            obj[Acode] = A;
+            obj[Rcode] = R;
+            output.push(obj)
+
+        }
+        lastItem = target[i]['item']
     }
+    return output
 }
 
 function testItemFinder(jsPsychData){
