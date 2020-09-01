@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jspsych": "^6.0.0",
-    "uuid": "^8.3.0"
+    "jspsych": "^6.0.0"
   }
 }

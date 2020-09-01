@@ -10,6 +10,20 @@ async function getData(url) {
     return response.json()
 }
 
+function getPID(){
+    var typedArray = new Uint32Array(4)
+    window.crypto.getRandomValues(typedArray);
+
+
+    let outstr = ''
+    for (i in typedArray)
+        outstr += typedArray[i].toString(36)
+    
+    return outstr
+}
+
+const pid = getPID()
+console.log('Your ID is ' + pid)
 
 let NUM_CODES = {'96': 0,
 '97': 1,
@@ -74,9 +88,10 @@ function saveData() {
         }}
 
     }
+    let postobj = {}
+    postobj[pid] = objectMelt(data)
 
-
-    xhr.send(JSON.stringify(objectMelt(data)));
+    xhr.send(JSON.stringify(postobj));
 }
 
 function objectMelt(target){
