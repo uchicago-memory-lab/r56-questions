@@ -18,9 +18,13 @@ try{
         ltrim($db["path"], "/")
     ));
     
-    echo $data_array;
+    
     
 
 } catch(\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
   }
+
+?>
+
+<?=console_log($data_array);?>
