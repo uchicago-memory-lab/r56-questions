@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "jspsych": "^6.0.0",
-    "screenfull": "^5.0.2"
+    "uuid": "^8.3.0"
   }
 }
