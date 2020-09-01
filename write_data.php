@@ -27,7 +27,9 @@ try{
                 $colnames[] = $col;
                 $colvals[] = $dpoint;
             }
-            $pdo->query("INSERT INTO subjects (pid, {implode(\", \",$colnames)}) VALUES ($name, {implode(\", \", $colvals)})");
+            $qnames = implode(", ", $colnames);
+            $qvals = implode(", ", $colvals);
+            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
         }
     }
 
