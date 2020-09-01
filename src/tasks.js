@@ -17,7 +17,7 @@ function getPID(){
 
     let outstr = ''
     for (i in typedArray)
-        outstr += typedArray[i].toString(36)
+        outstr += typedArray[i].toString(16)
     
     return outstr
 }

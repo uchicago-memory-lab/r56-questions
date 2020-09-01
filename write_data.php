@@ -18,13 +18,21 @@ try{
         ltrim($db["path"], "/")
     ));
     
-    
-    
+    foreach ($data_array as $name => $data){
+        foreach ($data as $result){
+            $colnames = [];
+            $colvals = [];
+            foreach ($result as $col => $dpoint){
+                $pdo->query("ALTER TABLE subjects ADD COLUMN IF NOT EXISTS $col");
+                $colnames[] = $col;
+                $colvals[] = $dpoint;
+            }
+            $pdo->query("INSERT INTO subjects (pid, {implode(\", \",$colnames)}) VALUES ($name, {implode(\", \")})");
+        }
+    }
 
 } catch(\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
   }
 
 ?>
-
-<?=console_log($data_array);?>
