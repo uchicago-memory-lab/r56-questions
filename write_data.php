@@ -7,6 +7,14 @@ $db = parse_url(getenv("DATABASE_URL"));
 
 $data_array = json_decode(file_get_contents("php://input"), true);
 
+function console_log($output, $with_script_tags = true) {
+    $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
+');';
+    if ($with_script_tags) {
+        $js_code = '<script>' . $js_code . '</script>';
+    }
+    echo $js_code;
+}
 
 try{
     $pdo = new PDO("pgsql:" . sprintf(
@@ -30,7 +38,7 @@ try{
             $qnames = implode(", ", $colnames);
             $qvals = implode(", ", $colvals);
             $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
-            header("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
+            console_log("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
         }
     }
 
