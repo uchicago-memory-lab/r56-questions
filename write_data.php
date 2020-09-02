@@ -42,7 +42,7 @@ try{
             }
             $qnames = implode(", ", $colnames);
             $qvals = implode("', '", $colvals);
-            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)");
+            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals')");
             console_log("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals')");
         }
     }
