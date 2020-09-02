@@ -42,8 +42,8 @@ try{
             }
             $qnames = implode(", ", $colnames);
             $qvals = implode("', '", $colvals);
-            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals') ON CONFLICT DO UPDATE SET ($qnames) = ('$qvals')");
-            console_log("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals') ON CONFLICT DO UPDATE SET ($qnames) = ('$qvals')");
+            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals') ON CONFLICT (pid) DO UPDATE SET ($qnames) = ('$qvals')");
+            console_log("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals') ON CONFLICT (pid) DO UPDATE SET ($qnames) = ('$qvals')");
         }
     }
 
