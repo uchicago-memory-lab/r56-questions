@@ -79,6 +79,11 @@ function getParams(func) {
 async function loadQuestions() {
     return getData('questions/json/qblock.json')
 }
+
+async function getPics(){
+    return getData('src/preload.json')
+}
+
 function dat2Func(dat){
     /**
      * A function that takes in the generalized question data object (defined in qblock.json) and does a smart-conversion
@@ -107,9 +112,6 @@ function itemsByDifficulty(qBlock, difficulty){
     return Object.keys(qBlock).filter((key) => qBlock[key]['difficulty'] === difficulty);
 }
 
-function EMOPByDifficulty(qBlock, difficulty){
-    return Object.keys(qBlock).filter((key) => qBlock[key]['difficulty'] === difficulty & qBlock[key]['kind'] === "EMObjectPicture");
-}
 
 async function easyBlock(qBlock){
     let block = {};
@@ -123,18 +125,7 @@ async function easyBlock(qBlock){
 
     let tarNums = itemsByDifficulty(qBlock, 'easy');
     let orderedNums = fisherYates(tarNums);
-    let tarPics = EMOPByDifficulty(qBlock, 'easy')
-    let allpics = [];
-    for (const i in tarPics){
-        for(const j in qBlock[orderedNums[i]]['trials']){
-            for (const k in qBlock[orderedNums[i]]['trials'][j]){
-                allpics.push('./img/' + qBlock[orderedNums[i]]['trials'][j][k] + '.jpg')
-            }
-        }
-    }
-    console.log(allpics)
-    console.log(tarPics)
-
+    let allpics = await getPics()['easy'];
     for (const i in orderedNums){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
     }
@@ -165,15 +156,8 @@ async function medBlock(qBlock){
     });
     let tarNums = itemsByDifficulty(qBlock, 'medium');
     let orderedNums = fisherYates(tarNums);
-    let tarPics = EMOPByDifficulty(qBlock, 'medium')
-    let allpics = [];
-    for (const i in tarPics){
-        for(const j in qBlock[orderedNums[i]]['trials']){
-            for (const k in qBlock[orderedNums[i]]['trials'][j]){
-                allpics.push('./img/' + qBlock[orderedNums[i]]['trials'][j][k] + '.jpg')
-            }
-        }
-    }
+    let allpics = await getPics()['medium'];
+
     for (const i in orderedNums){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
     }
@@ -248,15 +232,8 @@ async function hardBlock(qBlock){
     })
     let tarNums = itemsByDifficulty(qBlock, 'hard');
     let orderedNums = fisherYates(tarNums);
-    let tarPics = EMOPByDifficulty(qBlock, 'hard')
-    let allpics = [];
-    for (const i in tarPics){
-        for(const j in qBlock[orderedNums[i]]['trials']){
-            for (const k in qBlock[orderedNums[i]]['trials'][j]){
-                allpics.push('./img/' + qBlock[orderedNums[i]]['trials'][j][k] + '.jpg')
-            }
-        }
-    }
+    let allpics = await getPics()['hard'];
+
     for (const i in orderedNums){
         timeline.push(await dat2Func(qBlock[orderedNums[i]]));
     }
