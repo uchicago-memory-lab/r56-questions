@@ -30,6 +30,7 @@ try{
             $qnames = implode(", ", $colnames);
             $qvals = implode(", ", $colvals);
             $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
+            header("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
         }
     }
 
