@@ -31,7 +31,12 @@ try{
             $colnames = [];
             $colvals = [];
             foreach ($result as $col => $dpoint){
-                $pdo->query("ALTER TABLE subjects ADD COLUMN IF NOT EXISTS $col");
+                if(substr($col, -1) === 'R'){
+                    $ctype = 'text';
+                } else {
+                    $ctype = 'smallint';
+                }
+                $pdo->query("ALTER TABLE subjects ADD COLUMN IF NOT EXISTS $col $ctype");
                 $colnames[] = $col;
                 $colvals[] = $dpoint;
             }
