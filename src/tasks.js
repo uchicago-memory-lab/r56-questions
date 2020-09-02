@@ -5,12 +5,22 @@
 // In addition this allows this code to be more easily re-usable down the line.
 
 async function getData(url) {
+    /**
+     * A helper function for all of our data reading needs.
+     */
     const response = await fetch(url);
 
     return response.json()
 }
 
 function getPID(){
+    /**
+     * Generates a 128bit number (I think) to use as a participant ID. 
+     * Non-CS people usually see this and are like: "BuT WhAt If THeReS A RePeAt!?"
+     * Well you should know that literally every company uses this method to generate ID numbers, and there ARE
+     * NO REPEATS. If you ran this function every second of every day for the next hundred billion years, there would only be a 50/50 chance that there's
+     * a SINGLE repeat ANYWHERE in the list. https://en.wikipedia.org/wiki/Universally_unique_identifier.
+     */
     var typedArray = new Uint32Array(4)
     window.crypto.getRandomValues(typedArray);
 
@@ -58,17 +68,28 @@ let stroopCodes = {
 
 var LAST_UPLOAD = 0
 
-// TODO: Do some magic on the item tags so that they're like IitemnumTtrialnum
 
 let storeDataTag = {stored: true}
 
 function saveData() {
+    /**
+     * I dunno man it just works.
+     */
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'write_data.php');
     xhr.setRequestHeader('Content-Type', 'application/json');
     data = JSON.parse(jsPsych.data.get().filterCustom(testItemFinder).json())
     try{LAST_UPLOAD = data[data.length - 1].trial_index;}
     catch{LAST_UPLOAD = 0}
+
+    // Okay so this monstrosity is an artifact of jspsych's data model. In short, it checks every datapoint.
+    // and translates it into english, it accomplishes this by referencing the custom data packet I gave all of these
+    // items called "key". jspsych's key_press returns an int referencing a button on the computer. (Not necessarily a key on the keyboard btw.)
+    // jspsych's 'button_pressed' returns a key referencing the index of the button the player clicked. 
+
+    // Recap: 'key_press' returns a button, 'button_pressed' returns a key, I use a key (the other kind) to turn that nonsense into english.
+    
+    // It's all very intuitive.
 
     for(let i in data){
         if(!data[i].response){
@@ -95,6 +116,14 @@ function saveData() {
 }
 
 function objectMelt(target){
+    /**
+     * This is a helper function that goes through jspsych's data model and turns it into a NORMAL AJAX POST.
+     * That way you don't have to spend any more time coding PHP than you need to. *Glares at jspsych docs.*
+     * 
+     * Most of the items are set up so that they construct separate jspsych item objects for each trial. However,
+     * because of the weird timing requirements of the ProcessingSpeed test, that one returns all three trials as one object,
+     * that's why this logic has two branches, to make it polymorphic enough to deal with that. 
+     */
     let output = [];
     let lastItem = undefined;
     let trialnum = 0;
@@ -140,7 +169,10 @@ function objectMelt(target){
 }
 
 function testItemFinder(jsPsychData){
-    /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() */
+    /** Input should be in the form of jsPsych.data.get(), so this works with .filterCustom() 
+     * This is set up so that you can POST after every item, and it'll just send the new stuff, to 
+     * avoid doing a huge upsert everytime, instead it's doing a smol upsert every time.
+    */
     if ('stored' in jsPsychData){
         return jsPsychData.stored && jsPsychData.trial_index > LAST_UPLOAD
     }
@@ -152,9 +184,14 @@ function dumpData(){
 }
 
 function range(start, end) {
+    /**
+     * Why isn't this in the standard library? Only god knows, and he ain't talking.
+     */
     if(start === end) return [start];
     return [start, ...range(start + 1, end)];
 }
+
+// Some shortcuts and aliases that I didn't feel like typing more than once.
 
 let memorize_command = {type: 'html-keyboard-response',
     stimulus: 'Memorize the items.',
@@ -172,6 +209,8 @@ function imgLocStim(name){
 function imgLocChoice(name){
     return '<img src="./img/' + name + '.jpg" style="vertical-align: middle" height="200px">'
 }
+
+// Alright kids, 200 lines in and we're just getting to the good stuff.
 
 // most of the work is being done plugin-side, since a lot of it is abstracted away to the question set. So this is just
 // a shortcut function for our particular brand of distractor questions.
@@ -200,6 +239,10 @@ async function EMDistractors(){
 }
 
 async function EMWordStim(stimuli, choices, data){
+    /**
+     * The EMWordStim is pretty straight forward, it uses a standard plugin, so nothing too crazy.
+     * Although, it does use the distractors, which are a little wonk. 
+     */
     let task = {};
     let timeline = [];
     timeline.push(memorize_command)
@@ -214,13 +257,18 @@ async function EMWordStim(stimuli, choices, data){
         data['item_type'] = 'EMWordStim';
         let answer = stimuli.filter(x => choices[i].includes(x));
         data['answer'] = answer[0];
+        // You'll notice how none of these data blocks actually require the correct answer to be passed.
+        // That's the magic of having me make these helper functions. We get more complex functionality out of
+        // jspsych than it would be able to do itself, and I get to pretend I'm a good programmer.
         let rechoice = fisherYates(choices[i]);
+        // randomize the button locations, to keep those pattern recognizing subjects from realizing
+        // that the answers spell "DAVE" over and over again in tap5 code. (joke)
         data['key'] = rechoice;
         timeline.push({
             type: 'html-button-response',
             stimulus: "Which did you memorize before?",
             choices: rechoice,
-            data: {...storeDataTag, ...data}
+            data: {...storeDataTag, ...data} // This is a syntax I didn't know existed before today, it does a safe object merge.
         });
     }
 
@@ -234,6 +282,10 @@ async function EMWordStim(stimuli, choices, data){
 }
 
 async function EMObjectPicture(stimuli, choices, data){
+    /**
+     * This uses jspsych's built in button response, except it loads images into the buttons. It works pretty well.
+     * Now with image preloading, so there's no weirdness on slow connections.
+     */
     let task = {};
     let timeline = [];
     timeline.push(memorize_command)
@@ -282,7 +334,22 @@ let colorChart = {R: '#F94D56',
         K: '#000000'}
 
 function drawRuleID(stimuli, scale) {
-    // Draws on the canvas.
+    /**
+     * This guy draws the Rule ID stuff onto a canvas. However, <canvas> is a technology that 
+     * apple invented about ten years ago, and has seen NO development since then, with all of
+     * the advancement going on with aliasing and shortcut packages. 
+     * 
+     * That is why it's 20 lines of code to draw a hexagon.
+     * 
+     * If you think that's bad, it takes 1000 for vulkan to draw a triangle.
+     * https://github.com/SaschaWillems/Vulkan/blob/master/examples/triangle/triangle.cpp
+     * 
+     * (This is a rendering platform intended to replace directx at some point. We shall see.)
+     * 
+     * A lot of this is weird geometry math that I thought I wouldn't see after middle school.
+     * 
+     * It's all triggered by the shape codes, which are just the first letter of each shape's name.
+     */
     let canvas = document.getElementById('ruleID');
     let step = 1000 / (stimuli.length + 1);
     let objectCenters =   Array(Math.ceil(1000.0 / step)).fill(0).map((x, y) => x + y * step);
@@ -363,6 +430,9 @@ function drawRuleID(stimuli, scale) {
     }
 
 function countUnique(array){
+    /**
+     * again, can't these two functions aren't standard.
+     */
     return new Set(array).size;
 }
 
@@ -371,6 +441,10 @@ function argMin(array) {
 }
 
 function EFRuleID(stimuli, data){
+    /**
+     * Actually generating the RuleID stims. Basically it just calls that big rendering function
+     * some amount of times. 
+     */
     let task = {};
     let shapes = [];
     let colors = [];
@@ -381,6 +455,7 @@ function EFRuleID(stimuli, data){
         stimulus: '<p>Which is the most frequent feature:</p><p>Shape, Color, or Number?</p>',
         prompt:'<p style="font-size:32px">Press any key to continue...<p>'});
         for(let i in stimuli){
+            // splits our "easy" to read codes into parameters for the draw function.
             for(let j in stimuli[i]){
                 shapes.push(stimuli[i][j][0])
                 colors.push(stimuli[i][j][1])
@@ -391,10 +466,11 @@ function EFRuleID(stimuli, data){
             data['answer'] = data['key'][answerIndex]
             data['item_type'] = 'EFRuleID';
 
+
             function draw(){
                 drawRuleID(stimuli[i], 50);
             }
-
+            // See our custom canvas plugin for more details on how this works.
             timeline.push({type: 'canvas-button-response',
                 func: draw,
                 canvas_id: 'ruleID',
@@ -453,6 +529,10 @@ function SMObjectNaming(stimuli, choices, data){
 }
 
 function WMForwardDigitSpan(stimuli, delay, data){
+    /**
+     * Most of the interesting stuff is happening plugin-side. This function basically just passes
+     * some data to that.
+     */
     let repeats;
     let task = {};
     let timeline = [];
@@ -518,6 +598,9 @@ function WMForwardDigitSpan(stimuli, delay, data){
 }
 
 function WMBackwardDigitSpan(stimuli, delay, data){
+    /**
+     * Exactly the same as the forward one,except it has a line where it reverses the numbers first.
+     */
     let repeats;
     let task = {};
     let timeline = [];
@@ -746,7 +829,7 @@ function endSurvey(question){
         type: 'call-function',
         func: saveData
     })
-    
+
     task['data'] = data;
     return task;
 }

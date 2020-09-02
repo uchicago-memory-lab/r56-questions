@@ -3,6 +3,7 @@ let LONGTERMS = [1, 7, 6]
 
 document.addEventListener('DOMContentLoaded', main, false);
 
+// A quick little namespace object so that dat2func doesn't have to work too hard.
 let nameToFunc = {EMWordStim: EMWordStim,
              EMObjectPicture: EMObjectPicture,
              EFRuleID: EFRuleID,
@@ -14,7 +15,7 @@ let nameToFunc = {EMWordStim: EMWordStim,
              PSStringComparison: PSStringComparison};
 
 let pressAny = '<p style="font-size:32px">Press any key to continue...<p>'
-
+// Standard shuffle function
 function fisherYates(tarArray){
     let array = JSON.parse(JSON.stringify(tarArray));
     for(let i = array.length - 1; i > 0; i--){
@@ -25,7 +26,7 @@ function fisherYates(tarArray){
     }
     return array
 }
-
+// standard sleep function
 function sleep(milliseconds) {
     const date = Date.now();
     let currentDate = null;
@@ -76,6 +77,7 @@ function getParams(func) {
     return params;
 }
 
+// two little wrappers for getData to make our lives easier.
 async function loadQuestions() {
     return getData('questions/json/qblock.json')
 }
@@ -109,11 +111,19 @@ function dat2Func(dat){
 }
 
 function itemsByDifficulty(qBlock, difficulty){
+    /**
+     * Looks at qblock and pulls out just the questions with difficulty = to `difficulty`
+     */
     return Object.keys(qBlock).filter((key) => qBlock[key]['difficulty'] === difficulty);
 }
 
 
 async function easyBlock(qBlock){
+    /**
+     * Defines the easy questions. Basically each of these three blocks are identical except for difficulty.
+     * I wouldn't say this is a _good_ solution to the problem that jspsych expects one init per experiment, 
+     * but it's the best one I could think of.
+     */
     let block = {};
     let timeline = [];
 
@@ -177,6 +187,9 @@ async function medBlock(qBlock){
 }
 
 async function practiceBlock(qBlock){
+    /**
+     * This one defines the practice block, note that it has some extra logic for defining the instructions.
+     */
     let block = {};
     let timeline = [];
     timeline.push({
@@ -249,6 +262,9 @@ async function hardBlock(qBlock){
 }
 
 async function endBlock(qBlock){
+    /**
+     * Similar to the practice block, the end block just does the survey and the long term memory questions.
+     */
     let block = {};
     let timeline = [];
     timeline.push({
@@ -287,29 +303,11 @@ async function main() {
         prompt: pressAny
     })
 
-    // timeline.push({
-    //     type: 'call-function',
-    //     func: function() { 
-
-    //         element = Document.documentElement;
-
-    //         if (screenfull.isEnabled){
-    //             screenfull.request(element)
-    //         }
-    //     }
-    // })
 
     timeline.push({
         type: 'fullscreen',
         fullscreen_mode: true
     })
-    // timeline.push({
-    //     type: 'html-keyboard-response',
-    //     stimulus: '',
-    //     prompt: '',
-    //     choices: jsPsych.NO_KEYS,
-    //     trial_duration: 1000
-    // })
 
     let qBlock = await loadQuestions();
 
