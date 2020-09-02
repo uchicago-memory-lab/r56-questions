@@ -716,7 +716,10 @@ function EMLongTerm(stimuli, choices, data){
             data: {...storeDataTag, ...data}
         });
     }
-
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
     data['item_type'] = 'EMLongTerm';
     task['timeline'] = timeline;
     task['data'] = data;
@@ -738,6 +741,12 @@ function endSurvey(question){
     data: {...storeDataTag, ...data}})
     task['timeline'] = timeline;
     data['item_type'] = "End of Experiment Survey";
+
+    timeline.push({
+        type: 'call-function',
+        func: saveData
+    })
+    
     task['data'] = data;
     return task;
 }

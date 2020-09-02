@@ -41,9 +41,9 @@ try{
                 $colvals[] = $dpoint;
             }
             $qnames = implode(", ", $colnames);
-            $qvals = implode(", ", $colvals);
-            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
-            console_log("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)})");
+            $qvals = implode("', '", $colvals);
+            $pdo->query("INSERT INTO subjects (pid, $qnames) VALUES ($name, $qvals)");
+            console_log("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals')");
         }
     }
 
