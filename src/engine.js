@@ -285,8 +285,9 @@ async function endBlock(qBlock){
     })
     let rSurveyQs = fisherYates(surveyQs)
     for (const i in rSurveyQs){
-        let dat = qBlock[rSurveyQs[i].toString()]
-        timeline.push(endSurvey(dat['stimuli']))
+        let dat = qBlock[rSurveyQs[i]]
+        console.log(dat)
+        timeline.push(endSurvey(dat['stimuli'], {item: dat['taskNum']}))
     }
     timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
     choices: jsPsych.NO_KEYS})

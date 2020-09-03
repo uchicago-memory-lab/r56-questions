@@ -106,7 +106,10 @@ function saveData() {
                 }else {data[i].answer = data[i].key[data[i].answer]}
             }else if (data[i].button_pressed) {
                 data[i].response = data[i].key[parseInt(data[i].button_pressed)];
-        }}
+            }else if (data[i].responses){
+                data[i].response = JSON.parse(data[i].responses)['Q0']
+            }
+    }
 
     }
     let postobj = {}
@@ -809,19 +812,20 @@ function EMLongTerm(stimuli, choices, data){
     return task;
 }
 
-function endSurvey(question){
+function endSurvey(question, data){
     let task = {};
-    let data = {}
     let timeline = [];
     let options = ['Substantially Worse', 'Much Worse', 'Slightly Worse', 'Average', 'Slightly Better', 'Much Better', 'Substantially Better']
     let formoptions = []
     for(const i in options){
         formoptions.push('<p style="font-size:32px; line-height: 32px">' + options[i] + '</p>')
     }
+    
     timeline.push({type: 'survey-likert',
     questions: [{prompt: '<p style="font-size:48px">' + question[0] + '</p>',
     labels: formoptions}],
     data: {...storeDataTag, ...data}})
+
     task['timeline'] = timeline;
     data['item_type'] = "End of Experiment Survey";
 
