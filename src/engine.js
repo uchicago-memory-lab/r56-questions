@@ -274,7 +274,7 @@ async function endBlock(qBlock){
     })
     for(let i in LONGTERMS){
         let dat = qBlock[LONGTERMS[i].toString()]
-        let data = {stims_type: dat['stimsType'], item: dat['taskNum'], difficulty: dat['difficulty']};
+        let data = {stims_type: dat['stimsType'], item: 'LT' + dat['taskNum'], difficulty: dat['difficulty']};
         timeline.push(EMLongTerm(dat['stimuli'], dat['trials'], data))
     }
     let surveyQs = itemsByDifficulty(qBlock, 'survey')
@@ -288,7 +288,6 @@ async function endBlock(qBlock){
         let dat = qBlock[rSurveyQs[i].toString()]
         timeline.push(endSurvey(dat['stimuli']))
     }
-    timeline.push({type: 'call-function', func: setTimeout(function(){document.exitFullscreen()}, 1000)})
     timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
     choices: jsPsych.NO_KEYS})
     block['timeline'] = timeline;
