@@ -1,6 +1,6 @@
 
 let LONGTERMS = [1, 7, 6]
-
+let start = Date.now()
 document.addEventListener('DOMContentLoaded', main, false);
 
 // A quick little namespace object so that dat2func doesn't have to work too hard.
@@ -34,6 +34,19 @@ function sleep(milliseconds) {
       currentDate = Date.now();
     } while (currentDate - date < milliseconds);
   }
+
+function endTimer(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'stopwatch.php');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    
+    let packet = {
+        time: Date.now() - start,
+        pid: pid
+    }
+
+    xhr.send(JSON.stringify(packet))
+}
 
 function getParams(func) {
     /**
@@ -220,6 +233,10 @@ async function practiceBlock(qBlock){
         })
     }
 
+    timeline.push({type: 'call-function',
+        func: endTimer
+    })
+
     timeline.push({type: 'html-button-response',
         stimulus: 'Would you like to repeat the practice round?',
         choices: ['yes', 'no'],
@@ -289,6 +306,10 @@ async function endBlock(qBlock){
         console.log(dat)
         timeline.push(endSurvey(dat['stimuli'], {item: dat['taskNum']}))
     }
+
+    timeline.push({type: 'call-function',
+        func: endTimer})
+
     timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
     choices: jsPsych.NO_KEYS})
     block['timeline'] = timeline;
