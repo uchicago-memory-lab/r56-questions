@@ -15,8 +15,8 @@ try{
         ltrim($db["path"], "/")
     ));
 
-    $time = $data_array['time'];
-    $pid = $data_array['pid'];
+    $time = $data_array->time;
+    $pid = $data_array->pid;
 
     $pdo->query("INSERT INTO time_elapsed (pid, time_elapsed) VALUES ('$pid', $time)");
     echo "INSERT INTO time_elapsed (pid, time_elapsed) VALUES ('$pid', $time)";
