@@ -19,7 +19,6 @@ try{
     $pid = $data_array->pid;
 
     $pdo->query("INSERT INTO time_elapsed (pid, time_elapsed) VALUES ('$pid', $time)");
-    echo "INSERT INTO time_elapsed (pid, time_elapsed) VALUES ('$pid', $time)";
 } catch(\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
   }
