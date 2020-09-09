@@ -233,6 +233,11 @@ async function practiceBlock(qBlock){
         })
     }
 
+    timeline.push({
+        type: 'call-function',
+        func: endTimer
+    })
+
     timeline.push({type: 'html-button-response',
         stimulus: 'Would you like to repeat the practice round?',
         choices: ['yes', 'no'],
