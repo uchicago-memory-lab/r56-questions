@@ -33,24 +33,22 @@ try{
             foreach ($result as $col => $dpoint){
                 if(substr($col, -1) === 'T'){
                     $ctype = 'smallint';
-                    $pdo->query("ALTER TABLE reaction_time ADD COLUMN IF NOT EXISTS $col $ctype");
+                    $colname = substr($col, 0, -1);
+                    $pdo->query("ALTER TABLE reaction_time ADD COLUMN IF NOT EXISTS $colname $ctype");
                     $pdo->query("INSERT INTO reaction_time (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET ($colname) = ('$dpoint')");
                 } else if(substr($col, -1) === 'R'){
                     $ctype = 'text';
-                    $pdo->query("ALTER TABLE response ADD COLUMN IF NOT EXISTS $col $ctype");
+                    $colname = substr($col, 0, -1);
+                    $pdo->query("ALTER TABLE response ADD COLUMN IF NOT EXISTS $colname $ctype");
                     $pdo->query("INSERT INTO response (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET ($colname) = ('$dpoint')");
                 } else if(substr($col, -1) === 'A'){
                     $ctype = 'text';
-                    $pdo->query("ALTER TABLE answers ADD COLUMN IF NOT EXISTS $col $ctype");
                     $colname = substr($col, 0, -1);
+                    $pdo->query("ALTER TABLE answers ADD COLUMN IF NOT EXISTS $colname $ctype");
                     $pdo->query("INSERT INTO answers (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET ($colname) = ('$dpoint')");
                 }
 
             }
-            $qnames = implode(", ", $colnames);
-            $qvals = implode("', '", $colvals);
-
-            console_log("INSERT INTO subjects (pid, $qnames) VALUES ('$name', '$qvals') ON CONFLICT (pid) DO UPDATE SET ($qnames) = ('$qvals')");
         }
     }
 
