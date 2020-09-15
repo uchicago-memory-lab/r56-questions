@@ -46,6 +46,7 @@ try{
                     $colname = substr($col, 0, -1);
                     $pdo->query("ALTER TABLE answers ADD COLUMN IF NOT EXISTS $colname $ctype");
                     $pdo->query("INSERT INTO answers (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET ($colname) = ('$dpoint')");
+                    console_log("INSERT INTO answers (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET ($colname) = ('$dpoint')");
                 }
 
             }
