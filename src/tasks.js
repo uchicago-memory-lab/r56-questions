@@ -13,6 +13,8 @@ async function getData(url) {
     return response.json()
 }
 
+JORELL_MASTER_OF_SCHEDULING = 0
+
 function getPID(){
     /**
      * Generates a 128bit number (I think) to use as a participant ID. 
@@ -133,7 +135,6 @@ function objectMelt(target){
     for( i in target){
         if (target[i].answer instanceof Array){
             for (j in target[i].answer){
-                trialnum += 1
                 let T = target[i]['rt'][j];
                 let A = target[i]['answer'][j];
                 let R = target[i]['response'][j];
@@ -141,17 +142,23 @@ function objectMelt(target){
                 let Tcode = (trialCode + 'T');
                 let Acode = (trialCode + 'A');
                 let Rcode = (trialCode + 'R');
+                let Ocode = (trialCode + 'O');
                 let obj = {};
                 obj[Tcode] = T;
                 obj[Acode] = A;
                 obj[Rcode] = R;
+                obj[Ocode] = JORELL_MASTER_OF_SCHEDULING;
+                trialnum += 1
                 output.push(obj)
             }
             trialnum = 0
+            JORELL_MASTER_OF_SCHEDULING += 1;
         } else {
             if (lastItem === target[i]['item']){
-                trialnum += 1
-            }else{trialnum = 0}
+                trialnum += 1;
+            }else{trialnum = 0;
+            JORELL_MASTER_OF_SCHEDULING += 1;
+            }
             let T = target[i]['rt'];
             let A = target[i]['answer'];
             let R = target[i]['response'];
@@ -159,15 +166,18 @@ function objectMelt(target){
             let Tcode = (trialCode + 'T');
             let Acode = (trialCode + 'A');
             let Rcode = (trialCode + 'R');
+            let Ocode = (trialCode + 'O');
             let obj = {};
             obj[Tcode] = T;
             obj[Acode] = A;
             obj[Rcode] = R;
+            obj[Ocode] = JORELL_MASTER_OF_SCHEDULING;
             output.push(obj)
 
         }
         lastItem = target[i]['item']
     }
+    JORELL_MASTER_OF_SCHEDULING += 1;
     return output
 }
 
@@ -776,6 +786,7 @@ function PSStringComparison(stimuli, delay, data){
     prompt: '<div class="container bottom"> <div>Same - Q</div><div>&nbsp;</div><div>Different - P</div></div>',
     data: {...storeDataTag, ...data}})
 
+
     timeline.push({
         type: 'call-function',
         func: saveData
@@ -802,10 +813,12 @@ function EMLongTerm(stimuli, choices, data){
             data: {...storeDataTag, ...data}
         });
     }
+
     timeline.push({
         type: 'call-function',
         func: saveData
     })
+
     data['item_type'] = 'EMLongTerm';
     task['timeline'] = timeline;
     task['data'] = data;
