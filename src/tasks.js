@@ -177,7 +177,6 @@ function objectMelt(target){
         }
         lastItem = target[i]['item']
     }
-    JORELL_MASTER_OF_SCHEDULING += 1;
     return output
 }
 
