@@ -46,9 +46,10 @@ try{
                     $colname = substr($col, 0, -1);
                     $pdo->query("INSERT INTO answers (task, answer) VALUES ('$colname', '$dpoint') ON CONFLICT (task) DO UPDATE SET answer = '$dpoint'");
                 } else if(substr($col, -1) === 'O'){
-                    $ctype = 'smallint';
+                    $ctype = 'integer';
                     $colname = substr($col, 0, -1);
-                    $pdo->query("INSERT INTO ordering (pid, ordering) VALUES ('$colname', '$dpoint') ON CONFLICT (pid) DO UPDATE SET ordering = '$dpoint'");
+                    $pdo->query("ALTER TABLE reaction_time ADD COLUMN IF NOT EXISTS $colname $ctype");
+                    $pdo->query("INSERT INTO reaction_time (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET $colname = '$dpoint'");
 
                 }
 
