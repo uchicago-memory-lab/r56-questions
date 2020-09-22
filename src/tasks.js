@@ -13,7 +13,7 @@ async function getData(url) {
     return response.json()
 }
 
-JORELL_MASTER_OF_SCHEDULING = 0
+var JORELL_MASTER_OF_SCHEDULING = -1
 
 function getPID(){
     /**
@@ -134,6 +134,7 @@ function objectMelt(target){
     let trialnum = 0;
     for( i in target){
         if (target[i].answer instanceof Array){
+            JORELL_MASTER_OF_SCHEDULING += 1;
             for (j in target[i].answer){
                 let T = target[i]['rt'][j];
                 let A = target[i]['answer'][j];
@@ -152,12 +153,11 @@ function objectMelt(target){
                 output.push(obj)
             }
             trialnum = 0
-            JORELL_MASTER_OF_SCHEDULING += 1;
         } else {
             if (lastItem === target[i]['item']){
                 trialnum += 1;
             }else{trialnum = 0;
-            JORELL_MASTER_OF_SCHEDULING += 1;
+                JORELL_MASTER_OF_SCHEDULING += 1;
             }
             let T = target[i]['rt'];
             let A = target[i]['answer'];
