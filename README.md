@@ -1,6 +1,8 @@
 # R56 Web
 
-R56 is the project to collect pilot data for a Computerized Adaptive Test for Cognition (CAT-COG). This is the Javascript version of it for use in web browsers. 
+R56 is the project to collect pilot data for a Computerized Adaptive Test for Cognition (CAT-COG). This is the Javascript version of it for use in web browsers.
+
+[Current Location](https://uchicago.co1.qualtrics.com/jfe/form/SV_bd7jEAFxEnKiqUd)
 
 # Tasks
 
@@ -8,17 +10,17 @@ R56 will have 9 tasks programmed into it, meant to probe 5 domains of cognitive 
 
 <center>
 
-| Task Name | Domain |
-|-----------|--------|
-|Word Stimuli|Episodic Memory|
-|Object-Picture|Episodic Memory|
-|Nonsense Words|Episodic Memory|
-|Object Naming| Semantic Memory|
-|Forward Digit Span|Working Memory|
-|Backward Digit Span|Working Memory|
-|Stroop|Executive Function|
-|Rule Identification| Executive Function|
-|String Comparison| Processing Speed|
+| Task Name | Domain | Code |
+|-----------|--------|---|
+|Word Stimuli|Episodic Memory| EMRG |
+|Object-Picture|Episodic Memory| EMRG |
+|Nonsense Words|Episodic Memory| EMRG |
+|Object Naming| Semantic Memory| SMON |
+|Forward Digit Span|Working Memory| WMFS |
+|Backward Digit Span|Working Memory| WMBS |
+|Stroop|Executive Function| EFST |
+|Rule Identification| Executive Function| EFRI |
+|String Comparison| Processing Speed| PSSC |
 
 </center>
 
