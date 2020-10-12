@@ -16,22 +16,8 @@ async function getData(url) {
 var JORELL_MASTER_OF_SCHEDULING = -1
 
 function getPID(){
-    /**
-     * Generates a 128bit number (I think) to use as a participant ID. 
-     * Non-CS people usually see this and are like: "BuT WhAt If THeReS A RePeAt!?"
-     * Well you should know that literally every company uses this method to generate ID numbers, and there ARE
-     * NO REPEATS. If you ran this function every second of every day for the next hundred billion years, there would only be a 50/50 chance that there's
-     * a SINGLE repeat ANYWHERE in the list. https://en.wikipedia.org/wiki/Universally_unique_identifier.
-     */
-    var typedArray = new Uint32Array(4)
-    window.crypto.getRandomValues(typedArray);
-
-
-    let outstr = ''
-    for (i in typedArray)
-        outstr += typedArray[i].toString(16)
-    
-    return outstr
+    const params = new URLSearchParams(window.location.search)
+    return params.get('RID')
 }
 
 const pid = getPID()
