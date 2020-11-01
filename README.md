@@ -28,7 +28,7 @@ R56 will have 9 tasks programmed into it, meant to probe 5 domains of cognitive 
 
 Episodic Memory describes a person's ability to recall a specific event. Generally it is probed by exposing a test subject to a number of stimuli, the exposure creating an event in the subject's memory. Then the subject is asked to recall information from the stimuli.
 
-All of the episodic memory tasks are given as html button tasks. In other words, they are shown a set of stimuli, and then given a set of html buttons to click in order to choose their response. Each question is set by the design documents, but each set of choices has their positions randomized. 
+All of the episodic memory tasks are given as html button tasks. In other words, they are shown a set of stimuli, and then given a set of html buttons to click in order to choose their response. Each question is set by the design documents, but each set of choices has their positions randomized.
 
 The stimuli block and the question block are separated by distractor questions. These questions are true-false math problems, answered with an html button press. The subject is shown a simple, addition based, equation, and asked if that equation is true or not. For example:
 $$
