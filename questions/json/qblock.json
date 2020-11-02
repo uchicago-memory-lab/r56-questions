@@ -3131,6 +3131,14 @@
             [
                 "DB7",
                 "SB8"
+            ],
+            [
+                "DB7",
+                "SR8"
+            ],
+            [
+                "DO8",
+                "SB8"
             ]
         ]
     },
@@ -3295,11 +3303,7 @@
         "kind": "WMForwardDigitSpan",
         "stimsType": "1s",
         "stimuli": [
-            "872",
-            "925",
-            "714",
-            "956",
-            "010"
+            "872"
         ],
         "taskNum": "WMAP",
         "trials": []

@@ -65,6 +65,10 @@ jsPsych.plugins["string-entry"] = (function() {
                 entryString +=
                     jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(info.key).replace('numpad', '');
             }
+            var endTime = performance.now();
+            var rt = endTime - startTime;
+            response.entry = entryString;
+            response.rt = rt;
             display_element.innerHTML = html + '<p style="font-size: ' + trial.entry_size + 'px">&nbsp;' + entryString + '</p>';
         }
 

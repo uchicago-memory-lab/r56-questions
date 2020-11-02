@@ -207,7 +207,7 @@ async function TESTBLOCK(qBlock){
         stimulus: 'If you see this message, tell Coen he screwed up.',
         prompt: pressAny
     });
-    timeline.push(await dat2Func(qBlock['WMAP']))
+    timeline.push(await dat2Func(qBlock['EFRIP']))
 
     block['timeline'] = timeline;
     return block
