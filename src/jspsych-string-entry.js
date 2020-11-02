@@ -95,14 +95,15 @@ jsPsych.plugins["string-entry"] = (function() {
             jsPsych.finishTrial(trial_data);
         }
 
-        var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-            callback_function: after_response,
-            valid_responses: trial.choices,
-            rt_method: 'date',
-            persist: false,
-            allow_held_key: false
-        });
-
+        if (trial.choices !== jsPsych.NO_KEYS) {
+            var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+                callback_function: after_response,
+                valid_responses: trial.choices,
+                rt_method: 'performance',
+                persist: true,
+                allow_held_key: false
+            });
+        }
 
         if (trial.trial_duration !== null) {
             jsPsych.pluginAPI.setTimeout(function() {
