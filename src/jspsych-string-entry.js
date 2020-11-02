@@ -56,7 +56,7 @@ jsPsych.plugins["string-entry"] = (function() {
                 var endTime = performance.now();
                 var rt = endTime - startTime;
                 response.entry = entryString;
-                response.rt = rt;
+                response.rt = Math.round(rt);
                 setTimeout(() => end_trial(), trial.delay);
             }
             else if(info.key === 8){

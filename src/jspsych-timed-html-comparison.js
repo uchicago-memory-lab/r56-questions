@@ -99,7 +99,7 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
 
             // gather the data to store for the trial
             let trial_data = {
-                "rt": response.rt,
+                "rt": Math.round(response.rt),
                 "stimulus": trial.stimulus,
                 "key_press": response.key,
 

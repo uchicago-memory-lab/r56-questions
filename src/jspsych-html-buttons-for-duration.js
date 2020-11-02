@@ -166,7 +166,7 @@ jsPsych.plugins["html-buttons-for-duration"] = (function() {
 
         function endTrial(){
             var trial_data = {
-                "rt": response.rt,
+                "rt": Math.round(response.rt),
                 "stimulus": trial.stimulus,
                 "button_pressed": response.button
             };

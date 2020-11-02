@@ -129,7 +129,7 @@ jsPsych.plugins["canvas-keyboard-response"] = (function() {
 
             // gather the data to store for the trial
             let trial_data = {
-                "rt": response.rt,
+                "rt": Math.round(response.rt),
                 "key_press": response.key,
                 "answer_key": trial.answer_key
             };
