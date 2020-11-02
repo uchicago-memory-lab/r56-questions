@@ -199,6 +199,20 @@ async function medBlock(qBlock){
     return block
 }
 
+async function TESTBLOCK(qBlock){
+    let block = {};
+    let timeline = [];
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: 'If you see this message, tell Coen he screwed up.',
+        prompt: pressAny
+    });
+    timeline.push(await dat2Func(qBlock['WMAP']))
+
+    block['timeline'] = timeline;
+    return block
+}
+
 async function practiceBlock(qBlock){
     /**
      * This one defines the practice block, note that it has some extra logic for defining the instructions.
@@ -329,7 +343,7 @@ async function main() {
     let qBlock = await loadQuestions();
 
 
-    timeline.push(await practiceBlock(qBlock));
+    timeline.push(await TESTBLOCK(qBlock));
 
 
     jsPsych.init({timeline: timeline});

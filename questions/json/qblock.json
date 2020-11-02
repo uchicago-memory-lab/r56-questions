@@ -3295,7 +3295,11 @@
         "kind": "WMForwardDigitSpan",
         "stimsType": "1s",
         "stimuli": [
-            "872"
+            "872",
+            "925",
+            "714",
+            "956",
+            "010"
         ],
         "taskNum": "WMAP",
         "trials": []
