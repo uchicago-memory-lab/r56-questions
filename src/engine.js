@@ -344,7 +344,7 @@ async function main() {
     let qBlock = await loadQuestions();
 
 
-    timeline.push(await TESTBLOCK(qBlock));
+    timeline.push(await practiceBlock(qBlock));
 
 
     jsPsych.init({timeline: timeline});
