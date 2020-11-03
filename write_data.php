@@ -34,8 +34,10 @@ try{
                 if(substr($col, -1) === 'T'){
                     $ctype = 'integer';
                     $colname = substr($col, 0, -1);
+                    $dpoint = round($dpoint);
                     $pdo->query("ALTER TABLE reaction_time ADD COLUMN IF NOT EXISTS $colname $ctype");
                     $pdo->query("INSERT INTO reaction_time (pid, $colname) VALUES ('$name', '$dpoint') ON CONFLICT (pid) DO UPDATE SET $colname = '$dpoint'");
+                    console_log($dpoint, $with_script_tags=FALSE);
                 } else if(substr($col, -1) === 'R'){
                     $ctype = 'text';
                     $colname = substr($col, 0, -1);
