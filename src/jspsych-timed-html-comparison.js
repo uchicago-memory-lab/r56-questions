@@ -89,17 +89,10 @@ jsPsych.plugins["timed-html-comparison"] = (function() {
                 jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
             }
 
-            let t_left = trial.stimuli_1.length - t
-
-            for(let i = 0; i < t_left; i++){
-                response.rt.push(0);
-                response.key.push(null);
-            }
-
 
             // gather the data to store for the trial
             let trial_data = {
-                "rt": Math.round(response.rt),
+                "rt": response.rt,
                 "stimulus": trial.stimulus,
                 "key_press": response.key,
 
