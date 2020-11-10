@@ -537,6 +537,13 @@ function WMForwardDigitSpan(stimuli, delay, data){
     timeline.push({type: 'html-keyboard-response',
     stimulus:'Rehearse the numbers in forward order. (first to last)',
     prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
+
+        
+    timeline.push({type: 'html-keyboard-response',
+    stimulus:'Rehearse the numbers in forward order. (last to first)',
+    trial_duration: 1000,
+    choices: jsPsych.NO_KEYS});
+    
     for (let j in stimuli) {
 
         let numbers = stimuli[j].toString()
@@ -605,6 +612,12 @@ function WMBackwardDigitSpan(stimuli, delay, data){
     timeline.push({type: 'html-keyboard-response',
         stimulus:'Rehearse the numbers in reverse order. (last to first)',
         prompt: '<p style="font-size:32px">Press any key to continue...<p>'});
+    
+        timeline.push({type: 'html-keyboard-response',
+        stimulus:'Rehearse the numbers in reverse order. (last to first)',
+        trial_duration: 1000,
+        choices: jsPsych.NO_KEYS});
+
     for(let j in stimuli){
         let numbers = stimuli[j].toString();
         let splitNumbers = numbers.split("");

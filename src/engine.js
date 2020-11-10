@@ -142,6 +142,18 @@ async function easyBlock(qBlock){
 
     timeline.push({
         type: 'html-keyboard-response',
+        stimulus: "Great job! Now we will begin the real study. You will take many of the tasks in random order.  Please do all the work in your head (don't use paper to help).",
+        prompt: pressAny
+    });
+
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: "It is important that you take your time for each answer and do not get frustrated (it is designed to get difficult).  Only one of the tasks requires you to respond quickly, and we will remind you for that task.",
+        prompt: pressAny
+    });
+
+    timeline.push({
+        type: 'html-keyboard-response',
         stimulus: 'Block 1 of 3',
         prompt: pressAny
     });
@@ -321,7 +333,7 @@ async function endBlock(qBlock){
     timeline.push({type: 'call-function',
         func: endTimer})
 
-    timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment!",
+    timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment! <p>Please close your browser to complete your experiment.</p>",
     choices: jsPsych.NO_KEYS})
     block['timeline'] = timeline;
     return block
@@ -331,7 +343,7 @@ async function main() {
     let timeline = [];
     timeline.push({
         type: 'html-keyboard-response',
-        stimulus: 'Welcome to the Experiment! <p> This window will switch to fullscreen mode when you continue.</p>',
+        stimulus: 'Welcome to the Experiment!',
         prompt: pressAny
     })
 
