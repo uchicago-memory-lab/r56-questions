@@ -9,18 +9,15 @@ args = parser.parse_args()
 problems = []
 for i in range(args.N):
     parity = random.choice((True, False))
-    a1 = random.randint(1, 9)
-    a2 = random.randint(0, 9)
-    b1 = random.randint(1, 9)
-    b2 = random.randint(0, 9)
-    b = f'{b1}{b2}'
-    a = f'{a1}{a2}'
+    a = random.randint(1, 9)
+    b = random.randint(1, 9)
+    c = random.randint(1, 9)
     if parity:
-        c = int(a) + int(b)
+        d = int(a) + int(b) + int(c)
     else:
-        c = int(a) + int(b) + random.choice((-1, 1)) * random.randint(1, 9)
+        d = int(a) + int(b) + int(c) + random.choice((-1, 1)) * random.randint(1, 9)
     
-    question = f'{a} + {b} = {c}'
+    question = f'{a} + {b} + {c} = {d}'
     answer = str(parity)
 
     problems.append([question, answer])

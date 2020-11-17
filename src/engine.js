@@ -333,8 +333,11 @@ async function endBlock(qBlock){
     timeline.push({type: 'call-function',
         func: endTimer})
 
-    timeline.push({type: 'html-keyboard-response', stimulus: "Thanks for taking the time to do this experiment! <p>Please close your browser to complete your experiment.</p>",
-    choices: jsPsych.NO_KEYS})
+    timeline.push({type: 'html-button-response', 
+    stimulus: "Thanks for taking the time to do this experiment!",
+    choices: ['Press here to complete the experiment.'],
+    on_finish: function(data){window.location.replace('https://app.prolific.co/submissions/complete?cc=7BA58854')}
+    })
     block['timeline'] = timeline;
     return block
 }
