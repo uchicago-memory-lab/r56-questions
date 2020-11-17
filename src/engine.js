@@ -148,7 +148,7 @@ async function easyBlock(qBlock){
 
     timeline.push({
         type: 'html-keyboard-response',
-        stimulus: "It is important that you take your time for each answer and do not get frustrated (it is designed to get difficult).  Only one of the tasks requires you to respond quickly, and we will remind you for that task.",
+        stimulus: "It is important that you take your time for each answer (it is designed to get difficult).  Only one of the tasks requires you to respond quickly, and we will remind you for that task.",
         prompt: pressAny
     });
 

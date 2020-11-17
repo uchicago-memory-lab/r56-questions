@@ -542,6 +542,7 @@ function WMForwardDigitSpan(stimuli, delay, data){
     timeline.push({type: 'html-keyboard-response',
     stimulus:'Rehearse the numbers in forward order. (last to first)',
     trial_duration: 1000,
+    prompt: '<p>&nbsp;</p>',
     choices: jsPsych.NO_KEYS});
     
     for (let j in stimuli) {
