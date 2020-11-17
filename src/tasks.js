@@ -617,7 +617,7 @@ function WMBackwardDigitSpan(stimuli, delay, data){
         timeline.push({type: 'html-keyboard-response',
         stimulus:'Rehearse the numbers in reverse order. (last to first)',
         trial_duration: 1000,
-        prompt: '<p style="font-size:32px">&nbsp;</p>'
+        prompt: '<p style="font-size:32px">&nbsp;</p>',
         choices: jsPsych.NO_KEYS});
 
     for(let j in stimuli){
