@@ -1,6 +1,6 @@
 taskNum,stim1,stim2,stim3,stim4,stim5,stim6,trial1,trial2,trial3,stimsType,difficulty
 WMAP,872,,,,,,,,,1s,practice
-401,218,495,782,,,,,,,1s,
+401,218,495,782,,,,,,,1s,easy
 402,482,872,528,,,,,,,1s,
 403,,,,,,,,,,1s,
 404,,,,,,,,,,1s,

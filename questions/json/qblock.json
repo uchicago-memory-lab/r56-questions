@@ -334,7 +334,7 @@
         ]
     },
     "204": {
-        "difficulty": "med",
+        "difficulty": "medium",
         "kind": "SMObjectNaming",
         "stimsType": "",
         "stimuli": [
@@ -365,7 +365,7 @@
         ]
     },
     "205": {
-        "difficulty": "med",
+        "difficulty": "medium",
         "kind": "SMObjectNaming",
         "stimsType": "",
         "stimuli": [
@@ -396,7 +396,7 @@
         ]
     },
     "206": {
-        "difficulty": "med",
+        "difficulty": "medium",
         "kind": "SMObjectNaming",
         "stimsType": "",
         "stimuli": [
@@ -1060,7 +1060,7 @@
         ]
     },
     "401": {
-        "difficulty": "",
+        "difficulty": "easy",
         "kind": "WMForwardDigitSpan",
         "stimsType": "1s",
         "stimuli": [
@@ -1578,7 +1578,7 @@
         "kind": "EFStroop",
         "stimsType": "3s",
         "stimuli": [
-            "Red.R Green.R Black.B",
+            "Red.R Green.R Black.K",
             "Black.R  Red.R  Yellow.Y",
             "Purple.P Green.R Red.G"
         ],
@@ -1656,7 +1656,7 @@
         "stimuli": [
             "Yellow.Y Green.G Red.R Purple.P Yellow.Y",
             "Green.R  Red.G Red.R Green.G Purple.Y",
-            "Black.B  Yellow.B  Green.Y  Purple.P Yellow.Y"
+            "Black.K  Yellow.K  Green.Y  Purple.P Yellow.Y"
         ],
         "taskNum": "609",
         "trials": []
@@ -1714,9 +1714,9 @@
         "kind": "EFStroop",
         "stimsType": "3s",
         "stimuli": [
-            "yellow.G black.B green.G red.P green.G yellow.P",
-            "red.R red.G purple.P yellow.B black.R black.P",
-            "green.G black.Y black.P green.P yellow.Y black.B"
+            "yellow.G black.K green.G red.P green.G yellow.P",
+            "red.R red.G purple.P yellow.K black.R black.P",
+            "green.G black.Y black.P green.P yellow.Y black.K"
         ],
         "taskNum": "616",
         "trials": []
@@ -1726,9 +1726,9 @@
         "kind": "EFStroop",
         "stimsType": "3s",
         "stimuli": [
-            "Green.G Yellow.B Purple.P Black.B Red.R Yellow.R",
-            "Purple.B Yellow.B Yellow.Y Red.P Green.Y Red.R",
-            "Green.B  Red.G  Black.P Purple.B Yellow.R Green.B"
+            "Green.G Yellow.K Purple.P Black.K Red.R Yellow.R",
+            "Purple.K Yellow.K Yellow.Y Red.P Green.Y Red.R",
+            "Green.K  Red.G  Black.P Purple.K Yellow.R Green.K"
         ],
         "taskNum": "617",
         "trials": []
@@ -1738,8 +1738,8 @@
         "kind": "EFStroop",
         "stimsType": "4s",
         "stimuli": [
-            "Red.P Green.R Black.B",
-            "Black.G Red.R Yellow.B",
+            "Red.P Green.R Black.K",
+            "Black.G Red.R Yellow.K",
             "Purple.G Green.R Red.G"
         ],
         "taskNum": "618",
@@ -1806,9 +1806,9 @@
         "kind": "EFStroop",
         "stimsType": "4s",
         "stimuli": [
-            "Black.B  Green.G Red.B  Black.B Purple.G",
-            "Yellow.B  Green.B  Yellow.Y Red.B Red.R",
-            "Yellow.Y  Purple.R Purple.P Green.B Green.G"
+            "Black.K  Green.G Red.K  Black.K Purple.G",
+            "Yellow.K  Green.K  Yellow.Y Red.K Red.R",
+            "Yellow.Y  Purple.R Purple.P Green.K Green.G"
         ],
         "taskNum": "626",
         "trials": []
@@ -1835,7 +1835,7 @@
         "stimsType": "4s",
         "stimuli": [
             "Purple.P Green.R Red.R Red.G Yellow.P",
-            "Purple.Y Red.G Red.B Black.R Black.P",
+            "Purple.Y Red.G Red.K Black.R Black.P",
             "Yellow.P Purple.P Green.P Red.G Red.R"
         ],
         "taskNum": "629",
@@ -1846,9 +1846,9 @@
         "kind": "EFStroop",
         "stimsType": "4s",
         "stimuli": [
-            "Green.G  Red.G  Green.R  Yellow.Y Yellow.B Black.B",
-            "Green.R Red.B Red.R Yellow.Y  Yellow.B Yellow.Y",
-            "Red.B Red.R  Green.R Purple.P Purple.B Yellow.R"
+            "Green.G  Red.G  Green.R  Yellow.Y Yellow.K Black.K",
+            "Green.R Red.K Red.R Yellow.Y  Yellow.K Yellow.Y",
+            "Red.K Red.R  Green.R Purple.P Purple.K Yellow.R"
         ],
         "taskNum": "630",
         "trials": []
@@ -1891,8 +1891,8 @@
         "stimsType": "5s",
         "stimuli": [
             "Green.G Black.P Red.R",
-            "Yellow.B Purple.R Green.B",
-            "Black.R  Black.B Black.B"
+            "Yellow.K Purple.R Green.K",
+            "Black.R  Black.K Black.K"
         ],
         "taskNum": "635",
         "trials": []
@@ -1918,9 +1918,9 @@
         "kind": "EFStroop",
         "stimsType": "5s",
         "stimuli": [
-            "red.G purple.G black.B purple.B",
+            "red.G purple.G black.K purple.K",
             "green.G black.G purple.P black.R",
-            "green.B red.R purple.G green.G"
+            "green.K red.R purple.G green.G"
         ],
         "taskNum": "638",
         "trials": []
@@ -1954,9 +1954,9 @@
         "kind": "EFStroop",
         "stimsType": "5s",
         "stimuli": [
-            "Black.G  Purple.G  Green.G Red.B Yellow.Y",
-            "Yellow.B  Black.G  Purple.P Red.R Black.B",
-            "Green.B  Green.R Green.G  Purple.P Purple.R"
+            "Black.G  Purple.G  Green.G Red.K Yellow.Y",
+            "Yellow.K  Black.G  Purple.P Red.R Black.K",
+            "Green.K  Green.R Green.G  Purple.P Purple.R"
         ],
         "taskNum": "642",
         "trials": []
@@ -2605,7 +2605,7 @@
         "trials": []
     },
     "8": {
-        "difficulty": "hard",
+        "difficulty": "",
         "kind": "EMWordStim",
         "stimsType": "Related",
         "stimuli": [

@@ -80,7 +80,6 @@ After this, the subject is asked to enter the sequence of numerals in reverse or
 There are two executive function tasks. They both have to do with visually identifying color and content, and synthesizing this data in an abnormal way. These tasks use a custom pallette.
 <center>
 
-
 |English|Hex Value|Visual|
 |-------|---------|------|
 |Red|#F94D56|<div style="background-color:#F94D56">&nbsp;</div>|
@@ -94,7 +93,7 @@ There are two executive function tasks. They both have to do with visually ident
 
 </center>
 
-Note that orange and yellow are rendered as the same color. White is used only for the numbers printed on the shapes in the Rule ID task. In all other places in the R56, #FFFFFF (True White) is used for white. Internal design documents use the first letter of each color word to denote the use of that color, except for black, which is denoted as "K". 
+ White is used only for the numbers printed on the shapes in the Rule ID task. In all other places in the R56, #FFFFFF (True White) is used for white. Internal design documents use the first letter of each color word to denote the use of that color, except for black, which is denoted as "K".
 
 ### Stroop
 
@@ -118,3 +117,7 @@ The subject is shown a series of colored shapes.
 ## Processing Speed
 
 ### String Comparison
+
+## Usage Notes
+
+<!-- TODO: URGENT -->

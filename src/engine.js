@@ -219,7 +219,7 @@ async function TESTBLOCK(qBlock){
         stimulus: 'If you see this message, tell Coen he screwed up.',
         prompt: pressAny
     });
-    timeline.push(await dat2Func(qBlock['826']))
+    timeline.push(await dat2Func(qBlock['752']))
 
 
     block['timeline'] = timeline;
@@ -307,16 +307,16 @@ async function endBlock(qBlock){
      */
     let block = {};
     let timeline = [];
-    timeline.push({
-        type: 'html-keyboard-response',
-        stimulus: "You're almost done! Just a few more items to test your longer term memory, and then a short survey",
-        prompt: pressAny
-    })
-    for(let i in LONGTERMS){
-        let dat = qBlock[LONGTERMS[i].toString()]
-        let data = {stims_type: dat['stimsType'], item: 'LT' + dat['taskNum'], difficulty: dat['difficulty']};
-        timeline.push(EMLongTerm(dat['stimuli'], dat['trials'], data))
-    }
+    // timeline.push({
+    //     type: 'html-keyboard-response',
+    //     stimulus: "You're almost done! Just a few more items to test your longer term memory, and then a short survey",
+    //     prompt: pressAny
+    // })
+    // for(let i in LONGTERMS){
+    //     let dat = qBlock[LONGTERMS[i].toString()]
+    //     let data = {stims_type: dat['stimsType'], item: 'LT' + dat['taskNum'], difficulty: dat['difficulty']};
+    //     timeline.push(EMLongTerm(dat['stimuli'], dat['trials'], data))
+    // }
     let surveyQs = itemsByDifficulty(qBlock, 'survey')
     timeline.push({
         type: 'html-keyboard-response',
@@ -326,7 +326,6 @@ async function endBlock(qBlock){
     let rSurveyQs = fisherYates(surveyQs)
     for (const i in rSurveyQs){
         let dat = qBlock[rSurveyQs[i]]
-        console.log(dat)
         timeline.push(endSurvey(dat['stimuli'], {item: dat['taskNum']}))
     }
 
@@ -359,7 +358,7 @@ async function main() {
     let qBlock = await loadQuestions();
 
 
-    timeline.push(await practiceBlock(qBlock));
+    timeline.push(await endBlock(qBlock));
 
 
     jsPsych.init({timeline: timeline});

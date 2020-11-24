@@ -444,41 +444,40 @@ function EFRuleID(stimuli, data){
      * some amount of times. 
      */
     let task = {};
-    let shapes = [];
-    let colors = [];
-    let numbers = [];
 
     let timeline = [];
     timeline.push({type: 'html-keyboard-response',
         stimulus: '<p>Which is the most frequent feature:</p><p>Shape, Color, or Number?</p>',
         prompt:'<p style="font-size:32px">Press any key to continue...<p>'});
-        for(let i in stimuli){
-            // splits our "easy" to read codes into parameters for the draw function.
-            for(let j in stimuli[i]){
-                shapes.push(stimuli[i][j][0])
-                colors.push(stimuli[i][j][1])
-                numbers.push(stimuli[i][j][2])}
-            let uniques = [shapes, colors, numbers].map(countUnique)
-            let answerIndex = argMin(uniques)
-            data['key'] = ['shape', 'color', 'number'];
-            data['answer'] = data['key'][answerIndex]
-            data['item_type'] = 'EFRuleID';
+    for(let i in stimuli){
+        let shapes = [];
+        let colors = [];
+        let numbers = [];
+        // splits our "easy" to read codes into parameters for the draw function.
+        for(let j in stimuli[i]){
+            shapes.push(stimuli[i][j][0])
+            colors.push(stimuli[i][j][1])
+            numbers.push(stimuli[i][j][2])}
+        let uniques = [shapes, colors, numbers].map(countUnique)
+        let answerIndex = argMin(uniques)
+        data['key'] = ['shape', 'color', 'number'];
+        data['answer'] = data['key'][answerIndex]
+        data['item_type'] = 'EFRuleID';
 
+        function draw(){
+            drawRuleID(stimuli[i], 50);
+        }
+        // See our custom canvas plugin for more details on how this works.
+        timeline.push({type: 'canvas-button-response',
+            func: draw,
+            canvas_id: 'ruleID',
+            stimulus: 'Which is the most frequent feature?',
+            choices: ['Shape', 'Color', 'Number'],
+            data: {...storeDataTag, ...data}
+            })
 
-            function draw(){
-                drawRuleID(stimuli[i], 50);
-            }
-            // See our custom canvas plugin for more details on how this works.
-            timeline.push({type: 'canvas-button-response',
-                func: draw,
-                canvas_id: 'ruleID',
-                stimulus: 'Which is the most frequent feature?',
-                choices: ['Shape', 'Color', 'Number'],
-                data: {...storeDataTag, ...data}
-                })
-
-            timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
-                choices: jsPsych.NO_KEYS, trial_duration: 250});
+        timeline.push({type: 'html-keyboard-response', stimulus: '<p></p>',
+            choices: jsPsych.NO_KEYS, trial_duration: 250});
 
         }
         timeline.pop() // gets rid of the break on the last one, we don't need it before the next trial.
@@ -834,13 +833,15 @@ function endSurvey(question, data){
         formoptions.push('<p style="font-size:32px; line-height: 32px">' + options[i] + '</p>')
     }
     
+    data['item_type'] = "End of Experiment Survey";
+    data['answer'] = 'None';
+
     timeline.push({type: 'survey-likert',
     questions: [{prompt: '<p style="font-size:48px">' + question[0] + '</p>',
     labels: formoptions}],
     data: {...storeDataTag, ...data}})
 
     task['timeline'] = timeline;
-    data['item_type'] = "End of Experiment Survey";
 
     timeline.push({
         type: 'call-function',
