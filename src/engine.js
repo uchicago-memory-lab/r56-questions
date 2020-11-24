@@ -307,16 +307,16 @@ async function endBlock(qBlock){
      */
     let block = {};
     let timeline = [];
-    // timeline.push({
-    //     type: 'html-keyboard-response',
-    //     stimulus: "You're almost done! Just a few more items to test your longer term memory, and then a short survey",
-    //     prompt: pressAny
-    // })
-    // for(let i in LONGTERMS){
-    //     let dat = qBlock[LONGTERMS[i].toString()]
-    //     let data = {stims_type: dat['stimsType'], item: 'LT' + dat['taskNum'], difficulty: dat['difficulty']};
-    //     timeline.push(EMLongTerm(dat['stimuli'], dat['trials'], data))
-    // }
+    timeline.push({
+        type: 'html-keyboard-response',
+        stimulus: "You're almost done! Just a few more items to test your longer term memory, and then a short survey",
+        prompt: pressAny
+    })
+    for(let i in LONGTERMS){
+        let dat = qBlock[LONGTERMS[i].toString()]
+        let data = {stims_type: dat['stimsType'], item: 'LT' + dat['taskNum'], difficulty: dat['difficulty']};
+        timeline.push(EMLongTerm(dat['stimuli'], dat['trials'], data))
+    }
     let surveyQs = itemsByDifficulty(qBlock, 'survey')
     timeline.push({
         type: 'html-keyboard-response',
@@ -358,7 +358,7 @@ async function main() {
     let qBlock = await loadQuestions();
 
 
-    timeline.push(await endBlock(qBlock));
+    timeline.push(await practiceBlock(qBlock));
 
 
     jsPsych.init({timeline: timeline});
