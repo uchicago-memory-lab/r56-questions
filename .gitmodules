@@ -1,3 +1,3 @@
 [submodule "questions"]
 	path = questions
-	url = "https://soybison:AllHailKingFugu#3@github.com/uchicago-memory-lab/r56-questions.git"
+	url = https://github.com/uchicago-memory-lab/r56-questions.git
