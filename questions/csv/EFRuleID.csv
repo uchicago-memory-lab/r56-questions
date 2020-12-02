@@ -1,4 +1,4 @@
-taskNum,stim1,stim2,stim3,stim4,stim5,stim6,trial1,trial2,trial3,stimsType,difficulty
+p,stim1,stim2,stim3,stim4,stim5,stim6,trial1,trial2,trial3,stimsType,difficulty
 EFRIP,,,,,,,DB7 SB8,,,,practice
 751,,,,,,,DR1 DB3,DG1 TG3,DB1  DR4,,easy
 752,,,,,,,SO2 SB4,SO2 HO4,SO2  HB2,,easy
