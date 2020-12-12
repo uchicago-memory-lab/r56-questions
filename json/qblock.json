@@ -472,16 +472,23 @@
                 "seagull",
                 "duck",
                 "cardinal",
-                "pidgeon"
+                "pigeon"
             ],
             [
                 "cardinal",
                 "seagull",
                 "duck",
+<<<<<<< HEAD
                 "pidgeon"
             ],
             [
                 "pidgeon",
+=======
+                "pigeon"
+            ],
+            [
+                "pigeon",
+>>>>>>> 90d850696161f3fe08527ab92c6d747e8b3698f9
                 "duck",
                 "cardinal",
                 "seagull"
