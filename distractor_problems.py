@@ -1,3 +1,5 @@
+# Dave has python 3.7.2, he's on macos so it's called as python3
+
 import random
 import argparse
 import json
